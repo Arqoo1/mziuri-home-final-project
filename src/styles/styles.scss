@@ -1,5 +1,7 @@
-*{
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-}
+@use "./abstracts/mixins";
+@use "./abstracts/reset";
+@use "./abstracts/variables";
+
+@use "./layouts/Header";
+@use "./components/Carousel";
+@use "./components/RouteBanner";
