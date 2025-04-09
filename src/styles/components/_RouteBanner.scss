@@ -12,4 +12,26 @@
   font-weight: 700;
   width: 100%;
   height: 50vh;
+  h3{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: black;
+    font-size: 25px;
+    font-weight: normal;
+    span{
+      font-size: 16px;
+    }
+    i{
+      font-size: 15px;
+    }
+    a{
+      color: black;
+      text-decoration: none;
+      &:hover{
+        color:  #e72463;
+        transition: color 0.2s ease-in-out;
+      }
+    }
+  }
 }
