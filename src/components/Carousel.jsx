@@ -5,12 +5,14 @@ import slide2 from '../assets/slider2.webp';
 const slides = [
   {
     image: slide1,
-    title: 'Welcome to Our Shop',
+    header: 'TOP TREND',
+    title: '2022 Flower Trends',
     description: 'Lorem ipsum dolor sit amet, pri autem nemore bonorum te. Autem fierent ullamcorper ius no, nec ea quodsi invenire. '
   },
   {
     image: slide2,
-    title: 'New Arrivals',
+    header: 'COLLECTION',
+    title: 'Flowers and Candle Birthday Gift',
     description: 'Lorem ipsum dolor sit amet, pri autem nemore bonorum te. Autem fierent ullamcorper ius no, nec ea quodsi invenire. '
   }
 ];
@@ -39,7 +41,7 @@ function Carousel() {
       nextSlide();
     }, 4000);
 
-    return () => clearInterval(interval); // cleanup
+    return () => clearInterval(interval); 
   }, []);
 
   return (
@@ -47,17 +49,16 @@ function Carousel() {
       <div className="carousel-slide">
         <img src={slides[currentIndex].image} alt={`Slide ${currentIndex + 1}`} />
         <div className="carousel-text">
-          <p className='bla'>TOP TREND</p>
-          <h2>{slides[currentIndex].title}</h2>
+        <p className={`sliderText${currentIndex + 1}`}>{slides[currentIndex].header}</p>
+        <h2>{slides[currentIndex].title}</h2>
           <p>{slides[currentIndex].description}</p>
-        </div>
+          <button className={`sliderBtn${currentIndex + 1}`}>Shop Now</button>
+          </div>
 
-        {/* Left Arrow */}
         <button className="arrow left" onClick={prevSlide}>
           <i className="fa fa-chevron-left"></i>
         </button>
 
-        {/* Right Arrow */}
         <button className="arrow right" onClick={nextSlide}>
           <i className="fa fa-chevron-right"></i>
         </button>

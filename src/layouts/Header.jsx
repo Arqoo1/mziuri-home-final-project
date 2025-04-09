@@ -28,9 +28,7 @@ function Header() {
             className="fa fa-search"
             onClick={() => setShowSearch((prev) => !prev)}
           ></i>
-          <Link to="/cart">
             <i className="fa fa-shopping-cart"></i>
-          </Link>
           <i className="fa fa-bars"></i>
         </div>
       </header>

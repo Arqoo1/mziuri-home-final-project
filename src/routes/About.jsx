@@ -5,7 +5,7 @@ function About() {
 
   return (
     <>
-      <RouteBanner page="About" />
+      <RouteBanner page="ABOUT" />
     </>
   );
 }

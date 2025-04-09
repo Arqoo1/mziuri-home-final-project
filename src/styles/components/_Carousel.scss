@@ -35,10 +35,27 @@
         letter-spacing: 1px;
         line-height: 30px;
       }
-      .bla {
+      .sliderText2 {
         background-color: black;
         color: white;
         padding: 5px 10px;
+      }
+      .sliderText1 {
+        background-color: #e72463;
+        color: white;
+        padding: 5px 10px;
+      }
+      button {
+        padding: 10px 30px;
+        border: none;
+        color: white;
+        cursor: pointer;
+      }
+      .sliderBtn1 {
+        background-color: #e72463;
+      }
+      .sliderBtn2 {
+        background-color: black;
       }
     }
 

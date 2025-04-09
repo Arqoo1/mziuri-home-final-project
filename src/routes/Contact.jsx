@@ -3,7 +3,7 @@ import RouteBanner from '../components/RouteBanner'
 function Contact() {
   return (
     <div>
-            <RouteBanner page="Contact" />
+            <RouteBanner page="CONTACT" />
 
     </div>
   )
