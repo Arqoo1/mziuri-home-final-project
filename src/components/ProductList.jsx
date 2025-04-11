@@ -16,6 +16,7 @@ function ProductList() {
 
   return (
     <div className="product-list-wrapper">
+      <h3>SHOP</h3>
       <Filter
         setTitleFilter={setTitleFilter}
         setPriceRange={setPriceRange}
