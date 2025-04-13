@@ -24,6 +24,7 @@ function Filter({ setTitleFilter, setPriceRange }) {
 
   return (
     <div className="filter-container">
+      <h4>FILTER</h4>
       <input
         type="text"
         placeholder="Search by title..."
