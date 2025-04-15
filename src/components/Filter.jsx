@@ -30,10 +30,11 @@ function Filter({ setTitleFilter, setPriceRange }) {
         placeholder="Search by title..."
         value={titleFilter}
         onChange={handleTitleChange}
+        className="searchInput"
       />
 
       <div className="price-filter">
-        <label>Select max price:</label>
+        <p>price</p>
         <input
           type="range"
           min="0"

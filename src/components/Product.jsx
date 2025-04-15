@@ -1,15 +1,13 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
+import useStars from "../hooks/useStars"; // import the hook
 
-function Product({ title, price, rating, image }) {
-  const roundedRating = Math.round(rating);
-
-  const stars = [];
-  for (let i = 0; i < roundedRating; i++) {
-    stars.push(<i key={i} className="fas fa-star"></i>);
-  }
+function Product({ id, title, price, rating, image }) {
+  const navigate = useNavigate();
+  const stars = useStars(rating); // use the hook
 
   return (
-    <div className="product-card">
+    <div className="product-card" onClick={() => navigate(`/shop/${id}`)}>
       <img src={image} alt={title} className="product-img" />
       <h3>{title}</h3>
       <p>${price}</p>

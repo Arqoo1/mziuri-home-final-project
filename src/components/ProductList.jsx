@@ -15,8 +15,7 @@ function ProductList() {
   });
 
   return (
-    <div className="product-list-wrapper">
-      <h3>SHOPP</h3>
+    <section className="product-list-wrapper">
       <Filter
         setTitleFilter={setTitleFilter}
         setPriceRange={setPriceRange}
@@ -25,6 +24,7 @@ function ProductList() {
       <div className="product-grid">
         {filteredProducts.map((product) => (
           <Product
+            id={product.id}
             key={product.id}
             image={product.image}
             title={product.title}
@@ -33,7 +33,7 @@ function ProductList() {
           />
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 

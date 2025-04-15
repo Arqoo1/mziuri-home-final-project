@@ -11,7 +11,6 @@ import Home from "./routes/Home";
 import About from "./routes/About";
 import Contact from "./routes/Contact";
 import Shop from "./routes/Shop";
-import SingleProduct from "./routes/SingleProduct";
 import Cart from "./routes/Cart";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
@@ -21,6 +20,7 @@ import Checkout from "./routes/Checkout";
 import Compare from "./routes/Compare";
 import Blog from "./routes/Blog";
 import NotFound from "./routes/NotFound";
+import SinglePage from "./routes/SinglePage";
 
 function App() {
   return (
@@ -31,7 +31,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
-          <Route path="/shop/:id" element={<SingleProduct />} />
+          <Route path="/shop/:id" element={<SinglePage />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/login" element={<Login />} />
