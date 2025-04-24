@@ -2,12 +2,13 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import useStars from "../hooks/useStars";
 
-function Product({ id, title, price, rating, image }) {
+function Product({ product }) {
   const navigate = useNavigate();
-  const stars = useStars(rating);
+  const { _id, title, price, rating, image } = product;
+  const stars = useStars(rating)
 
   const handleClick = () => {
-    navigate(`/shop/${id}`); 
+    navigate(`/shop/${_id}`)
   };
 
   return (

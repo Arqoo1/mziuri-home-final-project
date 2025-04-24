@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchProducts } from "../api/productapi";
+import fetchProductData from "../api/productapi";
 import Product from "./Product";
 import Filter from "./Filter";
 
@@ -9,36 +9,29 @@ function ProductList() {
   const [products, setProducts] = useState([]); 
 
   useEffect(() => {
-    async function loadProducts() {
+    const loadProducts = async () => {
       try {
-        const data = await fetchProducts(titleFilter, priceRange[0], priceRange[1]);
-        setProducts(data);  
+        const data = await fetchProductData();
+        setProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error.message);
       }
-    }
+    };
 
     loadProducts();  
-  }, [titleFilter, priceRange]);  
+  }, []);
+
+  const filteredProducts = products.filter(({ title, price }) =>
+    title.toLowerCase().includes(titleFilter.toLowerCase()) &&
+    price >= priceRange[0] && price <= priceRange[1]
+  );
 
   return (
     <section className="product-list-wrapper">
-      <Filter
-        setTitleFilter={setTitleFilter}
-        setPriceRange={setPriceRange}
-        priceRange={priceRange}
-      />
-      
+      <Filter setTitleFilter={setTitleFilter} setPriceRange={setPriceRange} priceRange={priceRange} />
       <div className="product-grid">
-        {products.map((product) => (
-          <Product
-            key={product._id}
-            id={product._id}
-            image={product.image}
-            title={product.title}
-            price={product.price}
-            rating={product.rating}
-          />
+        {filteredProducts.map((product) => (
+          <Product key={product._id} product={product} />
         ))}
       </div>
     </section>

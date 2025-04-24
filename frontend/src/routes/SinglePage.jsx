@@ -1,29 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { fetchProductById } from "../api/productapi"; 
+import fetchProductData from "../api/productapi";
 import useStars from "../hooks/useStars";  
 
 function SinglePage() {
   const { id } = useParams();  
   const [product, setProduct] = useState(null);
-  const [amount, setAmount] = useState(1);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const getProduct = async () => {
-      try {
-        const productData = await fetchProductById(id);
-        setProduct(productData);
-      } catch (error) {
-        console.error("Error fetching product:", error);
-      }
+      const products = await fetchProductData() 
+      const selectedProduct = products.find((item) => item._id === id); 
+      setProduct(selectedProduct); 
     };
 
     getProduct();
   }, [id]);
 
-  if (!product) return <p>Loading...</p>;
+  if (!product) return <p>Product not found</p>; 
 
-  const stars = useStars(product.rating);
+  const stars = useStars(product.rating); 
 
   return (
     <main className="single-product-page">
@@ -32,7 +29,7 @@ function SinglePage() {
         <div className="product-details">
           <h2>{product.title}</h2>
           <p className="price">${product.price}</p>
-          <div className="rating">{stars}</div> 
+          <div className="rating">{stars}</div>
           <p className="descp">{product.description}</p>
           <div className="add-to-cart">
             <div className="amount-chooser">
@@ -40,8 +37,8 @@ function SinglePage() {
                 type="number"
                 id="amount"
                 min="1"
-                value={amount}
-                onChange={(e) => setAmount(parseInt(e.target.value, 10))}
+                value={quantity}
+                onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
               />
             </div>
             <button onClick={() => console.log("Add to Cart")} className="add-to-cart-btn">

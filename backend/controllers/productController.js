@@ -1,34 +1,18 @@
 import Product from "../models/Product.js";
 
 export const getProducts = async (req, res) => {
+  console.log('Request received to get products');
   try {
-    const { title, min, max } = req.query;
+    const products = await Product.find(); 
 
-    const filters = {};
-    if (title) {
-      filters.title = { $regex: title, $options: "i" }; 
-    }
-    if (min || max) {
-      filters.price = {};
-      if (min) filters.price.$gte = min;
-      if (max) filters.price.$lte = max;
+    if (!products || products.length === 0) {
+      console.log('No products found or error fetching data');
+      return res.status(404).json({ message: 'No products found' });
     }
 
-    const products = await Product.find(filters); 
-    res.json(products);
+    res.status(200).json(products); 
   } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
-
-export const getProductById = async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-    res.json(product);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+    console.error('Error fetching products:', err);
+    res.status(500).json({ message: 'Error fetching products', error: err.message });
   }
 };

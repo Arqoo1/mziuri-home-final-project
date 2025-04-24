@@ -1,29 +1,17 @@
 const API_URL = "http://localhost:5000/api/products";
 
-export async function fetchProducts(title, minPrice, maxPrice) {
+const fetchProductData = async () => {
   try {
-    const params = new URLSearchParams({
-      title,
-      min: minPrice,
-      max: maxPrice,
-    });
-    
-    const res = await fetch(`${API_URL}?${params.toString()}`);
-    if (!res.ok) throw new Error(`Failed to fetch products: ${res.statusText}`);
-    return res.json();
+    const response = await fetch(API_URL); // Using fetch to make the request
+    if (!response.ok) { // Check if the response is successful (status code 200-299)
+      throw new Error('Network response was not ok');
+    }
+    const data = await response.json(); // Parse the JSON response
+    return data;
   } catch (error) {
-    console.error("Error fetching products:", error);
-    throw error; 
+    console.error('Error fetching product data:', error);
+    return []; // Return an empty array in case of an error
   }
-}
+};
 
-export async function fetchProductById(id) {
-  try {
-    const res = await fetch(`${API_URL}/${id}`);
-    if (!res.ok) throw new Error(`Failed to fetch product with ID ${id}: ${res.statusText}`);
-    return res.json();
-  } catch (error) {
-    console.error("Error fetching product by ID:", error);
-    throw error;  
-  }
-}
+export default fetchProductData;
