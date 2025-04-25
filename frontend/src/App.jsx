@@ -1,12 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import "./styles/styles.scss";
 
+import "./styles/styles.scss";
 import Header from "./layouts/Header";
 import Main from "./layouts/Main";
 import Footer from "./layouts/Footer";
 import { TitleUpdater } from "./utils/setTitle";
-
 import Home from "./routes/Home";
 import About from "./routes/About";
 import Contact from "./routes/Contact";

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useLoader } from "../hooks/useLoader";
+
 import { useParams } from "react-router-dom";
 import { fetchSingleProduct } from "../api/productapi";
 import useStars from "../hooks/useStars";
@@ -9,12 +11,13 @@ function SinglePage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const { useDataLoader } = useLoader();
 
   useEffect(() => {
     const getProduct = async () => {
       try {
         setLoading(true);
-        const productData = await fetchSingleProduct(id);
+        const productData = await  useDataLoader(() => fetchSingleProduct(id));
         setProduct(productData);
       } catch (err) {
         console.error("Error fetching product:", err);

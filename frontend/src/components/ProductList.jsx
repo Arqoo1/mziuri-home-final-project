@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {fetchProductData} from "../api/productapi";
+import { useLoader } from "../hooks/useLoader";
+import { fetchProductData } from "../api/productapi";
 import Product from "./Product";
 import LeftFilter from "./LeftFilter";
 import TopFilter from "./Topfilter";
@@ -10,11 +11,12 @@ function ProductList() {
   const [products, setProducts] = useState([]);
   const [sort, setSort] = useState("price_asc");
   const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const { useDataLoader } = useLoader();
 
   useEffect(() => {
     const loadProducts = async () => {
       try {
-        const data = await fetchProductData(sort);
+        const data = await useDataLoader(() => fetchProductData(sort));
         setProducts(data);
       } catch (error) {
         console.error("Error fetching products:", error.message);
