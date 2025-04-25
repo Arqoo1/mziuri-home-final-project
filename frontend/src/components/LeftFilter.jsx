@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Filter({ setTitleFilter, setPriceRange }) {
+function LeftFilter({ setTitleFilter, setPriceRange }) {
   const [titleFilter, setTitleFilterLocal] = useState("");  
   const [priceRange, setPriceRangeLocal] = useState(100);   
 
@@ -13,7 +13,7 @@ function Filter({ setTitleFilter, setPriceRange }) {
   };
 
   return (
-    <div className="filter-container">
+    <div className="left-filter">
       <h4>FILTER</h4>
       
       <input
@@ -42,4 +42,4 @@ function Filter({ setTitleFilter, setPriceRange }) {
   );
 }
 
-export default Filter;
+export default LeftFilter;

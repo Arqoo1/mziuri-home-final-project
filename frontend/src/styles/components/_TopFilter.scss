@@ -1,0 +1,64 @@
+@use '../abstracts/Variables' as *;
+
+
+.top-filter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%;
+  border: 1px solid $border-color;
+  padding: 20px;
+
+  .icon-group {
+    display: flex;
+    gap: 10px;
+
+    i {
+      font-size: 18px;
+      cursor: pointer;
+      color: #333;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #555;
+      }
+    }
+  }
+
+  .sort-container {
+    width: 180px;
+    position: relative;
+
+    .sort-select {
+      padding: 8px 30px 8px 12px;
+      font-size: 14px;
+      border: 1px solid #d8c4c4;
+      border-radius: 4px;
+      background: #f9f9f9;
+      color: #333;
+      cursor: pointer;
+      appearance: none;
+      width: 100%;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .select-arrow {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: #666;
+      font-size: 12px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+      &.rotate {
+        transform: translateY(-50%) rotate(-180deg);
+      }
+    }
+  }
+}

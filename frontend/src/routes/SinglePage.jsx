@@ -1,27 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import fetchProductData from "../api/productapi";
-import useStars from "../hooks/useStars";  
+import { fetchSingleProduct } from "../api/productapi";
+import useStars from "../hooks/useStars";
 
 function SinglePage() {
-  const { id } = useParams();  
+  const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const getProduct = async () => {
-      const products = await fetchProductData(); 
-      const selectedProduct = products.find((item) => item._id === id); 
-      setProduct(selectedProduct); 
+      try {
+        setLoading(true);
+        const productData = await fetchSingleProduct(id);
+        setProduct(productData);
+      } catch (err) {
+        console.error("Error fetching product:", err);
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
     };
 
-    getProduct();
+    if (id) {
+      // (fetch if prodct have id )
+      getProduct();
+    }
   }, [id]);
 
-  if (!product) return <p>Product not found</p>; 
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+  if (!product) return <p>Product not found</p>;
 
-  const stars = useStars(product.rating); 
-
+  const stars = useStars(product.rating);
   return (
     <main className="single-product-page">
       <section className="product-wrapper">
@@ -48,10 +61,16 @@ function SinglePage() {
                 onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
               />
             </div>
-            <button onClick={() => console.log("Add to Cart")} className="add-to-cart-btn">
+            <button
+              onClick={() => console.log("Add to Cart")}
+              className="add-to-cart-btn"
+            >
               Add to Cart
             </button>
-            <button onClick={() => console.log("Add to Wishlist")} className="add-to-wishlist-btn">
+            <button
+              onClick={() => console.log("Add to Wishlist")}
+              className="add-to-wishlist-btn"
+            >
               Add to Wishlist
             </button>
           </div>

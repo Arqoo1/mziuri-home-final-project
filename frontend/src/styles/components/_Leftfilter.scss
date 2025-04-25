@@ -1,0 +1,35 @@
+.left-filter {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: start;
+    flex-direction: column;
+    width: 25%;
+    gap: 30px;
+
+    .searchInput {
+      padding: 10px 100px 10px 10px;
+      outline: none;
+    }
+
+    h4 {
+      font-size: 44px;
+    }
+
+    button {
+      padding: 10px 42px;
+      background: black;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+
+      &:hover {
+        background: black;
+      }
+    }
+
+    .price-filter {
+      display: flex;
+      gap: 10px;
+    }
+  }
