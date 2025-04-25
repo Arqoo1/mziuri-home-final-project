@@ -10,7 +10,7 @@ function SinglePage() {
 
   useEffect(() => {
     const getProduct = async () => {
-      const products = await fetchProductData() 
+      const products = await fetchProductData(); 
       const selectedProduct = products.find((item) => item._id === id); 
       setProduct(selectedProduct); 
     };
@@ -28,7 +28,14 @@ function SinglePage() {
         <img src={product.image} alt={product.title} />
         <div className="product-details">
           <h2>{product.title}</h2>
-          <p className="price">${product.price}</p>
+          {product.salePrice ? (
+            <p className="product-price">
+              <span className="sale-price">${product.salePrice}</span>
+              <span className="original-price">${product.price}</span>{" "}
+            </p>
+          ) : (
+            <p className="product-price">${product.price}</p>
+          )}
           <div className="rating">{stars}</div>
           <p className="descp">{product.description}</p>
           <div className="add-to-cart">
