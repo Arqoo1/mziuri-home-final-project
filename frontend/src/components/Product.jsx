@@ -23,7 +23,7 @@ function Product({ product }) {
       ) : (
         <p className="product-price">${price}</p>
       )}
-      <p>{stars}</p>
+      <p className="rating">{stars}</p>
     </div>
   );
 }

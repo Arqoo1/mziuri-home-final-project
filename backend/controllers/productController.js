@@ -48,7 +48,9 @@ export const getProducts = async (req, res) => {
         sortOption = [];
     }
 
-    const products = await Product.aggregate(sortOption);
+    const products = sortOption.length > 0
+      ? await Product.aggregate(sortOption)
+      : await Product.find();
 
     if (!products || products.length === 0) {
       return res.status(404).json({ message: "No products found" });

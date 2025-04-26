@@ -32,11 +32,12 @@
     margin-bottom: 8px;
   }
 
-  p {
-    margin: 4px 0;
+}
 
-    i {
-      color: $primary-color;
-    }
+.rating {
+  margin: 4px 0;
+
+  i {
+    color: $primary-color;
   }
 }
