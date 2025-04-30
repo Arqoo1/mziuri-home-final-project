@@ -5,14 +5,17 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import productRoutes from "./routes/productRoutes.js";
-
+import UsersRouter from "./routes/UsersRouter.js";
 const app = express();
-app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
+app.use(cors({
+  origin: "http://localhost:5173", 
+  credentials: true, 
+}));
 mongoose
   .connect(MONGO_URI)
   .then(() => {
@@ -23,5 +26,6 @@ mongoose
   });
 
 app.use("/api/products", productRoutes);
+app.use('/api/users', UsersRouter)
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

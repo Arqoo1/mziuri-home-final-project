@@ -1,21 +1,23 @@
 import React, { useState } from "react";
+import Slider from "rc-slider";
+import "rc-slider/assets/index.css";
 
 function LeftFilter({ setTitleFilter, setPriceRange }) {
-  const [titleFilter, setTitleFilterLocal] = useState("");  
-  const [priceRange, setPriceRangeLocal] = useState(100);   
+  const [titleFilter, setTitleFilterLocal] = useState("");
+  const [priceRange, setPriceRangeLocal] = useState([0, 100]);
 
   const applyFilter = (e) => {
     e.preventDefault();
     setTitleFilter(titleFilter.toLowerCase());
-    setPriceRange([0, priceRange]);
+    setPriceRange(priceRange);
     setTitleFilterLocal("");
-    setPriceRangeLocal(100);
+    setPriceRangeLocal([0, 100]);
   };
 
   return (
     <div className="left-filter">
       <h4>FILTER</h4>
-      
+
       <input
         type="text"
         placeholder="Search by title..."
@@ -23,20 +25,20 @@ function LeftFilter({ setTitleFilter, setPriceRange }) {
         onChange={(e) => setTitleFilterLocal(e.target.value)}
         className="searchInput"
       />
-      
+
       <div className="price-filter">
         <p>Price</p>
-        <input
-          type="range"
-          min="0"
-          max="100"
-          step="1"
+        <Slider
+          range
+          min={0}
+          max={100}
           value={priceRange}
-          onChange={(e) => setPriceRangeLocal(Number(e.target.value))}
+          onChange={setPriceRangeLocal}
+          trackStyle={[{ backgroundColor: "transparent" }]} // Make track transparent
         />
-        <p className="price-preview">0 - ${priceRange}</p>
       </div>
-      
+        <p className="price-preview">${priceRange[0]} - ${priceRange[1]}</p>
+
       <button onClick={applyFilter}>Filter</button>
     </div>
   );

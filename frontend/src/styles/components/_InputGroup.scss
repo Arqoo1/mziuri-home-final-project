@@ -1,0 +1,43 @@
+@use "../abstracts/Variables" as *;
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  .label {
+    font-weight: 500;
+    color: $primary-color;
+  }
+
+  .inputBox {
+    input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1px solid #ccc;
+      border-radius: 0.5rem;
+      font-size: 1rem;
+      transition: border-color 0.2s ease;
+      outline: none;
+      margin-bottom: 30px;
+
+      &.error {
+        border-color: rgb(230, 33, 33);
+      }
+
+      &:focus {
+        border-color: $primary-color;
+        outline: none;
+      }
+    }
+  }
+
+  .error {
+    font-size: 0.875rem;
+    color: rgb(230, 33, 33);
+    // visibility: hidden;
+
+    // &.visible {
+    //   visibility: visible;
+    // }
+  }
+}

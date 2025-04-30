@@ -1,35 +1,56 @@
 .left-filter {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: start;
-    flex-direction: column;
-    width: 25%;
-    gap: 30px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  width: 25%;
+  gap: 30px;
+  padding: 0px 20px;
 
-    .searchInput {
-      padding: 10px 100px 10px 10px;
-      outline: none;
-    }
+  .searchInput {
+    width: 100%;
+    padding: 10px;
+    outline: none;
+  }
 
-    h4 {
-      font-size: 44px;
-    }
+  h4 {
+    font-size: 44px;
+  }
 
-    button {
-      padding: 10px 42px;
+  button {
+    padding: 10px 42px;
+    background: black;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:hover {
       background: black;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 4px;
-
-      &:hover {
-        background: black;
-      }
-    }
-
-    .price-filter {
-      display: flex;
-      gap: 10px;
     }
   }
+}
+
+.price-filter {
+  width: 100%;
+  display: flex;
+  height: auto;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+
+  .price-preview {
+    margin-top: 0.5rem;
+    font-weight: bold;
+    color: #2e186a;
+  }
+}
+
+.rc-slider-handle {
+  background-color: rgb(255, 255, 255);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  z-index: 333 !important;
+  border: 2px solid #e72463 !important;
+}
