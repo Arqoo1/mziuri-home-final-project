@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import InputGroup from "../components/InputGroup";
 import RouteBanner from "../components/RouteBanner";
+import Checkbox from "../components/Checkbox";
+import { login } from "../api/usersapi";
 import {
   validateEmail,
   validatePassword,
@@ -40,6 +42,7 @@ function Login() {
     e.preventDefault();
     if (validateForm()) {
       try {
+        await login(formData);
         console.log("Login successful", formData);
         navigate("/");
       } catch (error) {
@@ -56,7 +59,7 @@ function Login() {
           <h2>Login</h2>
           <p>Please login using account detail below.</p>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="login-form">
           <InputGroup label="Email" name="email" error={errors.email}>
             <input
               type="email"
@@ -77,20 +80,22 @@ function Login() {
             />
           </InputGroup>
 
-          <div className="remember-me-checkbox">
-            <label>
-              <input
-                type="checkbox"
-                name="rememberMe"
-                checked={formData.rememberMe}
-                onChange={handleChange}
-              />
-              Remember me
-            </label>
-            {errors.rememberMe && (
-              <div className="error-text">{errors.rememberMe}</div>
-            )}
-          </div>
+          <InputGroup label="" name="rememberMe" error={errors.rememberMe}>
+            <div className="checkbox-container">
+              <label className="termsLabel">
+                <div>
+                  <Checkbox
+                    type="checkbox"
+                    name="rememberMe"
+                    checked={formData.rememberMe || false}
+                    onChange={handleChange}
+                  />
+                  <span className="terms">Remember me</span>
+                </div>
+              </label>
+              <a>forget password?</a>
+            </div>
+          </InputGroup>
 
           <button type="submit" className="login-button">
             Login

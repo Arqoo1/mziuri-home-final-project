@@ -2,7 +2,7 @@ import axios from "axios";
 
 const API = axios.create({
   baseURL: "http://localhost:5000/api/users",
-  withCredentials: true, 
+  withCredentials: true,
 });
 export const register = async (formData) => {
   try {
@@ -11,6 +11,22 @@ export const register = async (formData) => {
   } catch (err) {
     const errorMessage =
       err.response?.data?.err || "Registration failed. Try again.";
+    throw new Error(errorMessage);
+  }
+};
+export const login = async (formData) => {
+  try {
+    // Transform the data to match backend expectations
+    const requestData = {
+      usernameOrPassword: formData.email, // or formData.username if you have that field
+      password: formData.password,
+    };
+
+    const { data } = await API.post("/login", requestData);
+    return data;
+  } catch (err) {
+    const errorMessage =
+      err.response?.data?.err || "Login failed. Please check your credentials.";
     throw new Error(errorMessage);
   }
 };

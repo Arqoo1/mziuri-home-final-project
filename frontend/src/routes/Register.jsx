@@ -4,6 +4,7 @@ import { register } from "../api/usersapi";
 
 import InputGroup from "../components/InputGroup";
 import RouteBanner from "../components/RouteBanner";
+import Checkbox from "../components/Checkbox";
 import {
   validateEmail,
   validatePassword,
@@ -61,7 +62,7 @@ function Register() {
           <h2>Register</h2>
           <p>Create your account to get started.</p>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="register-form">
           <InputGroup label="Username" name="username" error={errors.username}>
             <input
               type="text"
@@ -92,20 +93,17 @@ function Register() {
             />
           </InputGroup>
 
-          <div className="remember-me-checkbox">
-            <label>
-              <input
+          <InputGroup label="" name="rememberMe" error={errors.rememberMe}>
+            <label className="termsRegister">
+              <Checkbox
                 type="checkbox"
                 name="rememberMe"
-                checked={formData.rememberMe}
+                checked={formData.rememberMe || false}
                 onChange={handleChange}
               />
-              I accept the terms and conditions
+              <span className="terms">I agree to Terms and Conditions</span>
             </label>
-            {errors.rememberMe && (
-              <div className="error-text">{errors.rememberMe}</div>
-            )}
-          </div>
+          </InputGroup>
 
           <button type="submit" className="register-button">
             Register

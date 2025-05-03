@@ -1,0 +1,11 @@
+.register-container {
+  padding: 30px 20px;
+  .termsRegister {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    .checkbox {
+      display: flex;
+    }
+  }
+}

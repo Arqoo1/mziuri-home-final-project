@@ -1,4 +1,4 @@
-@use "../abstracts/Variables" as *;
+@use "../abstracts/index.scss" as *;
 
 .product-card {
   display: flex;
@@ -31,7 +31,6 @@
     font-size: 18px;
     margin-bottom: 8px;
   }
-
 }
 
 .rating {

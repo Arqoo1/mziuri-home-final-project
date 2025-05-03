@@ -1,26 +1,29 @@
 @use "../abstracts/Variables" as *;
 
-.login-container {
+.login-container,
+.register-container {
   padding: 20px;
-  width: 40%;
+  width: 30%;
   margin: 110px auto;
   display: flex;
-  gap: 30px;
   flex-direction: column;
   justify-content: center;
   background-color: $bg-color;
+
   & > div {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
     align-items: center;
+    margin-bottom: 30px;
     h2 {
       font-size: 2rem;
       font-weight: 600;
       color: $primary-color;
     }
   }
-  .login-button {
+  .login-button,
+  .register-button {
     background-color: $primary-color;
     color: $white-color;
     padding: 10px 30px;
@@ -35,5 +38,28 @@
     //     color: $primary-color;
     //     border: 1px solid $primary-color;
     // }
+  }
+  .login-form,
+  .register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    .login-checkbox {
+      display: flex;
+      justify-content: space-between;
+      // gap: 10px;
+    }
+  }
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.termsLabel {
+  div {
+    display: flex;
+    gap: 5px;
   }
 }

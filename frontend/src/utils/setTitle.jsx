@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 function setTitleFromPath() {
   const path = window.location.pathname.toLowerCase();
@@ -50,7 +50,8 @@ function setTitleFromPath() {
         title = "Not Found (404) | floSun";
       } else {
         const cleanedPath = path.replace("/", "");
-        const capitalized = cleanedPath.charAt(0).toUpperCase() + cleanedPath.slice(1);
+        const capitalized =
+          cleanedPath.charAt(0).toUpperCase() + cleanedPath.slice(1);
         title = `${capitalized} | floSun`;
       }
   }

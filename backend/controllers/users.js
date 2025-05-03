@@ -2,6 +2,55 @@ import jwt from "jsonwebtoken";
 import Users from "../models/users.js";
 import bcrypt from "bcrypt";
 
+export const registerUser = async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+
+    const usernameExists = await Users.findOne({ username });
+    if (usernameExists) {
+      return res.status(400).json({ err: "Username is already in use" });
+    }
+
+    const emailExists = await Users.findOne({ email });
+    if (emailExists) {
+      return res.status(400).json({ err: "Email is already in use" });
+    }
+
+    const isEmail = email.includes("@");
+    if (!isEmail) {
+      return res.status(400).json({ err: "Email should contain @" });
+    }
+
+    const hashedPassword = await bcrypt.hash(
+      password + process.env.BCRYPT_PEPPER,
+      11
+    );
+
+    const newUser = new Users({
+      username,
+      email,
+      password: hashedPassword,
+    });
+
+    await newUser.save();
+
+    // Users.create()
+
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, {
+      expiresIn: "1d",
+    });
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+
+    res.status(201).json({ data: newUser });
+  } catch (err) {
+    res.status(500).json({ err: err.message });
+  }
+};
+
 export const loginUser = async (req, res) => {
   try {
     const { usernameOrPassword, password } = req.body;
@@ -76,54 +125,5 @@ export const getUser = async (req, res) => {
     res.status(200).json({ data: userData });
   } catch (err) {
     res.status(500).json({ msg: err.message });
-  }
-};
-
-export const registerUser = async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
-
-    const usernameExists = await Users.findOne({ username });
-    if (usernameExists) {
-      return res.status(400).json({ err: "Username is already in use" });
-    }
-
-    const emailExists = await Users.findOne({ email });
-    if (emailExists) {
-      return res.status(400).json({ err: "Email is already in use" });
-    }
-
-    const isEmail = email.includes("@");
-    if (!isEmail) {
-      return res.status(400).json({ err: "Email should contain @" });
-    }
-
-    const hashedPassword = await bcrypt.hash(
-      password + process.env.BCRYPT_PEPPER,
-      11
-    );
-
-    const newUser = new Users({
-      username,
-      email,
-      password: hashedPassword,
-    });
-
-    await newUser.save();
-
-    // Users.create()
-
-    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, {
-      expiresIn: "1d",
-    });
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
-
-    res.status(201).json({ data: newUser });
-  } catch (err) {
-    res.status(500).json({ err: err.message });
   }
 };
