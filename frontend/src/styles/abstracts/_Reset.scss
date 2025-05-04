@@ -73,11 +73,11 @@ h6 {
 // input[type=number] {
 // 	-moz-appearance: textfield;
 // }
-// ul {
-// 	margin: 0;
-// 	padding: 0;
-// 	list-style: none;
-// }
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
 // img {
 // 	max-width: 100%;
 // }
@@ -97,27 +97,27 @@ h6 {
 // 		color: $primary-color;
 // 	}
 // }
-// a,
-// button,
-// i {
-// 	transition: .3s;
-// }
-// a,
-// a:hover,
-// a:focus,
-// a:active,
-// button,
-// button:focus,
-// .btn,
-// .btn:focus,
-// input,
-// input:focus,
-// select,
-// textarea,
-// .slick-slide {
-// 	text-decoration: none;
-// 	outline: 0;
-// }
+a,
+button,
+i {
+  transition: 0.3s;
+}
+a,
+a:hover,
+a:focus,
+a:active,
+button,
+button:focus,
+.btn,
+.btn:focus,
+input,
+input:focus,
+select,
+textarea,
+.slick-slide {
+  text-decoration: none;
+  outline: 0;
+}
 
 // input{
 // 	&.input-field{

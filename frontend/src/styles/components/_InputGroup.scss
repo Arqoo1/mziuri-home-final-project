@@ -3,6 +3,7 @@
 .inputGroup {
   display: flex;
   flex-direction: column;
+  width: 100%;
   .label {
     font-weight: 500;
     color: $primary-color;
@@ -11,9 +12,8 @@
   .inputBox {
     input {
       width: 100%;
-      padding: 0.75rem 1rem;
+      padding: 10px;
       border: 1px solid #ccc;
-      border-radius: 0.5rem;
       font-size: 1rem;
       transition: border-color 0.2s ease;
       outline: none;
@@ -33,10 +33,6 @@
   .error {
     font-size: 0.875rem;
     color: rgb(230, 33, 33);
-    // visibility: hidden;
 
-    // &.visible {
-    //   visibility: visible;
-    // }
   }
 }

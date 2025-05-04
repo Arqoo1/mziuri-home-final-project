@@ -1,8 +1,7 @@
-
 .carousel {
   position: relative;
   overflow: hidden;
-  height: 90vh;
+  height: 80vh;
   .carousel-slide {
     position: relative;
     height: 100%;
@@ -20,7 +19,7 @@
       flex-direction: column;
       gap: 30px;
       color: black;
-      top: 40%;
+      top: 25%;
       left: 10%;
       align-items: start;
       text-align: left;

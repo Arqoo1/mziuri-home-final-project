@@ -12,7 +12,28 @@ function ProductList() {
   const [sort, setSort] = useState("price_asc");
   const [isSelectOpen, setIsSelectOpen] = useState(false);
   const { useDataLoader } = useLoader();
+  const [selectedTags, setSelectedTags] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
+  const allTags = React.useMemo(() => {
+    const tagSet = new Set();
+    products.forEach((product) => {
+      if (product.tags) {
+        product.tags.forEach((tag) => tagSet.add(tag));
+      }
+    });
+    return Array.from(tagSet).sort();
+  }, [products]);
+
+  const allCategories = React.useMemo(() => {
+    const categorySet = new Set();
+    products.forEach((product) => {
+      if (product.category) {
+        categorySet.add(product.category);
+      }
+    });
+    return Array.from(categorySet).sort();
+  }, [products]);
   useEffect(() => {
     const loadProducts = async () => {
       try {
@@ -27,10 +48,13 @@ function ProductList() {
   }, [sort]);
 
   const filteredProducts = products.filter(
-    ({ title, price }) =>
+    ({ title, price, tags, category  }) =>
       title.toLowerCase().includes(titleFilter.toLowerCase()) &&
       price >= priceRange[0] &&
-      price <= priceRange[1]
+      price <= priceRange[1] &&
+      (selectedTags.length === 0 ||
+        selectedTags.some((tag) => tags.includes(tag))) &&
+      (!selectedCategory || category === selectedCategory)
   );
 
   return (
@@ -39,6 +63,12 @@ function ProductList() {
         setTitleFilter={setTitleFilter}
         setPriceRange={setPriceRange}
         priceRange={priceRange}
+        selectedTags={selectedTags}
+        setSelectedTags={setSelectedTags}
+        allTags={allTags}
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+        allCategories={allCategories}
       />
       <div className="product-grid">
         <TopFilter

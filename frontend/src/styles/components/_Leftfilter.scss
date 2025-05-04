@@ -1,3 +1,5 @@
+@use "../abstracts/index.scss" as *;
+
 .left-filter {
   margin-bottom: 20px;
   display: flex;
@@ -7,42 +9,47 @@
   gap: 30px;
   padding: 0px 20px;
 
-  .searchInput {
+  .searchTitle {
+    font-size: 22px;
+    font-weight: 700;
+    padding: 10px 0px;
     width: 100%;
-    padding: 10px;
-    outline: none;
-  }
-
-  h4 {
-    font-size: 44px;
+    border-bottom: 3px solid $border-color-3;
   }
 
   button {
-    padding: 10px 42px;
     background: black;
     color: white;
     border: none;
     cursor: pointer;
-    border-radius: 4px;
-
-    &:hover {
-      background: black;
-    }
   }
 }
 
-.price-filter {
-  width: 100%;
+.filter-section {
   display: flex;
-  height: auto;
-  align-items: center;
-  justify-content: center;
+  flex-direction: column;
   gap: 30px;
+  width: 100%;
+  padding: 10px 0px;
+  ul {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    flex-wrap: wrap;
+    li {
+      padding: 10px 30px;
+      // background-color: $primary-color;
+      border: 1px solid $border-color-3;
+      border-radius: 20px;
+      color: $black-color;
+      transition: 0.2s ease-in-out;
+      cursor: pointer;
+      &:hover {
+        border: 1px solid $primary-color;
+        color: $primary-color;
 
-  .price-preview {
-    margin-top: 0.5rem;
-    font-weight: bold;
-    color: #2e186a;
+      }
+    }
   }
 }
 
@@ -53,4 +60,29 @@
   border-radius: 50%;
   z-index: 333 !important;
   border: 2px solid #e72463 !important;
+}
+
+.searchInputWrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 10px;
+}
+
+.searchButton {
+  position: absolute;
+  padding: 12px;
+  right: 0;
+  background-color: #e8e2f8;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.priceButton {
+  padding: 6px 20px;
 }
