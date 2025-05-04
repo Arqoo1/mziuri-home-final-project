@@ -1,3 +1,5 @@
+@use "../abstracts/index.scss" as *;
+
 .header {
   position: fixed;
   top: 0;
@@ -8,48 +10,45 @@
   justify-content: space-between;
   align-items: center;
   height: 100px;
-  padding: 10px 50px;
+  padding: 10px 40px;
   z-index: 1000;
   transform: translate3d(0, 0, 0);
-  transition: 
-    transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-    background-color 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    background-color 0.2s ease, box-shadow 0.2s ease;
 }
-  .icons {
-    display: flex;
-    gap: 30px;
-    cursor: pointer;
+.icons {
+  display: flex;
+  gap: 30px;
+  cursor: pointer;
 
-    i {
-      font-size: 17px;
-      &:hover {
-        color: #e72463;
-        transition: color 0.2s ease-in-out;
-      }
+  i {
+    font-size: 17px;
+    &:hover {
+      color: #e72463;
+      transition: color 0.2s ease-in-out;
     }
   }
+}
 
-  nav {
-    display: flex;
-    gap: 100px;
+nav {
+  display: flex;
+  gap: 100px;
 
-    a {
-      color: black;
-      text-decoration: none;
+  a {
+    color: black;
+    text-decoration: none;
 
-      &:hover {
-        color: #e72463;
-        transition: color 0.2s ease-in-out;
-      }
+    &:hover {
+      color: #e72463;
+      transition: color 0.2s ease-in-out;
     }
   }
-
+}
 
 .search-bar-wrapper {
   position: fixed;
-  top: 105px; 
-  right: 50px; 
+  top: 105px;
+  right: 50px;
   width: 400px;
   z-index: 999;
 }

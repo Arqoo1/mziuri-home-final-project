@@ -1,0 +1,78 @@
+@use "../abstracts/index.scss" as *;
+
+.Imagecarousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin: auto;
+  user-select: none;
+  padding: 50px 0;
+  height: auto;
+  background-color: $bg-color;
+  touch-action: pan-y;
+  &:active {
+    cursor: grabbing;
+  }
+  .carousel-track {
+    display: flex;
+    width: 100%;
+    cursor: grab;
+
+    &:active {
+      cursor: grabbing;
+    }
+    .carousel-slide {
+      flex: 0 0 25%;
+      padding: 0 7.5px;
+      box-sizing: border-box;
+
+      &.blurred {
+        opacity: 0.4;
+      }
+
+      &:hover {
+        transform: scale(1.04);
+        z-index: 2;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+        border-radius: 8px;
+        pointer-events: none;
+        user-select: none;
+      }
+    }
+  }
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    border: none;
+    font-size: 1.5rem;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    &.prev {
+      left: 15px;
+    }
+
+    &.next {
+      right: 15px;
+    }
+  }
+}

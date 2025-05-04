@@ -17,6 +17,7 @@
 @use "./components/CategoriesContainer";
 @use "./components/InputGroup";
 @use "./components/scrollToTop";
+@use "./components/ImageCarousel";
 
 
 
@@ -24,3 +25,4 @@
 @use "./routes/SinglePage";
 @use "./routes/Login";
 @use "./routes/Register";
+@use "./routes/About";
