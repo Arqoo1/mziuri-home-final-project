@@ -20,7 +20,8 @@
       // margin-bottom: 10px;
 
       &.error {
-        border-color: rgb(230, 33, 33);
+        border-color: rgb(160, 0, 0);
+        font-weight: 600;
       }
 
       &:focus {
@@ -31,8 +32,8 @@
   }
 
   .error {
-    font-size: 0.875rem;
-    color: rgb(230, 33, 33);
+    border-color: rgb(219, 13, 13);
+    font-weight: 600;
 
   }
 }

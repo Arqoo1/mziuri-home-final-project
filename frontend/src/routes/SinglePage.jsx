@@ -4,6 +4,7 @@ import { useLoader } from "../hooks/useLoader";
 import { useParams } from "react-router-dom";
 import { fetchSingleProduct } from "../api/productapi";
 import useStars from "../hooks/useStars";
+import RouteBanner from "../components/RouteBanner";
 
 function SinglePage() {
   const { id } = useParams();
@@ -17,7 +18,7 @@ function SinglePage() {
     const getProduct = async () => {
       try {
         setLoading(true);
-        const productData = await  useDataLoader(() => fetchSingleProduct(id));
+        const productData = await useDataLoader(() => fetchSingleProduct(id));
         setProduct(productData);
       } catch (err) {
         console.error("Error fetching product:", err);
@@ -40,6 +41,8 @@ function SinglePage() {
   const stars = useStars(product.rating);
   return (
     <main className="single-product-page">
+      <RouteBanner page="SINGLEPAGE" />
+
       <section className="product-wrapper">
         <img src={product.image} alt={product.title} />
         <div className="product-details">
