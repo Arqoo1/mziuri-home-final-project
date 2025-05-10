@@ -7,14 +7,16 @@ const slides = [
     image: slide1,
     header: 'TOP TREND',
     title: '2022 Flower Trends',
-    description: 'Lorem ipsum dolor sit amet, pri autem nemore bonorum te. Autem fierent ullamcorper ius no, nec ea quodsi invenire. '
+    description:
+      'Lorem ipsum dolor sit amet, pri autem nemore bonorum te. Autem fierent ullamcorper ius no, nec ea quodsi invenire. ',
   },
   {
     image: slide2,
     header: 'COLLECTION',
     title: 'Flowers and Candle Birthday Gift',
-    description: 'Lorem ipsum dolor sit amet, pri autem nemore bonorum te. Autem fierent ullamcorper ius no, nec ea quodsi invenire. '
-  }
+    description:
+      'Lorem ipsum dolor sit amet, pri autem nemore bonorum te. Autem fierent ullamcorper ius no, nec ea quodsi invenire. ',
+  },
 ];
 
 function Carousel() {
@@ -25,15 +27,11 @@ function Carousel() {
   };
 
   const nextSlide = () => {
-    setCurrentIndex((prev) =>
-      prev === slides.length - 1 ? 0 : prev + 1
-    );
+    setCurrentIndex((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
   };
 
   const prevSlide = () => {
-    setCurrentIndex((prev) =>
-      prev === 0 ? slides.length - 1 : prev - 1
-    );
+    setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   };
 
   useEffect(() => {
@@ -41,25 +39,34 @@ function Carousel() {
       nextSlide();
     }, 4000);
 
-    return () => clearInterval(interval); 
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="carousel">
       <div className="carousel-slide">
-        <img src={slides[currentIndex].image} alt={`Slide ${currentIndex + 1}`} />
+        <img
+          src={slides[currentIndex].image}
+          alt={`Slide ${currentIndex + 1}`}
+        />
         <div className="carousel-text">
-        <p className={`sliderText${currentIndex + 1}`}>{slides[currentIndex].header}</p>
-        <h2>{slides[currentIndex].title}</h2>
+          <p className={`sliderText${currentIndex + 1}`}>{slides[currentIndex].header}</p>
+          <h2>{slides[currentIndex].title}</h2>
           <p>{slides[currentIndex].description}</p>
           <button className={`sliderBtn${currentIndex + 1}`}>Shop Now</button>
-          </div>
+        </div>
 
-        <button className="arrow left" onClick={prevSlide}>
+        <button
+          className="arrow left"
+          onClick={prevSlide}
+        >
           <i className="fa fa-chevron-left"></i>
         </button>
 
-        <button className="arrow right" onClick={nextSlide}>
+        <button
+          className="arrow right"
+          onClick={nextSlide}
+        >
           <i className="fa fa-chevron-right"></i>
         </button>
       </div>

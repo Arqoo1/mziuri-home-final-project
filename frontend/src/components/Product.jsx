@@ -1,6 +1,6 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import useStars from "../hooks/useStars";
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import useStars from '../hooks/useStars';
 
 function Product({ product }) {
   const navigate = useNavigate();
@@ -12,13 +12,20 @@ function Product({ product }) {
   };
 
   return (
-    <div className="product-card" onClick={handleClick}>
-      <img src={image} alt={title} className="product-img" />
+    <div
+      className="product-card"
+      onClick={handleClick}
+    >
+      <img
+        src={image}
+        alt={title}
+        className="product-img"
+      />
       <h3>{title}</h3>
       {salePrice ? (
         <p className="product-price">
           <span className="sale-price">${salePrice}</span>
-          <span className="original-price">${price}</span>{" "}
+          <span className="original-price">${price}</span>{' '}
         </p>
       ) : (
         <p className="product-price">${price}</p>

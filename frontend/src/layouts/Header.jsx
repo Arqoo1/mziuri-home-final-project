@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import logo from "../assets/logo.webp";
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import logo from '../assets/logo.webp';
 
 function Header() {
   const [showSearch, setShowSearch] = useState(false);
@@ -11,14 +11,17 @@ function Header() {
       setScrolled(window.scrollY > 50);
     };
     handleScroll();
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <>
-      <header className={`header ${scrolled ? "scrolled" : ""}`}>
-        <img src={logo} alt="Logo" />
+      <header className={`header ${scrolled ? 'scrolled' : ''}`}>
+        <img
+          src={logo}
+          alt="Logo"
+        />
         <nav>
           <Link to="/">Home</Link>
           <Link to="/shop">Shop</Link>
@@ -38,7 +41,11 @@ function Header() {
 
       {showSearch && (
         <div className="search-bar-wrapper">
-          <input type="text" className="search-bar" placeholder="Search..." />
+          <input
+            type="text"
+            className="search-bar"
+            placeholder="Search..."
+          />
         </div>
       )}
     </>

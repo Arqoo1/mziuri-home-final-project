@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useLoader } from "../hooks/useLoader";
+import React, { useState, useEffect } from 'react';
+import { useLoader } from '../hooks/useLoader';
 
-import { useParams } from "react-router-dom";
-import { fetchSingleProduct } from "../api/productapi";
-import useStars from "../hooks/useStars";
-import RouteBanner from "../components/RouteBanner";
+import { useParams } from 'react-router-dom';
+import { fetchSingleProduct } from '../api/productapi';
+import useStars from '../hooks/useStars';
+import RouteBanner from '../components/RouteBanner';
 
 function SinglePage() {
   const { id } = useParams();
@@ -21,7 +21,7 @@ function SinglePage() {
         const productData = await useDataLoader(() => fetchSingleProduct(id));
         setProduct(productData);
       } catch (err) {
-        console.error("Error fetching product:", err);
+        console.error('Error fetching product:', err);
         setError(err.message);
       } finally {
         setLoading(false);
@@ -44,13 +44,16 @@ function SinglePage() {
       <RouteBanner page="SINGLEPAGE" />
 
       <section className="product-wrapper">
-        <img src={product.image} alt={product.title} />
+        <img
+          src={product.image}
+          alt={product.title}
+        />
         <div className="product-details">
           <h2>{product.title}</h2>
           {product.salePrice ? (
             <p className="product-price">
               <span className="sale-price">${product.salePrice}</span>
-              <span className="original-price">${product.price}</span>{" "}
+              <span className="original-price">${product.price}</span>{' '}
             </p>
           ) : (
             <p className="product-price">${product.price}</p>
@@ -68,13 +71,13 @@ function SinglePage() {
               />
             </div>
             <button
-              onClick={() => console.log("Add to Cart")}
+              onClick={() => console.log('Add to Cart')}
               className="add-to-cart-btn"
             >
               Add to Cart
             </button>
             <button
-              onClick={() => console.log("Add to Wishlist")}
+              onClick={() => console.log('Add to Wishlist')}
               className="add-to-wishlist-btn"
             >
               Add to Wishlist

@@ -1,14 +1,18 @@
-import React from "react";
-import logo from "../assets/logo-footer.webp";
+import React from 'react';
+import logo from '../assets/logo-footer.webp';
 function Footer() {
   return (
     <footer>
       <section className="infoContainer">
         <div className="detailsContainer logoContainer">
-          <img src={logo} alt="Logo" className="logoFooter" />
+          <img
+            src={logo}
+            alt="Logo"
+            className="logoFooter"
+          />
           <p>
-            Lorem Khaled Ipsum is a major key to success. To be successful
-            you’ve got to work hard you’ve got to make it.
+            Lorem Khaled Ipsum is a major key to success. To be successful you’ve got to work hard
+            you’ve got to make it.
           </p>
           <div className="socialLinkContainer">
             <i className="fa-brands fa-facebook-f"></i>
@@ -60,7 +64,7 @@ function Footer() {
       </section>
       <section className="copyright">
         <p>
-          {" "}
+          {' '}
           <span> © 2023 </span>- All rights reserved |
         </p>
         <p>

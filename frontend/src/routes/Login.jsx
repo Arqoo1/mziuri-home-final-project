@@ -1,19 +1,15 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import InputGroup from "../components/InputGroup";
-import RouteBanner from "../components/RouteBanner";
-import Checkbox from "../components/Checkbox";
-import { login } from "../api/usersapi";
-import {
-  validateEmail,
-  validatePassword,
-  validateCheckbox,
-} from "../utils/validations";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import InputGroup from '../components/InputGroup';
+import RouteBanner from '../components/RouteBanner';
+import Checkbox from '../components/Checkbox';
+import { login } from '../api/usersapi';
+import { validateEmail, validatePassword, validateCheckbox } from '../utils/validations';
 
 function Login() {
   const [formData, setFormData] = useState({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
     rememberMe: false,
   });
 
@@ -24,7 +20,7 @@ function Login() {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -43,44 +39,59 @@ function Login() {
     if (validateForm()) {
       try {
         await login(formData);
-        console.log("Login successful", formData);
-        navigate("/");
+        console.log('Login successful', formData);
+        navigate('/');
       } catch (error) {
-        console.error("Login error:", error);
+        console.error('Login error:', error);
       }
     }
   };
 
   return (
     <>
-      <RouteBanner page={"login"} />
+      <RouteBanner page={'login'} />
       <div className="login-container">
         <div>
           <h2>Login</h2>
           <p>Please login using account detail below.</p>
         </div>
-        <form onSubmit={handleSubmit} className="login-form">
-          <InputGroup label="Email" name="email" error={errors.email}>
+        <form
+          onSubmit={handleSubmit}
+          className="login-form"
+        >
+          <InputGroup
+            label="Email"
+            name="email"
+            error={errors.email}
+          >
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={errors.email ? "input error" : "input"}
+              className={errors.email ? 'input error' : 'input'}
             />
           </InputGroup>
 
-          <InputGroup label="Password" name="password" error={errors.password}>
+          <InputGroup
+            label="Password"
+            name="password"
+            error={errors.password}
+          >
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className={errors.password ? "input error" : "input"}
+              className={errors.password ? 'input error' : 'input'}
             />
           </InputGroup>
 
-          <InputGroup label="" name="rememberMe" error={errors.rememberMe}>
+          <InputGroup
+            label=""
+            name="rememberMe"
+            error={errors.rememberMe}
+          >
             <div className="checkbox-container">
               <label className="termsLabel">
                 <div>
@@ -97,7 +108,10 @@ function Login() {
             </div>
           </InputGroup>
 
-          <button type="submit" className="login-button">
+          <button
+            type="submit"
+            className="login-button"
+          >
             Login
           </button>
         </form>

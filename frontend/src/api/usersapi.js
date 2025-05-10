@@ -1,32 +1,29 @@
-import axios from "axios";
+import axios from 'axios';
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api/users",
+  baseURL: 'http://localhost:5000/api/users',
   withCredentials: true,
 });
 export const register = async (formData) => {
   try {
-    const { data } = await API.post("/register", formData);
+    const { data } = await API.post('/register', formData);
     return data;
   } catch (err) {
-    const errorMessage =
-      err.response?.data?.err || "Registration failed. Try again.";
+    const errorMessage = err.response?.data?.err || 'Registration failed. Try again.';
     throw new Error(errorMessage);
   }
 };
 export const login = async (formData) => {
   try {
-    // Transform the data to match backend expectations
     const requestData = {
-      usernameOrPassword: formData.email, // or formData.username if you have that field
+      usernameOrPassword: formData.email,
       password: formData.password,
     };
 
-    const { data } = await API.post("/login", requestData);
+    const { data } = await API.post('/login', requestData);
     return data;
   } catch (err) {
-    const errorMessage =
-      err.response?.data?.err || "Login failed. Please check your credentials.";
+    const errorMessage = err.response?.data?.err || 'Login failed. Please check your credentials.';
     throw new Error(errorMessage);
   }
 };

@@ -1,39 +1,38 @@
-import { createContext, useState, useContext, useEffect } from "react"
-import { useLocation } from "react-router-dom"
+import { createContext, useState, useContext } from 'react';
+const LoaderContext = createContext();
 
-const LoaderContext = createContext()
-
-export const useLoader = () => useContext(LoaderContext)
+export const useLoader = () => useContext(LoaderContext);
 
 export const LoaderProvider = ({ children }) => {
-  const [loading, setLoading] = useState(false)
-  const loadingDelay = 300
+  const [loading, setLoading] = useState(false);
+  const loadingDelay = 300;
 
   const useDataLoader = async (fetchReq) => {
-    setLoading(true)
+    setLoading(true);
 
-    const delayPromise = new Promise((resolve) => setTimeout(resolve, loadingDelay))
-    const dataPromise = fetchReq()
+    const delayPromise = new Promise((resolve) => setTimeout(resolve, loadingDelay));
+    const dataPromise = fetchReq();
 
-    const [data] = await Promise.all([dataPromise, delayPromise])
+    const [data] = await Promise.all([dataPromise, delayPromise]);
 
-    setLoading(false)
+    setLoading(false);
 
-    return data;  }
+    return data;
+  };
 
   // hook: useFakeLoader (for routes that simulate loading without fetch)
   const useFakeLoader = () => {
-    setLoading(true)
+    setLoading(true);
 
     const timer = setTimeout(() => {
-      setLoading(false)
-      clearTimeout(timer)
-    }, loadingDelay)
-  }
+      setLoading(false);
+      clearTimeout(timer);
+    }, loadingDelay);
+  };
 
   return (
     <LoaderContext.Provider value={{ loading, useDataLoader, useFakeLoader }}>
       {children}
     </LoaderContext.Provider>
-  )
-}
+  );
+};

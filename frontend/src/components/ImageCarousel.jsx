@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
-import imgslider1 from "../assets/imgslider1.webp";
-import imgslider2 from "../assets/imgslider2.webp";
-import imgslider3 from "../assets/imgslider3.webp";
-import imgslider4 from "../assets/imgslider4.webp";
-import imgslider5 from "../assets/imgslider5.webp";
+import React, { useState, useRef, useEffect } from 'react';
+import imgslider1 from '../assets/imgslider1.webp';
+import imgslider2 from '../assets/imgslider2.webp';
+import imgslider3 from '../assets/imgslider3.webp';
+import imgslider4 from '../assets/imgslider4.webp';
+import imgslider5 from '../assets/imgslider5.webp';
 
 const images = [
   imgslider1,
@@ -28,13 +28,21 @@ const ImageCarousel = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const carouselRef = useRef(null);
 
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev >= images.length - VISIBLE_COUNT ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev <= 0 ? images.length - VISIBLE_COUNT : prev - 1));
+  };
+
   const slideWidth = () => {
     if (!carouselRef.current) return 0;
     return carouselRef.current.offsetWidth * 0.25;
   };
 
   const handleDragStart = (e) => {
-    const x = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
+    const x = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
     setStartX(x);
     setIsDragging(true);
     setPrevTranslate(currentIndex * -slideWidth());
@@ -42,7 +50,7 @@ const ImageCarousel = () => {
 
   const handleDragMove = (e) => {
     if (!isDragging) return;
-    const x = e.type.includes("mouse") ? e.clientX : e.touches[0].clientX;
+    const x = e.type.includes('mouse') ? e.clientX : e.touches[0].clientX;
     const diff = x - startX;
     setCurrentTranslate(prevTranslate + diff);
   };
@@ -60,18 +68,6 @@ const ImageCarousel = () => {
     setCurrentTranslate(currentIndex * -slideWidth());
   }, [currentIndex]);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) =>
-      prev >= images.length - VISIBLE_COUNT ? 0 : prev + 1
-    );
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) =>
-      prev <= 0 ? images.length - VISIBLE_COUNT : prev - 1
-    );
-  };
-
   return (
     <div
       className="Imagecarousel"
@@ -88,13 +84,13 @@ const ImageCarousel = () => {
         className="carousel-track"
         style={{
           transform: `translateX(${currentTranslate}px)`,
-          transition: isDragging ? "none" : "transform 0.3s ease-in-out",
+          transition: isDragging ? 'none' : 'transform 0.3s ease-in-out',
         }}
       >
         {images.map((src, i) => (
           <div
             className={`carousel-slide ${
-              hoveredIndex !== null && hoveredIndex !== i ? "blurred" : ""
+              hoveredIndex !== null && hoveredIndex !== i ? 'blurred' : ''
             }`}
             key={i}
             onMouseEnter={() => setHoveredIndex(i)}
@@ -102,16 +98,26 @@ const ImageCarousel = () => {
             onTouchStart={() => setHoveredIndex(i)}
             onTouchEnd={() => setTimeout(() => setHoveredIndex(null), 500)}
           >
-            <img src={src} alt={`Slide ${i}`} draggable="false" />
+            <img
+              src={src}
+              alt={`Slide ${i}`}
+              draggable="false"
+            />
           </div>
         ))}
       </div>
 
-      <button className="carousel-btn prev" onClick={prevSlide}>
-        <i class="fa-solid fa-arrow-left"></i>{" "}
+      <button
+        className="carousel-btn prev"
+        onClick={prevSlide}
+      >
+        <i class="fa-solid fa-arrow-left"></i>{' '}
       </button>
-      <button className="carousel-btn next" onClick={nextSlide}>
-        <i class="fa-solid fa-arrow-right"></i>{" "}
+      <button
+        className="carousel-btn next"
+        onClick={nextSlide}
+      >
+        <i class="fa-solid fa-arrow-right"></i>{' '}
       </button>
     </div>
   );

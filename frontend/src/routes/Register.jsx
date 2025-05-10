@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { register } from "../api/usersapi";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { register } from '../api/usersapi';
 
-import InputGroup from "../components/InputGroup";
-import RouteBanner from "../components/RouteBanner";
-import Checkbox from "../components/Checkbox";
+import InputGroup from '../components/InputGroup';
+import RouteBanner from '../components/RouteBanner';
+import Checkbox from '../components/Checkbox';
 import {
   validateEmail,
   validatePassword,
   validateCheckbox,
   validateFullName,
-} from "../utils/validations";
+} from '../utils/validations';
 
 function Register() {
   const [formData, setFormData] = useState({
-    username: "",
-    email: "",
-    password: "",
+    username: '',
+    email: '',
+    password: '',
     rememberMe: false,
   });
 
@@ -27,7 +27,7 @@ function Register() {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: type === 'checkbox' ? checked : value,
     }));
   };
 
@@ -47,9 +47,9 @@ function Register() {
     if (validateForm()) {
       try {
         await register(formData);
-        navigate("/login");
+        navigate('/login');
       } catch (error) {
-        console.error("Registration error:", error.message);
+        console.error('Registration error:', error.message);
       }
     }
   };
@@ -62,38 +62,57 @@ function Register() {
           <h2>Register</h2>
           <p>Create your account to get started.</p>
         </div>
-        <form onSubmit={handleSubmit} className="register-form">
-          <InputGroup label="Username" name="username" error={errors.username}>
+        <form
+          onSubmit={handleSubmit}
+          className="register-form"
+        >
+          <InputGroup
+            label="Username"
+            name="username"
+            error={errors.username}
+          >
             <input
               type="text"
               name="username"
               value={formData.username}
               onChange={handleChange}
-              className={errors.username ? "input error" : "input"}
+              className={errors.username ? 'input error' : 'input'}
             />
           </InputGroup>
 
-          <InputGroup label="Email" name="email" error={errors.email}>
+          <InputGroup
+            label="Email"
+            name="email"
+            error={errors.email}
+          >
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className={errors.email ? "input error" : "input"}
+              className={errors.email ? 'input error' : 'input'}
             />
           </InputGroup>
 
-          <InputGroup label="Password" name="password" error={errors.password}>
+          <InputGroup
+            label="Password"
+            name="password"
+            error={errors.password}
+          >
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className={errors.password ? "input error" : "input"}
+              className={errors.password ? 'input error' : 'input'}
             />
           </InputGroup>
 
-          <InputGroup label="" name="rememberMe" error={errors.rememberMe}>
+          <InputGroup
+            label=""
+            name="rememberMe"
+            error={errors.rememberMe}
+          >
             <label className="termsRegister">
               <Checkbox
                 type="checkbox"
@@ -105,7 +124,10 @@ function Register() {
             </label>
           </InputGroup>
 
-          <button type="submit" className="register-button">
+          <button
+            type="submit"
+            className="register-button"
+          >
             Register
           </button>
         </form>

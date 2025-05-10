@@ -10,6 +10,6 @@ UsersRouter.post('/login', loginUser)
 // UsersRouter.get('/get-user', getUser)
 UsersRouter.post('/register', registerUser)
 // UsersRouter.put('/updateUser', auth, updateUser)
-// UsersRouter.get('/leaderboard', UsersLeaderBoard);
+
 
 export default UsersRouter

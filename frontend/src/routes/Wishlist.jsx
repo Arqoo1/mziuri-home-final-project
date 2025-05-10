@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 function Wishlist() {
-  return (
-    <div>
-      
-    </div>
-  )
+  return <div></div>;
 }
 
-export default Wishlist
+export default Wishlist;

@@ -1,11 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 function Main(props) {
-  return (
-    <main>
-      {props.children}
-    </main>
-  )
+  return <main>{props.children}</main>;
 }
 
-export default Main
+export default Main;

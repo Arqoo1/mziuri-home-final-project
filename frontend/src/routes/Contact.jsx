@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import RouteBanner from "../components/RouteBanner";
-import ContactUs from "../components/ContactUs";
-import InputGroup from "../components/InputGroup";
-import { validateFullName, validateEmail } from "../utils/validations";
+import React, { useState } from 'react';
+import RouteBanner from '../components/RouteBanner';
+import ContactUs from '../components/ContactUs';
+import InputGroup from '../components/InputGroup';
+import { validateFullName, validateEmail } from '../utils/validations';
 
 function Contact() {
   const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    type: "",
-    message: "",
+    name: '',
+    email: '',
+    type: '',
+    message: '',
   });
 
   const [errors, setErrors] = useState({});
@@ -28,8 +28,8 @@ function Contact() {
     const newErrors = {
       name: validateFullName(formData.name),
       email: validateEmail(formData.email),
-      type: formData.type ? null : "Type is required",
-      message: formData.message ? null : "Message is required",
+      type: formData.type ? null : 'Type is required',
+      message: formData.message ? null : 'Message is required',
     };
     setErrors(newErrors);
     return !Object.values(newErrors).some((error) => error);
@@ -40,10 +40,10 @@ function Contact() {
     if (validateForm()) {
       setIsSubmitting(true);
       setTimeout(() => {
-        console.log("Form submitted:", formData);
+        console.log('Form submitted:', formData);
         setIsSubmitting(false);
         setSubmitSuccess(true);
-        setFormData({ name: "", email: "", type: "", message: "" });
+        setFormData({ name: '', email: '', type: '', message: '' });
         setTimeout(() => setSubmitSuccess(false), 3000);
       }, 1500);
     }
@@ -62,7 +62,11 @@ function Contact() {
             </div>
           )}
           <form onSubmit={handleSubmit}>
-            <InputGroup label="Full Name" name="name" error={errors.name}>
+            <InputGroup
+              label="Full Name"
+              name="name"
+              error={errors.name}
+            >
               <input
                 type="text"
                 name="name"
@@ -73,7 +77,11 @@ function Contact() {
               />
             </InputGroup>
 
-            <InputGroup label="Email" name="email" error={errors.email}>
+            <InputGroup
+              label="Email"
+              name="email"
+              error={errors.email}
+            >
               <input
                 type="email"
                 name="email"
@@ -84,7 +92,11 @@ function Contact() {
               />
             </InputGroup>
 
-            <InputGroup label="subject" name="type" error={errors.type}>
+            <InputGroup
+              label="subject"
+              name="type"
+              error={errors.type}
+            >
               <input
                 type="text"
                 name="type"
@@ -95,7 +107,11 @@ function Contact() {
               />
             </InputGroup>
 
-            <InputGroup label="Message" name="message" error={errors.message}>
+            <InputGroup
+              label="Message"
+              name="message"
+              error={errors.message}
+            >
               <textarea
                 name="message"
                 value={formData.message}
@@ -110,7 +126,7 @@ function Contact() {
               className="submit-btn"
               disabled={isSubmitting}
             >
-              {isSubmitting ? "Sending..." : "Send Message"}
+              {isSubmitting ? 'Sending...' : 'Send Message'}
             </button>
           </form>
         </div>

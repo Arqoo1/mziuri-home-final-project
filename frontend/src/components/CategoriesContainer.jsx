@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { fetchProductData } from "../api/productapi";
-import categorybanner1 from "../assets/categorybanner1.webp";
-import categorybanner2 from "../assets/categorybanner2.webp";
-import categorybanner3 from "../assets/categorybanner3.webp";
-import categorybanner4 from "../assets/categorybanner4.webp";
-import categorybanner5 from "../assets/categorybanner5.webp";
+import React, { useEffect, useState } from 'react';
+import { fetchProductData } from '../api/productapi';
+import categorybanner1 from '../assets/categorybanner1.webp';
+import categorybanner2 from '../assets/categorybanner2.webp';
+import categorybanner3 from '../assets/categorybanner3.webp';
+import categorybanner4 from '../assets/categorybanner4.webp';
+import categorybanner5 from '../assets/categorybanner5.webp';
 
 function CategoriesContainer() {
   const [categories, setCategories] = useState([]);
@@ -50,8 +50,8 @@ function CategoriesContainer() {
             className="category-item1"
             style={{
               backgroundImage: `url(${categories[0].banner})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
             }}
           >
             <div className="category-content">
@@ -67,8 +67,8 @@ function CategoriesContainer() {
                 className={`category-item${index + 2}`}
                 style={{
                   backgroundImage: `url(${category.banner})`,
-                  backgroundSize: "cover",
-                  backgroundPosition: "center",
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
                 }}
               >
                 <div className="category-content">

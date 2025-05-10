@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 const TopFilter = ({ sort, setSort, isSelectOpen, setIsSelectOpen }) => {
   const handleSelectClick = () => {

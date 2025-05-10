@@ -1,13 +1,12 @@
-import React from 'react'
-import RouteBanner from '../components/RouteBanner'
+import React from 'react';
+import RouteBanner from '../components/RouteBanner';
 
 function Cart() {
   return (
     <div>
-            <RouteBanner page="CART" />
-
+      <RouteBanner page="CART" />
     </div>
-  )
+  );
 }
 
-export default Cart
+export default Cart;
