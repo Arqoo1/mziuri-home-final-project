@@ -6,6 +6,7 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import productRoutes from "./routes/productRoutes.js";
 import UsersRouter from "./routes/UsersRouter.js";
+import ReviewRouter from "./routes/ReviewRouter.js";
 import { rateLimit } from "express-rate-limit";
 import helmet from "helmet";
 import compression from "compression";
@@ -29,7 +30,7 @@ app.use(
     credentials: true,
   })
 );
-app.use(helmet())
+app.use(helmet());
 app.use(cookieParser()); //to access cookies in node.js
 app.use(compression());
 
@@ -44,5 +45,6 @@ mongoose
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", UsersRouter);
+app.use("/api/reviews", ReviewRouter);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

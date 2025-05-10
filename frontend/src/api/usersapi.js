@@ -16,7 +16,7 @@ export const register = async (formData) => {
 export const login = async (formData) => {
   try {
     const requestData = {
-      usernameOrPassword: formData.email,
+      usernameOrEmail: formData.email,
       password: formData.password,
     };
 

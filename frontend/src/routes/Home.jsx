@@ -4,6 +4,7 @@ import { useLoader } from '../hooks/useLoader';
 import Carousel from '../components/Carousel';
 import CategoriesContainer from '../components/CategoriesContainer';
 import ImageCarousel from '../components/ImageCarousel';
+import ClientReviewCarousel from '../components/ClientReviewCarousel';
 
 function Home() {
   const { useFakeLoader } = useLoader();
@@ -13,6 +14,7 @@ function Home() {
     <>
       <Carousel />
       <CategoriesContainer />
+      <ClientReviewCarousel />
       <ImageCarousel />
     </>
   );

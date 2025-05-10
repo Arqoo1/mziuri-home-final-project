@@ -53,14 +53,14 @@ export const registerUser = async (req, res) => {
 
 export const loginUser = async (req, res) => {
   try {
-    const { usernameOrPassword, password } = req.body;
-    const isEmail = usernameOrPassword.includes("@");
+    const { usernameOrEmail, password } = req.body;
+    const isEmail = usernameOrEmail.includes("@");
 
     let user;
     if (isEmail) {
-      user = await Users.findOne({ email: usernameOrPassword });
+      user = await Users.findOne({ email: usernameOrEmail });
     } else {
-      user = await Users.findOne({ username: usernameOrPassword });
+      user = await Users.findOne({ username: usernameOrEmail });
     }
 
     if (!user) {
