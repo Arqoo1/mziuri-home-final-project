@@ -4,7 +4,7 @@ import RouteBanner from '../components/RouteBanner';
 function Cart() {
   return (
     <div>
-      <RouteBanner page="CART" />
+      <RouteBanner page="Cart" />
     </div>
   );
 }

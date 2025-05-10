@@ -1,4 +1,4 @@
-@use "../abstracts/index.scss" as *;
+@use '../abstracts/index.scss' as *;
 
 .our-contactinfo {
   width: 100%;
@@ -7,6 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+
   & > div {
     width: 30%;
     height: 100%;
@@ -16,20 +17,24 @@
     flex-direction: column;
     gap: 10px;
     border: 2px solid $border-color-2;
+
     &:hover {
       i {
         background-color: $primary-color;
         color: $white-color;
       }
     }
-    & > h5 {
+
+    h5 {
       font-size: 25px;
       margin: 20px 0px;
     }
-    & > p {
+
+    p {
       font-size: 1.2rem;
       text-align: center;
     }
+
     i {
       font-size: 30px;
       color: $primary-color;
@@ -48,34 +53,58 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
 
-.form-container {
-  padding: 40px 40px;
+  .form-container {
+    padding: 40px 40px;
+    background: #fff;
+    border-radius: 8px;
+    width: 100%;
 
-  background: #fff;
-  border-radius: 8px;
-  width: 100%;
-}
+    h2 {
+      margin-bottom: 30px;
+      font-weight: 600;
+    }
 
-.form-container h2 {
-  text-align: center;
-  margin-bottom: 2rem;
-  color: #333;
-}
+    .contactform {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
 
-.inputGroup {
-  margin-bottom: 1.5rem;
-  input {
-    border: none !important;
+      .half-inputs {
+        display: flex;
+        gap: 20px;
+
+        > div {
+          flex: 1;
+        }
+      }
+    }
   }
 }
-.inputBox input:focus,
-.inputBox select:focus,
-.inputBox textarea:focus {
-  border-color: #798ea7;
-  outline: none;
-  resize: vertical;
+
+.inputBox {
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 10px;
+    background-color: $bg-color;
+    border-radius: 4px;
+    border: none;
+    font-size: 1rem;
+    transition: border-color 0.3s;
+
+    &.error-border {
+      border-color: #8b1c0f;
+    }
+
+    &:focus {
+      border-color: #798ea7;
+      outline: none;
+      resize: vertical;
+    }
+  }
 }
 
 .label {
@@ -85,28 +114,10 @@
   color: #444;
 }
 
-.inputBox input,
-.inputBox select,
-.inputBox textarea {
-  width: 100%;
-  padding: 0.75rem;
-  background-color: $bg-color;
-  border-radius: 4px;
-  border: none;
-  font-size: 1rem;
-  transition: border-color 0.3s;
-}
-
 .error {
   color: #e74c3c;
   margin-top: 0.25rem;
   display: block;
-}
-
-.inputBox input.error-border,
-.inputBox select.error-border,
-.inputBox textarea.error-border {
-  border-color: #8b1c0f;
 }
 
 .submit-btn {

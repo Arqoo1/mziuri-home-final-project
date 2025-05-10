@@ -1,0 +1,36 @@
+@use '../abstracts/index.scss' as *;
+
+.our-history {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  gap: 30px;
+  text-align: center;
+  padding: 100px 250px;
+  background-color: $bg-color;
+
+  span {
+    color: $primary-color;
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    font-family: $different-font-style-2;
+  }
+  h2{
+    font-size: 80px;
+    font-family: $different-font-style;
+    font-weight: 600;
+  }
+  p{
+    font-size: 20px;
+    line-height: 40px;
+  }
+  .history-text{
+    font-size: 22px;
+    color: $black-color;
+    line-height: 40px;
+
+  }
+}

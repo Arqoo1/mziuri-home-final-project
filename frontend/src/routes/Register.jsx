@@ -56,7 +56,7 @@ function Register() {
 
   return (
     <>
-      <RouteBanner page="register" />
+      <RouteBanner page="Register" />
       <div className="register-container">
         <div>
           <h2>Register</h2>

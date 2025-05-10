@@ -5,7 +5,7 @@ import ProductList from '../components/ProductList';
 function Shop() {
   return (
     <>
-      <RouteBanner page="SHOP" />
+      <RouteBanner page="Shop" />
       <ProductList />
     </>
   );

@@ -41,7 +41,7 @@ function SinglePage() {
   const stars = useStars(product.rating);
   return (
     <main className="single-product-page">
-      <RouteBanner page="SINGLEPAGE" />
+      <RouteBanner page="Single Page" />
 
       <section className="product-wrapper">
         <img

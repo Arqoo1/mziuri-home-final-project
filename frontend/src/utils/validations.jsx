@@ -41,3 +41,11 @@ export const validateCheckbox = (value) => {
     return 'You must accept terms and conditions';
   }
 };
+export const validateMessage = (value) => {
+  if (!value || value.trim() === '') {
+    return 'Message is required';
+  } else if (value.length < 10) {
+    return 'Message must be at least 10 characters';
+  }
+  return null;
+};

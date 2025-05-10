@@ -1,0 +1,54 @@
+@use '../abstracts/index.scss' as *;
+
+.OurTeam {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 100vh;
+  justify-content: center;
+  gap: 40px;
+  padding: 40px 40px;
+  & > span {
+    color: $primary-color;
+    font-size: 22px;
+    font-weight: 600;
+    font-family: $different-font-style-2;
+    letter-spacing: 3px;
+  }
+  & > h2 {
+    font-size: 40px;
+  }
+  .team-title {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  .team-members {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .member {
+      width: 30%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      img {
+        width: 100%;
+        height: 100%;
+      }
+      .memberInfo {
+        width: 100%;
+        padding: 10px;
+        text-align: center;
+        h3 {
+          color: #333;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+}

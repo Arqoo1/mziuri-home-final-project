@@ -49,7 +49,7 @@ function Login() {
 
   return (
     <>
-      <RouteBanner page={'login'} />
+      <RouteBanner page="Login" />
       <div className="login-container">
         <div>
           <h2>Login</h2>

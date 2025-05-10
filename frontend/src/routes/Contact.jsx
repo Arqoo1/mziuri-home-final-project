@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import RouteBanner from '../components/RouteBanner';
 import ContactUs from '../components/ContactUs';
 import InputGroup from '../components/InputGroup';
-import { validateFullName, validateEmail } from '../utils/validations';
+import { validateFullName, validateEmail, validateMessage } from '../utils/validations';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -29,7 +29,7 @@ function Contact() {
       name: validateFullName(formData.name),
       email: validateEmail(formData.email),
       type: formData.type ? null : 'Type is required',
-      message: formData.message ? null : 'Message is required',
+      message: validateMessage(formData.message),
     };
     setErrors(newErrors);
     return !Object.values(newErrors).some((error) => error);
@@ -51,46 +51,51 @@ function Contact() {
 
   return (
     <>
-      <RouteBanner page="CONTACT" />
+      <RouteBanner page="Contact" />
       <ContactUs />
       <section className="contact-form">
         <div className="form-container">
-          <h2>Send Us a Message</h2>
+          <h2>GET IN TOUCH</h2>
           {submitSuccess && (
             <div className="success-message">
               Thank you! Your message has been sent successfully.
             </div>
           )}
-          <form onSubmit={handleSubmit}>
-            <InputGroup
-              label="Full Name"
-              name="name"
-              error={errors.name}
-            >
-              <input
-                type="text"
+          <form
+            className="contactform"
+            onSubmit={handleSubmit}
+          >
+            <div className="half-inputs">
+              <InputGroup
+                label="Full Name"
                 name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="John Doe"
-                className="full-name"
-              />
-            </InputGroup>
+                error={errors.name}
+              >
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  placeholder="John Doe"
+                  className="full-name"
+                />
+              </InputGroup>
 
-            <InputGroup
-              label="Email"
-              name="email"
-              error={errors.email}
-            >
-              <input
-                type="email"
+              <InputGroup
+                label="Email"
                 name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="your@email.com"
-                className="email"
-              />
-            </InputGroup>
+                error={errors.email}
+              >
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="your@email.com"
+                  className="email"
+                />
+              </InputGroup>
+            </div>
 
             <InputGroup
               label="subject"
