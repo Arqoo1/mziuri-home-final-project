@@ -121,7 +121,6 @@
   align-items: center;
   justify-content: center;
   transition: transform 0.3s ease;
-  position: absolute;
 
   &.left {
     transform: translateX(-100%);
@@ -186,8 +185,6 @@
   flex: 0 0 100%;
   min-width: 100%;
   padding: 2rem;
-  transition: opacity 0.3s ease;
-  opacity: 0.3;
 }
 
 .review-card.active {

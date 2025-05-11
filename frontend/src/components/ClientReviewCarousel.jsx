@@ -1,12 +1,11 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { fetchReviews } from '../api/reviewapi';
 import useReviewCarousel from '../hooks/useCarouselDrag';
 
 function ClientReviewCarousel() {
   const [reviews, setReviews] = useState([]);
-  const containerRef = useRef(null);
+
   const {
-    currentIndex,
     isDragging,
     currentTranslate,
     onDragStart,
@@ -14,9 +13,9 @@ function ClientReviewCarousel() {
     onDragEnd,
     next,
     prev,
-  } = useReviewCarousel(reviews.length);
+    containerRef,
+  } = useReviewCarousel(reviews.length, '.review-card', 1);
 
-  // Keep your data fetching logic
   useEffect(() => {
     const getReviews = async () => {
       try {
@@ -29,26 +28,6 @@ function ClientReviewCarousel() {
     getReviews();
   }, []);
 
-  // Calculate adjacent slides
-  const getVisibleSlides = () => {
-    const slides = [];
-    const totalSlides = reviews.length;
-
-    if (totalSlides === 0) return slides;
-
-    // Previous slide
-    const prevIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-    slides.push({ ...reviews[prevIndex], position: 'left' });
-
-    // Current slide
-    slides.push({ ...reviews[currentIndex], position: 'center' });
-
-    // Next slide
-    const nextIndex = (currentIndex + 1) % totalSlides;
-    slides.push({ ...reviews[nextIndex], position: 'right' });
-
-    return slides;
-  };
   if (reviews.length === 0) {
     return <div className="client-review-carousel loading">Loading reviews...</div>;
   }
@@ -67,21 +46,17 @@ function ClientReviewCarousel() {
         onTouchEnd={onDragEnd}
         style={{
           transform: `translateX(${currentTranslate}px)`,
-          transition: isDragging ? 'none' : 'transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+          transition: isDragging ? 'none' : 'transform 0.3s ease-in-out',
           cursor: isDragging ? 'grabbing' : 'grab',
         }}
       >
-        {getVisibleSlides().map((slide, index) => (
+        {reviews.map((slide, index) => (
           <div
             key={`${slide.id}-${index}`}
-            className={`review-card ${slide.position}`}
+            className={`review-card`}
           >
-            {slide.position === 'center' && (
-              <>
-                <span>We Love Our Clients</span>
-                <h2>What They're Saying</h2>
-              </>
-            )}
+            <span>We Love Our Clients</span>
+            <h2>What They're Saying</h2>
             <img
               src={slide.image}
               alt="Client review"
