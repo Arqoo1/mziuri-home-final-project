@@ -13,6 +13,7 @@
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   width: 30%;
+  user-select: none;
 
   &:hover {
     transform: translateY(-2px);

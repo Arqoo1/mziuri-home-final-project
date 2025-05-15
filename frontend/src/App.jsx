@@ -23,6 +23,8 @@ import {
   Compare,
   Blog,
   NotFound,
+  ForgotPassword,
+  ResetPassword,
 } from './routes';
 
 function App() {
@@ -83,6 +85,14 @@ function App() {
           <Route
             path="/blog"
             element={<Blog />}
+          />
+          <Route
+            path="/forgot-password"
+            element={<ForgotPassword />}
+          />
+          <Route
+            path="/reset-password/:token"
+            element={<ResetPassword />}
           />
           <Route
             path="*"

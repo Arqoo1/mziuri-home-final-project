@@ -27,3 +27,16 @@ export const login = async (formData) => {
     throw new Error(errorMessage);
   }
 };
+
+export const forgotPasswordUser = (data) => {
+  return axios.put(`http://localhost:5000/api/users/forgot-password`, data, {
+    withCredentials: true,
+  });
+};
+
+export const resetPasswordUser = (data, token) => {
+  return axios.put(`http://localhost:5000/api/users/reset-password`, data, {
+    headers: { Authorization: token },
+    withCredentials: true,
+  });
+};

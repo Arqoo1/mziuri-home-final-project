@@ -3,18 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import useStars from '../hooks/useStars';
 
 function Product({ product }) {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { _id, title, price, salePrice, rating, image } = product;
   const stars = useStars(rating);
 
-  const handleClick = () => {
-    navigate(`/shop/${_id}`);
-  };
+  // const handleClick = () => {
+  //   navigate(`/shop/${_id}`);
+  // };
 
   return (
     <div
       className="product-card"
-      onClick={handleClick}
+      // onClick={handleClick}
     >
       <img
         src={image}

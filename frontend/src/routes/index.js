@@ -12,3 +12,6 @@ export { default as Wishlist } from './Wishlist';
 export { default as Checkout } from './Checkout';
 export { default as Compare } from './Compare';
 export { default as Blog } from './Blog';
+export { default as ForgotPassword } from './ForgotPassword';
+
+export { default as ResetPassword } from './ResetPassword';
