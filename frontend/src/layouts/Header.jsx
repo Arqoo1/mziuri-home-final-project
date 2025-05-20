@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.webp';
+import { useTranslation } from 'react-i18next';
 
 function Header() {
   const [showSearch, setShowSearch] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+    localStorage.setItem('lang', lng);
+  };
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -23,12 +30,21 @@ function Header() {
           alt="Logo"
         />
         <nav>
-          <Link to="/">Home</Link>
+          <Link to="/">{t('home')}</Link>
           <Link to="/shop">Shop</Link>
           <Link to="/about">About</Link>
           <Link to="/contact">Contact</Link>
         </nav>
 
+        <select
+          onChange={(e) => changeLanguage(e.target.value)}
+          name=""
+          id=""
+          value={i18n.language}
+        >
+          <option value="en">English</option>
+          <option value="ka">Georgia</option>
+        </select>
         <div className="icons">
           <i
             className="fa fa-search"

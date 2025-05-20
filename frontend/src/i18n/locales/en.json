@@ -1,0 +1,11 @@
+{
+  "CounterProject": "Counter Project",
+  "Count": "Count",
+  "ChangeCountVariable": "Change Count Variable",
+  "Multiplier": "Multiplier",
+  "ChangeMultiplierVariable": "Change Multiplier Variable",
+  "MultipliedAmount": "Multiplied Amount",
+  "ChangeLanguage": "Change Language",
+  "GameIsActiveTillX": "Game is active till {{gamePoint}} points",
+  "home": "home"
+}

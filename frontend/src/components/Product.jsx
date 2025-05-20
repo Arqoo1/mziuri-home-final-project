@@ -1,27 +1,30 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import useStars from '../hooks/useStars';
+import Rating from '../components/Rating';
+import { useTranslation } from 'react-i18next';
 
 function Product({ product }) {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const { _id, title, price, salePrice, rating, image } = product;
-  const stars = useStars(rating);
+  const stars = Rating(rating);
 
-  // const handleClick = () => {
-  //   navigate(`/shop/${_id}`);
-  // };
+    const { t, i18n } = useTranslation();
+  
+  const handleClick = () => {
+    navigate(`/shop/${_id}`);
+  };
 
   return (
     <div
       className="product-card"
-      // onClick={handleClick}
+      onClick={handleClick}
     >
       <img
         src={image}
-        alt={title}
+        alt={typeof title === 'object' ? title[i18n.language] : title}
         className="product-img"
       />
-      <h3>{title}</h3>
+      <h3>{typeof title === 'object' ? title[i18n.language] : title}</h3>
       {salePrice ? (
         <p className="product-price">
           <span className="sale-price">${salePrice}</span>

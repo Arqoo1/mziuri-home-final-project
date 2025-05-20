@@ -1,0 +1,11 @@
+{
+  "CounterProject": "ქაუნთერ პროექტი",
+  "Count": "ცვლადი",
+  "ChangeCountVariable": "შეცვალე ცვლადის მნიშვნელობა",
+  "Multiplier": "მამრავლი",
+  "ChangeMultiplierVariable": "შეცვალე მამრავლის მნიშვნელობა",
+  "MultipliedAmount": "ნამრავლი",
+  "ChangeLanguage": "შეცვალე ენა",
+  "GameIsActiveTillX": "თამაში მიმდინარეობს {{gamePoint}} ქულამდე",
+  "home": "მთავარი"
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function useStars(rating) {
+function Rating(rating) {
   const roundedRating = Math.round(rating);
   const stars = [];
 
@@ -16,4 +16,4 @@ function useStars(rating) {
   return stars;
 }
 
-export default useStars;
+export default Rating;

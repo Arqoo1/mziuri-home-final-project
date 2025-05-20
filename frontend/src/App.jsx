@@ -1,13 +1,13 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
 import './styles/styles.scss';
 import Header from './layouts/Header';
 import Main from './layouts/Main';
 import Footer from './layouts/Footer';
-import { TitleUpdater } from './utils/setTitle';
-import ScrollToTop from './components/ScrollToTop';
-// import useScrollTop from './hooks/useScrollTop'; // Import your custom hook
+import useDocumentTitle from './hooks/useDocumentTitle';
+import useScrollTop from './hooks/useScrollTop';
+
 import {
   Home,
   Shop,
@@ -28,11 +28,12 @@ import {
 } from './routes';
 
 function App() {
+  useDocumentTitle();
+useScrollTop()
   return (
-    <Router>
+    <div className="app">
       <Header />
       <Main>
-        <TitleUpdater />
         <Routes>
           <Route
             path="/"
@@ -101,8 +102,7 @@ function App() {
         </Routes>
       </Main>
       <Footer />
-      <ScrollToTop />
-    </Router>
+    </div>
   );
 }
 

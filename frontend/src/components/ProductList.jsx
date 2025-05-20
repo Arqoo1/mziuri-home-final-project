@@ -49,7 +49,7 @@ function ProductList() {
 
   const filteredProducts = products.filter(
     ({ title, price, tags, category }) =>
-      title.toLowerCase().includes(titleFilter.toLowerCase()) &&
+      // title.toLowerCase().includes(titleFilter.toLowerCase()) &&
       price >= priceRange[0] &&
       price <= priceRange[1] &&
       (selectedTags.length === 0 || selectedTags.some((tag) => tags.includes(tag))) &&

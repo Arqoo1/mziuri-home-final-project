@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLoader } from '../hooks/useLoader';
-
 import { useParams } from 'react-router-dom';
 import { fetchSingleProduct } from '../api/productapi';
-import useStars from '../hooks/useStars';
+import Rating from '../components/Rating';
 import RouteBanner from '../components/RouteBanner';
 
 function SinglePage() {
@@ -38,7 +37,7 @@ function SinglePage() {
   if (error) return <p>Error: {error}</p>;
   if (!product) return <p>Product not found</p>;
 
-  const stars = useStars(product.rating);
+  const stars = Rating(product.rating);
   return (
     <main className="single-product-page">
       <RouteBanner page="Single Page" />
@@ -53,7 +52,7 @@ function SinglePage() {
           {product.salePrice ? (
             <p className="product-price">
               <span className="sale-price">${product.salePrice}</span>
-              <span className="original-price">${product.price}</span>{' '}
+              <span className="original-price">${product.price}</span>
             </p>
           ) : (
             <p className="product-price">${product.price}</p>
