@@ -14,7 +14,7 @@ i18n.use(initReactI18next).init({
       translation: ka,
     },
   },
-  lng: storedLang, 
+  lng: storedLang,
   fallbackLng: 'en', //default language
   interpolation: {
     escapeValue: false,

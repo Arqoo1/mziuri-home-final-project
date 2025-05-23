@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import Users from "../models/users.js";
 import bcrypt from "bcrypt";
-import mailSender from '../utils/mailSender.js'
+import mailSender from "../utils/mailSender.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -27,26 +27,20 @@ export const registerUser = async (req, res) => {
       11
     );
 
-    const newUser = new Users({
+    const newUser = await Users.create({
       username,
       email,
       password: hashedPassword,
     });
 
-    await newUser.save();
-
-    // Users.create()
-
-    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET_KEY, {
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
 
-    res.status(201).json({ data: newUser });
+    res.status(201).json({
+      data: newUser,
+      token,
+    });
   } catch (err) {
     res.status(500).json({ err: err.message });
   }
@@ -72,21 +66,20 @@ export const loginUser = async (req, res) => {
       password + process.env.BCRYPT_PEPPER,
       user.password
     );
+    console.log("Password valid?", isPasswordValid);
 
     if (!isPasswordValid) {
-      return res.json({ err: "Invalid username or password" });
+      return res.status(401).json({ err: "Invalid username or password" });
     }
 
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET_KEY, {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "1d",
     });
-    res.cookie("token", token, {
-      httpOnly: true,
-      secure: false,
-      maxAge: 24 * 60 * 60 * 1000,
-    });
 
-    res.status(200).json({ data: user });
+    res.status(200).json({
+      data: user,
+      token,
+    });
   } catch (err) {
     res.status(500).json({ err: err.message });
   }
@@ -106,7 +99,7 @@ export const getToken = (req, res) => {
     const token = req.cookies.token;
     if (!token) return res.json({ err: "Please login now!" });
 
-    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
       if (err) return res.status(400).json({ msg: "Please login now!" });
       res.json({ token });
     });
@@ -119,7 +112,7 @@ export const getUser = async (req, res) => {
   try {
     const token = req.header("Authorization");
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.id;
 
     const userData = await Users.findById(userId).select("-password");
@@ -129,48 +122,55 @@ export const getUser = async (req, res) => {
   }
 };
 
-
 export const forgotPasswordUser = async (req, res) => {
-    try {
-        const { email } = req.body;
+  try {
+    const { email } = req.body;
 
-        let user = await Users.findOne({ email: email });
-        if(!user) {
-            return res.status(400).json({msg: "Email is incorrect!"})
-        }
-
-        const access_token = jwt.sign({ id: user._id }, process.env.JWT_RESET_PASS_SECRET_KEY, { expiresIn: '15m' });
-        const url = `http://localhost:5173/reset-password/${access_token}`  
-
-        await mailSender(process.env.MAIL_SENDER_EMAIL, email, url)
-
-        res.status(200).json({msg: "Check your email for further instructions"})
-    } catch (err) {
-        return res.status(500).json({msg: err.message})
+    let user = await Users.findOne({ email: email });
+    if (!user) {
+      return res.status(400).json({ msg: "Email is incorrect!" });
     }
 
-}
+    const access_token = jwt.sign(
+      { id: user._id },
+      process.env.JWT_RESET_PASS_SECRET_KEY,
+      { expiresIn: "15m" }
+    );
+    const url = `http://localhost:5173/reset-password/${access_token}`;
+
+    await mailSender(process.env.MAIL_SENDER_EMAIL, email, url);
+
+    res.status(200).json({ msg: "Check your email for further instructions" });
+  } catch (err) {
+    return res.status(500).json({ msg: err.message });
+  }
+};
 
 export const resetPasswordUser = async (req, res) => {
-    try {
-        const {password, confirm_password} = req.body;
-        const token = req.header('Authorization');
+  try {
+    const { password, confirm_password } = req.body;
+    const token = req.header("Authorization");
 
-        const decoded = jwt.verify(token, process.env.JWT_RESET_PASS_SECRET_KEY);
-        const userId = decoded.id;
+    const decoded = jwt.verify(token, process.env.JWT_RESET_PASS_SECRET_KEY);
+    const userId = decoded.id;
 
-        const hashedPassword = await bcrypt.hash(password + process.env.BCRYPT_PEPPER, 11)
+    const hashedPassword = await bcrypt.hash(
+      password + process.env.BCRYPT_PEPPER,
+      11
+    );
 
-        await Users.findOneAndUpdate({_id: userId}, {
-            password: hashedPassword
-        })
+    await Users.findOneAndUpdate(
+      { _id: userId },
+      {
+        password: hashedPassword,
+      }
+    );
 
-        console.log(decoded)
+    console.log(decoded);
 
-        res.status(200).json({msg: "Password successfully changed!"})
-    } catch (err) {
-        console.log(err)
-        return res.status(500).json({msg: err.message})
-    }
-
-}
+    res.status(200).json({ msg: "Password successfully changed!" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: err.message });
+  }
+};

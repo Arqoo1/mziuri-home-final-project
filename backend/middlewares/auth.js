@@ -1,16 +1,21 @@
 import jwt from "jsonwebtoken";
 
-export const auth = (req, res, next) => {
-  const token = req.cookies.token;
+export const authMiddleware = (req, res, next) => {
+  const authHeader = req.headers.authorization; // ← this line was missing before
+  console.log("AUTH HEADER:", authHeader);
 
+  const token = authHeader?.split(" ")[1];
   if (!token) {
-    return res.json({ err: "user not logged in" });
+    return res.status(401).json({ message: "No token provided" });
   }
 
   try {
-    jwt.verify(token, process.env.JWT_SECRET_KEY);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log("TOKEN VERIFIED:", decoded);
+    req.user = decoded;
     next();
   } catch (err) {
-    res.json({ err: "invalid token" });
+    console.error("JWT VERIFY FAILED:", err.message);
+    return res.status(403).json({ message: "Invalid token" });
   }
 };

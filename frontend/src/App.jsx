@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
 
 import './styles/styles.scss';
 import Header from './layouts/Header';
@@ -28,8 +28,35 @@ import {
 } from './routes';
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(Boolean(localStorage.getItem('token')));
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      localStorage.removeItem('guestCart');
+    }
+  }, [isAuthenticated]);
+  useEffect(() => {
+    const checkAuth = () => {
+      const authStatus = Boolean(localStorage.getItem('token'));
+      setIsAuthenticated(authStatus);
+      if (authStatus) {
+        localStorage.removeItem('guestCart');
+      }
+    };
+
+    window.addEventListener('storage', checkAuth);
+    return () => window.removeEventListener('storage', checkAuth);
+  }, []);
+
+  //   if (
+  //   !isAuthenticated &&
+  //   !["/login", "/register"].includes(location.pathname)
+  // ) {
+  //   return <Navigate to="/login" replace />;
+  // }
+
   useDocumentTitle();
-useScrollTop()
+  useScrollTop();
   return (
     <div className="app">
       <Header />
@@ -45,7 +72,7 @@ useScrollTop()
           />
           <Route
             path="/shop/:id"
-            element={<SinglePage />}
+            element={<SinglePage isAuthenticated={isAuthenticated} />}
           />
           <Route
             path="/about"
@@ -57,11 +84,29 @@ useScrollTop()
           />
           <Route
             path="/login"
-            element={<Login />}
+            element={
+              isAuthenticated ? (
+                <Navigate
+                  to="/"
+                  replace
+                />
+              ) : (
+                <Login setIsAuthenticated={setIsAuthenticated} />
+              )
+            }
           />
           <Route
             path="/register"
-            element={<Register />}
+            element={
+              isAuthenticated ? (
+                <Navigate
+                  to="/"
+                  replace
+                />
+              ) : (
+                <Register />
+              )
+            }
           />
           <Route
             path="/profile"

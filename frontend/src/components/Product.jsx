@@ -8,8 +8,8 @@ function Product({ product }) {
   const { _id, title, price, salePrice, rating, image } = product;
   const stars = Rating(rating);
 
-    const { t, i18n } = useTranslation();
-  
+  const { i18n } = useTranslation();
+
   const handleClick = () => {
     navigate(`/shop/${_id}`);
   };

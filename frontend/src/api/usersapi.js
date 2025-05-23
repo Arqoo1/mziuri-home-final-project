@@ -13,10 +13,11 @@ export const register = async (formData) => {
     throw new Error(errorMessage);
   }
 };
+
 export const login = async (formData) => {
   try {
     const requestData = {
-      usernameOrEmail: formData.email,
+      usernameOrEmail: formData.usernameOrEmail,
       password: formData.password,
     };
 

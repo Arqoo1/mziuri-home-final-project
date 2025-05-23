@@ -26,23 +26,23 @@ export default function useReviewCarousel(
   useEffect(() => {
     if (!containerRef.current || length <= 1) return;
 
-const updateSlideWidth = () => {
-  if (!containerRef.current) return;
+    const updateSlideWidth = () => {
+      if (!containerRef.current) return;
 
-  const containerWidth = containerRef.current.offsetWidth;
-  let width = 0;
+      const containerWidth = containerRef.current.offsetWidth;
+      let width = 0;
 
-  if (visibleCount > 1) {
-    width = containerWidth / visibleCount;
-  } else {
-    const slide = containerRef.current.querySelector(slideSelector);
-    if (!slide) return; 
-    width = slide.offsetWidth;
-  }
+      if (visibleCount > 1) {
+        width = containerWidth / visibleCount;
+      } else {
+        const slide = containerRef.current.querySelector(slideSelector);
+        if (!slide) return;
+        width = slide.offsetWidth;
+      }
 
-  setSlideWidth(width);
-  setCurrentTranslate(-currentIndex * width);
-};
+      setSlideWidth(width);
+      setCurrentTranslate(-currentIndex * width);
+    };
 
     updateSlideWidth();
     const ro = new ResizeObserver(updateSlideWidth);

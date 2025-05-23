@@ -2,16 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { useLoader } from '../hooks/useLoader';
 import { useParams } from 'react-router-dom';
 import { fetchSingleProduct } from '../api/productapi';
+import { addToCart } from '../api/cartapi';
 import Rating from '../components/Rating';
 import RouteBanner from '../components/RouteBanner';
+import { useTranslation } from 'react-i18next';
 
-function SinglePage() {
+function SinglePage({ isAuthenticated }) {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { useDataLoader } = useLoader();
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     const getProduct = async () => {
@@ -28,16 +31,50 @@ function SinglePage() {
     };
 
     if (id) {
-      // (fetch if prodct have id )
       getProduct();
     }
   }, [id]);
+
+  const handleAddToCart = async () => {
+    const cartItem = {
+      title: product.title,
+      price: product.salePrice || product.price,
+      quantity,
+      image: product.image,
+    };
+
+    try {
+      if (isAuthenticated) {
+        await addToCart(cartItem); // backend
+      } else {
+        // localStorage logic
+        const localCart = JSON.parse(localStorage.getItem('guestCart')) || [];
+        const existingIndex = localCart.findIndex((item) => item.title === cartItem.title);
+        if (existingIndex !== -1) {
+          localCart[existingIndex].quantity += cartItem.quantity;
+        } else {
+          localCart.push(cartItem);
+        }
+        localStorage.setItem('guestCart', JSON.stringify(localCart));
+      }
+
+      alert('Added to cart!');
+    } catch (error) {
+      alert(`Failed to add to cart: ${error.message}`);
+    }
+  };
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   if (!product) return <p>Product not found</p>;
 
   const stars = Rating(product.rating);
+  const localizedTitle =
+    typeof product.title === 'object' ? product.title[i18n.language] : product.title;
+  const localizedDescription =
+    typeof product.description === 'object'
+      ? product.description[i18n.language]
+      : product.description;
   return (
     <main className="single-product-page">
       <RouteBanner page="Single Page" />
@@ -45,10 +82,10 @@ function SinglePage() {
       <section className="product-wrapper">
         <img
           src={product.image}
-          alt={product.title}
+          alt={localizedTitle}
         />
         <div className="product-details">
-          <h2>{product.title}</h2>
+          <h2>{localizedTitle}</h2>
           {product.salePrice ? (
             <p className="product-price">
               <span className="sale-price">${product.salePrice}</span>
@@ -58,7 +95,7 @@ function SinglePage() {
             <p className="product-price">${product.price}</p>
           )}
           <div className="rating">{stars}</div>
-          <p className="descp">{product.description}</p>
+          <p className="descp">{localizedDescription}</p>
           <div className="add-to-cart">
             <div className="amount-chooser">
               <input
@@ -70,7 +107,7 @@ function SinglePage() {
               />
             </div>
             <button
-              onClick={() => console.log('Add to Cart')}
+              onClick={handleAddToCart}
               className="add-to-cart-btn"
             >
               Add to Cart

@@ -15,6 +15,7 @@ function Login() {
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -36,13 +37,30 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (validateForm()) {
       try {
-        await login(formData);
-        console.log('Login successful', formData);
-        navigate('/');
+        const response = await login({
+          usernameOrEmail: formData.email,
+          password: formData.password,
+        });
+
+        if (response.token) {
+          if (formData.rememberMe) {
+            localStorage.setItem('token', response.token);
+            localStorage.setItem('username', response.data.username);
+          } else {
+            sessionStorage.setItem('token', response.token);
+            sessionStorage.setItem('username', response.data.username);
+          }
+
+          setIsAuthenticated(true);
+          navigate('/');
+        } else {
+          alert('Token not found in response.');
+        }
       } catch (error) {
-        console.error('Login error:', error);
+        alert(error.message || 'Login failed');
       }
     }
   };

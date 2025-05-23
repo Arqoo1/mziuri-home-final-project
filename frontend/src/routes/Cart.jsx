@@ -1,11 +1,14 @@
 import React from 'react';
 import RouteBanner from '../components/RouteBanner';
-
+import CartTable from '../components/CartTable';
 function Cart() {
   return (
-    <div>
+    <>
       <RouteBanner page="Cart" />
-    </div>
+      <section className="ProductTable">
+        <CartTable />
+      </section>
+    </>
   );
 }
 
