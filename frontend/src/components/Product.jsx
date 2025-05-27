@@ -17,13 +17,18 @@ function Product({ product }) {
   return (
     <div
       className="product-card"
-      onClick={handleClick}
+      // onClick={handleClick}
     >
+      <div className="icon-wrapper">
+        <i className="fa-solid fa-heart"></i>
+        <i className="fa-solid fa-eye"></i>
+      </div>
       <img
         src={image}
         alt={typeof title === 'object' ? title[i18n.language] : title}
         className="product-img"
       />
+
       <h3>{typeof title === 'object' ? title[i18n.language] : title}</h3>
       {salePrice ? (
         <p className="product-price">

@@ -23,6 +23,7 @@
 @use "./components/OurTeam";
 @use "./components/ClientReview";
 @use "./components/DealOfDay";
+@use "./components/CartTable";
 
 
 @use "./routes/SinglePage";
@@ -30,3 +31,4 @@
 @use "./routes/Register";
 @use "./routes/About";
 @use "./routes/Contact";
+@use "./routes/ForgotPassword";

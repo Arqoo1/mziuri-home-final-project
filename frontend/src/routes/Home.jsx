@@ -16,8 +16,8 @@ function Home() {
     <>
       <Carousel />
       <CategoriesContainer />
-      <OurHistory />
       <DealOfDay />
+      <OurHistory />
       <ClientReviewCarousel />
       <ImageCarousel />
     </>

@@ -31,10 +31,10 @@ function Header() {
         />
         <nav>
           <Link to="/">{t('home')}</Link>
-          <Link to="/shop">Shop</Link>
-          <Link to="/about">About</Link>
-          <Link to="/contact">Contact</Link>
-          <Link to="/cart">cart</Link>
+          <Link to="/shop">{t('shop')}</Link>
+          <Link to="/about">{t('about')}</Link>
+          <Link to="/contact">{t('contact')}</Link>
+          <Link to="/cart">{t('cart')}</Link>
         </nav>
 
         <select

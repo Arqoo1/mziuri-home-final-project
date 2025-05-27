@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import useReviewCarousel from '../hooks/useCarouselDrag';
+import React from 'react';
+import SwiperCarousel from './SwiperCarousel';
+
 import imgslider1 from '../assets/imgslider1.webp';
 import imgslider2 from '../assets/imgslider2.webp';
 import imgslider3 from '../assets/imgslider3.webp';
@@ -20,69 +21,31 @@ const images = [
 ];
 
 const ImageCarousel = () => {
-  const [hoveredIndex, setHoveredIndex] = useState(null);
-  const {
-    currentTranslate,
-    isDragging,
-    containerRef,
-    onDragStart,
-    onDragMove,
-    onDragEnd,
-    next,
-    prev,
-  } = useReviewCarousel(images.length - 3, '.carousel-slide', 4);
+  const renderSlide = (src, index, hoveredIndex, setHoveredIndex) => (
+    <div
+      className={`carousel-slide ${
+        hoveredIndex !== null && hoveredIndex !== index ? 'blurred' : ''
+      }`}
+      onMouseEnter={() => setHoveredIndex(index)}
+      onMouseLeave={() => setHoveredIndex(null)}
+      onTouchStart={() => setHoveredIndex(index)}
+      onTouchEnd={() => setTimeout(() => setHoveredIndex(null), 500)}
+      key={index}
+    >
+      <img src={src} alt={`Slide ${index}`} draggable="false" />
+    </div>
+  );
 
   return (
-    <div
-      className="Imagecarousel"
-      ref={containerRef}
-      onMouseDown={onDragStart}
-      onMouseMove={onDragMove}
-      onMouseUp={onDragEnd}
-      onMouseLeave={onDragEnd}
-      onTouchStart={onDragStart}
-      onTouchMove={onDragMove}
-      onTouchEnd={onDragEnd}
-    >
-      <div
-        className="carousel-track"
-        style={{
-          transform: `translateX(${currentTranslate}px)`,
-          transition: isDragging ? 'none' : 'transform 0.3s ease-in-out',
-        }}
-      >
-        {images.map((src, i) => (
-          <div
-            className={`carousel-slide ${
-              hoveredIndex !== null && hoveredIndex !== i ? 'blurred' : ''
-            }`}
-            key={i}
-            onMouseEnter={() => setHoveredIndex(i)}
-            onMouseLeave={() => setHoveredIndex(null)}
-            onTouchStart={() => setHoveredIndex(i)}
-            onTouchEnd={() => setTimeout(() => setHoveredIndex(null), 500)}
-          >
-            <img
-              src={src}
-              alt={`Slide ${i}`}
-              draggable="false"
-            />
-          </div>
-        ))}
-      </div>
-
-      <button
-        className="carousel-btn prev"
-        onClick={prev}
-      >
-        <i className="fa-solid fa-arrow-left"></i>
-      </button>
-      <button
-        className="carousel-btn next"
-        onClick={next}
-      >
-        <i className="fa-solid fa-arrow-right"></i>
-      </button>
+    <div className="image-carousel-wrapper">
+      <SwiperCarousel
+        items={images}
+        renderSlide={renderSlide}
+        slidesPerView={4}
+        loop={true}
+        prevBtnClass="carousel-btn prev"
+        nextBtnClass="carousel-btn next"
+      />
     </div>
   );
 };

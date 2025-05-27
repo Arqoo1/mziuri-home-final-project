@@ -37,7 +37,7 @@ function SinglePage({ isAuthenticated }) {
 
   const handleAddToCart = async () => {
     const cartItem = {
-      title: product.title,
+      title: localizedTitle,
       price: product.salePrice || product.price,
       quantity,
       image: product.image,
@@ -57,8 +57,7 @@ function SinglePage({ isAuthenticated }) {
         }
         localStorage.setItem('guestCart', JSON.stringify(localCart));
       }
-
-      alert('Added to cart!');
+      console.log('cartItem:', cartItem), alert('Added to cart!');
     } catch (error) {
       alert(`Failed to add to cart: ${error.message}`);
     }

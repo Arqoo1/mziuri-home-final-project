@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import Users from "../models/users.js";
 import bcrypt from "bcrypt";
-import mailSender from "../utils/mailSender.js";
+import {mailSender, sendContactMail} from "../utils/mailSender.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -174,3 +174,17 @@ export const resetPasswordUser = async (req, res) => {
     return res.status(500).json({ msg: err.message });
   }
 };
+
+export const contact = async (req, res) => {
+    try {
+        const { email, subject, message } = req.body;
+        console.log(req.body)
+        await sendContactMail(email, subject, message)
+
+        res.status(200).json({msg: "Email has sent!"})
+    } catch (err) {
+        console.log(err)
+        return res.status(500).json({msg: err.message})
+    }
+
+}

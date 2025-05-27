@@ -94,6 +94,7 @@
     border: none;
     font-size: 1rem;
     transition: border-color 0.3s;
+    resize: vertical;
 
     &.error-border {
       border-color: #8b1c0f;
@@ -104,6 +105,10 @@
       outline: none;
       resize: vertical;
     }
+  }
+  textarea {
+    min-height: 100px;
+    max-height: 500px;
   }
 }
 

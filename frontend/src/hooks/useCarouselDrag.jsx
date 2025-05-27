@@ -93,6 +93,7 @@ export default function useReviewCarousel(
     else setCurrentTranslate(-currentIndex * slideWidth);
   };
 
+  
   return {
     currentIndex,
     currentTranslate,
@@ -103,5 +104,6 @@ export default function useReviewCarousel(
     onDragEnd,
     next,
     prev,
+    setIndex: (index) => updateIndex(index), 
   };
 }

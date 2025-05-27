@@ -1,10 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { getCartItems, deleteCartItem, editCartItem } from '../api/cartapi';
+import { useTranslation } from 'react-i18next';
 
 function CartTable() {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const { t, i18n } = useTranslation();
+
+  // Helper function to get localized value
+  const getLocalizedValue = (value) => {
+    if (!value) return '';
+    if (typeof value === 'object') {
+      // Try current language first, then fallback to English, then first available key
+      return value[i18n.language] || value.en || value[Object.keys(value)[0]];
+    }
+    return value;
+  };
 
   const loadCart = async () => {
     const token = localStorage.getItem('token');
@@ -23,7 +35,6 @@ function CartTable() {
       if (localData) {
         try {
           const parsed = JSON.parse(localData);
-          // Add fallback _id for guest cart items if missing
           const itemsWithIds = parsed.map((item, index) => ({
             ...item,
             _id: item._id || `guest-${index}-${item.name || index}`,
@@ -77,44 +88,53 @@ function CartTable() {
     loadCart();
   }, []);
 
-  if (loading) return <p>Loading cart...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <p>{t('loading')}...</p>;
+  if (error) return <p>{t('error')}: {error}</p>;
 
   return (
-    <table className="CartTable">
+    <table className="cart-table">
       <thead>
         <tr>
-          <th>Image</th>
-          <th>Name</th>
-          <th>Price</th>
-          <th>Quantity</th>
-          <th>Total</th>
-          <th>Actions</th>
+          <th>{t('image')}</th>
+          <th>{t('name')}</th>
+          <th>{t('price')}</th>
+          <th>{t('quantity')}</th>
+          <th>{t('total')}</th>
+          <th>{t('actions')}</th>
         </tr>
       </thead>
       <tbody>
         {cartItems.map((item) => (
           <tr key={item._id}>
             <td>
-              <img
-                src={item.image}
-                alt={item.name}
-                width="50"
-              />
+              <div className="product-info">
+                <img src={item.image} alt={getLocalizedValue(item.title)} width="100" />
+              </div>
             </td>
-            <td>{item.name}</td>
+            <td>
+              <div className="product-info">
+                {getLocalizedValue(item.title)}
+              </div>
+            </td>
             <td>${item.price}</td>
             <td>
               <input
                 type="number"
                 min="1"
                 value={item.quantity}
-                onChange={(e) => handleQuantityChange(item._id, Number(e.target.value))}
+                onChange={(e) =>
+                  handleQuantityChange(item._id, Number(e.target.value))
+                }
               />
             </td>
             <td>${(item.price * item.quantity).toFixed(2)}</td>
             <td>
-              <button onClick={() => handleDelete(item._id)}>Delete</button>
+              <button
+                className="delete-button"
+                onClick={() => handleDelete(item._id)}
+              >
+                {t('delete')}
+              </button>
             </td>
           </tr>
         ))}

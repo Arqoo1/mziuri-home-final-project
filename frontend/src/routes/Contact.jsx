@@ -3,6 +3,7 @@ import RouteBanner from '../components/RouteBanner';
 import ContactUs from '../components/ContactUs';
 import InputGroup from '../components/InputGroup';
 import { validateFullName, validateEmail, validateMessage } from '../utils/validations';
+import * as api from '../api/usersapi.js';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -24,28 +25,42 @@ function Contact() {
     }));
   };
 
-  const validateForm = () => {
+  const validateForm = (data = formData) => {
     const newErrors = {
-      name: validateFullName(formData.name),
-      email: validateEmail(formData.email),
-      type: formData.type ? null : 'Type is required',
-      message: validateMessage(formData.message),
+      name: validateFullName(data.name),
+      email: validateEmail(data.email),
+      type: data.type ? null : 'Type is required',
+      message: validateMessage(data.message),
     };
-    setErrors(newErrors);
-    return !Object.values(newErrors).some((error) => error);
+    Object.keys(newErrors).forEach((key) => {
+      if (!newErrors[key]) delete newErrors[key];
+    });
+    return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (validateForm()) {
-      setIsSubmitting(true);
-      setTimeout(() => {
-        console.log('Form submitted:', formData);
-        setIsSubmitting(false);
+    setIsSubmitting(true);
+
+    const foundErrors = validateForm();
+    if (Object.keys(foundErrors).length > 0) {
+      setErrors(foundErrors);
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const response = await api.contact(formData);
+      if (response.data) {
         setSubmitSuccess(true);
         setFormData({ name: '', email: '', type: '', message: '' });
+        setErrors({});
         setTimeout(() => setSubmitSuccess(false), 3000);
-      }, 1500);
+      }
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 

@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { fetchReviews } from '../api/reviewapi';
-import useReviewCarousel from '../hooks/useCarouselDrag';
+import SwiperCarousel from './SwiperCarousel';
 
 function ClientReviewCarousel() {
   const [reviews, setReviews] = useState([]);
-
-  const {
-    isDragging,
-    currentTranslate,
-    onDragStart,
-    onDragMove,
-    onDragEnd,
-    next,
-    prev,
-    containerRef,
-  } = useReviewCarousel(reviews.length, '.review-card', 1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const getReviews = async () => {
@@ -22,65 +13,49 @@ function ClientReviewCarousel() {
         const fetched = await fetchReviews();
         setReviews(fetched);
       } catch (err) {
+        setError('Failed to load reviews');
         console.error('Error fetching reviews:', err);
+      } finally {
+        setLoading(false);
       }
     };
     getReviews();
   }, []);
 
-  if (reviews.length === 0) {
+  if (loading) {
     return <div className="client-review-carousel loading">Loading reviews...</div>;
   }
 
+  if (error) {
+    return <div className="client-review-carousel error">{error}</div>;
+  }
+
+  if (reviews.length === 0) {
+    return <div className="client-review-carousel empty">No reviews found.</div>;
+  }
+
+  const renderSlide = (slide) => (
+    <div className="review-card" key={slide.id || slide.clientName}>
+      <span>We Love Our Clients</span>
+      <h2>What They're Saying</h2>
+      <img src={slide.image} alt={`Review from ${slide.clientName}`} />
+      <p>{slide.review}</p>
+      <h4>
+        <span>{slide.clientName}</span>
+      </h4>
+    </div>
+  );
+
   return (
     <section className="client-review-carousel">
-      <div
-        className="review-card-container"
-        ref={containerRef}
-        onMouseDown={onDragStart}
-        onMouseMove={onDragMove}
-        onMouseUp={onDragEnd}
-        onMouseLeave={onDragEnd}
-        onTouchStart={onDragStart}
-        onTouchMove={onDragMove}
-        onTouchEnd={onDragEnd}
-        style={{
-          transform: `translateX(${currentTranslate}px)`,
-          transition: isDragging ? 'none' : 'transform 0.3s ease-in-out',
-          cursor: isDragging ? 'grabbing' : 'grab',
-        }}
-      >
-        {reviews.map((slide, index) => (
-          <div
-            key={`${slide.id}-${index}`}
-            className={`review-card`}
-          >
-            <span>We Love Our Clients</span>
-            <h2>What They're Saying</h2>
-            <img
-              src={slide.image}
-              alt="Client review"
-            />
-            <p>{slide.review}</p>
-            <h4>
-              <span>{slide.clientName}</span>
-            </h4>
-          </div>
-        ))}
-      </div>
-
-      <button
-        className="arrow left"
-        onClick={prev}
-      >
-        <i className="fa-solid fa-arrow-left"></i>
-      </button>
-      <button
-        className="arrow right"
-        onClick={next}
-      >
-        <i className="fa-solid fa-arrow-right"></i>
-      </button>
+      <SwiperCarousel
+        items={reviews}
+        renderSlide={renderSlide}
+        slidesPerView={1}
+        loop={true}
+        prevBtnClass="arrow left"
+        nextBtnClass="arrow right"
+      />
     </section>
   );
 }

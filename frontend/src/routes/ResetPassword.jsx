@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { validatePassword, validateConfirmPassword } from '../utils/validations';
 import * as api from '../api/usersapi.js';
 import RouteBanner from '../components/RouteBanner.jsx';
+import InputGroup from '../components/InputGroup.jsx';
 
 function ResetPassword() {
   const [state, setState] = useState({});
@@ -47,16 +48,19 @@ function ResetPassword() {
 
   return (
     <>
-      <RouteBanner />
-      <div className="resetPassword">
+      <RouteBanner page="Reset-Password" />
+      <section className="resetPassword">
         <div className="formContainer">
           <form onSubmit={handleSubmit}>
             <div className="titlesContainer">
               <h1 className="title">Reset Your Password</h1>
             </div>
 
-            <div className="inputGroup">
-              <label htmlFor="password">Password</label>
+            <InputGroup
+              label="Password"
+              name="password"
+              error={errorMessages.password}
+            >
               <input
                 type="password"
                 name="password"
@@ -66,11 +70,13 @@ function ResetPassword() {
                 onChange={handleChange}
                 className="input"
               />
-              {errorMessages.password && <p className="error">{errorMessages.password}</p>}
-            </div>
+            </InputGroup>
 
-            <div className="inputGroup">
-              <label htmlFor="confirmPassword">Confirm Password</label>
+            <InputGroup
+              label="Confirm Password"
+              name="confirmPassword"
+              error={errorMessages.confirmPassword}
+            >
               <input
                 type="password"
                 name="confirmPassword"
@@ -80,10 +86,7 @@ function ResetPassword() {
                 onChange={handleChange}
                 className="input"
               />
-              {errorMessages.confirmPassword && (
-                <p className="error">{errorMessages.confirmPassword}</p>
-              )}
-            </div>
+            </InputGroup>
 
             <button
               type="submit"
@@ -99,7 +102,7 @@ function ResetPassword() {
             </div>
           </form>
         </div>
-      </div>
+      </section>
     </>
   );
 }

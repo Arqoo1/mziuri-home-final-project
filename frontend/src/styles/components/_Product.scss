@@ -1,4 +1,4 @@
-@use "../abstracts/index.scss" as *;
+@use '../abstracts/index.scss' as *;
 
 .product-card {
   display: flex;
@@ -11,9 +11,62 @@
   background: #fff;
   text-align: center;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   width: 30%;
   user-select: none;
+  position: relative;
+  min-height: 300px;
+
+  .icon-wrapper {
+    position: absolute;
+    top: 20px;
+    right: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+
+    i {
+      font-size: 15px;
+      color: #ffffff;
+      background: #000000;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      transform: translateY(-10px);
+      opacity: 0;
+      transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+      &:hover {
+        background-color: $primary-color;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+    }
+
+    i:nth-child(1) {
+      transition-delay: 0.1s;
+    }
+
+    i:nth-child(2) {
+      transition-delay: 0.25s;
+    }
+  }
+
+  &:hover .icon-wrapper {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &:hover .icon-wrapper i {
+    transform: translateY(0);
+    opacity: 1;
+  }
 
   &:hover {
     transform: translateY(-2px);
@@ -22,7 +75,7 @@
 
   .product-img {
     width: 100%;
-    height: 150px;
+    min-height: 120px;
     object-fit: contain;
     border-radius: 8px;
     margin-bottom: 10px;

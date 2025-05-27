@@ -7,7 +7,6 @@
   overflow: hidden;
   cursor: grab;
   user-select: none;
-  margin-top: 300px;
 
   &:hover .arrow {
     opacity: 1;
@@ -221,11 +220,11 @@
   z-index: 10;
 }
 
-.carousel-button.prev {
+.prev {
   left: 1rem;
 }
 
-.carousel-button.next {
+.right {
   right: 1rem;
 }
 

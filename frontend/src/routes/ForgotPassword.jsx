@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { validateEmail } from '../utils/validations';
 import * as api from '../api/usersapi.js';
 import RouteBanner from '../components/RouteBanner.jsx';
+import InputGroup from '../components/InputGroup.jsx';
 
 function ForgotPassword() {
   const [state, setState] = useState({});
@@ -26,9 +27,8 @@ function ForgotPassword() {
 
     try {
       const response = await api.forgotPasswordUser(state);
-
       if (response.data) {
-        alert('email has sent');
+        alert('Email has been sent');
       }
     } catch (err) {
       throw err;
@@ -44,17 +44,20 @@ function ForgotPassword() {
 
   return (
     <>
-      <RouteBanner />
-      <div className="forgotPassword">
+      <RouteBanner page="Forgot-Password" />
+      <section className="forgotPassword">
         <div className="formContainer">
-          <form onSubmit={handleSubmit}>
+          <form className='forgot-password-form' onSubmit={handleSubmit}>
             <div className="titlesContainer">
               <h1 className="title">Forgot your password?</h1>
-              <h3 className="subtitle">No worries, enter your email to get reset password link</h3>
+              <h3 className="subtitle">Password Change</h3>
             </div>
 
-            <div className="inputGroup">
-              <label htmlFor="email">Email</label>
+            <InputGroup
+              label="Email"
+              name="email"
+              error={errorMessages.email}
+            >
               <input
                 type="text"
                 name="email"
@@ -64,13 +67,9 @@ function ForgotPassword() {
                 value={state.email || ''}
                 onChange={handleChange}
               />
-              {errorMessages.email && <p className="error">{errorMessages.email}</p>}
-            </div>
+            </InputGroup>
 
-            <button
-              type="submit"
-              className="submitButton"
-            >
+            <button type="submit" className="submitButton">
               Send
             </button>
 
@@ -81,7 +80,7 @@ function ForgotPassword() {
             </div>
           </form>
         </div>
-      </div>
+      </section>
     </>
   );
 }

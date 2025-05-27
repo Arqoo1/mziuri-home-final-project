@@ -1,0 +1,47 @@
+@use '../abstracts/index.scss' as *;
+
+.cart-table {
+  width: 80%;
+  border-collapse: collapse;
+  margin: 50px auto;
+
+  th,
+  td {
+    border: 2px solid rgba(4, 4, 4, 0.075);
+    padding: 10px;
+    text-align: center;
+  }
+  td{
+    height: 200px;
+    
+  }
+
+  th {
+    color: rgb(0, 0, 0);
+  }
+  .quantity {
+  }
+  .product-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    .name-row {
+      font-size: 16px;
+      font-weight: bold;
+      text-align: center;
+      // color: $theme-color;
+    }
+
+    .delete-button {
+      background: transparent;
+      border: none;
+      font-size: 22px;
+      color: rgb(139, 136, 136);
+      cursor: pointer;
+    }
+    img {
+    }
+  }
+}

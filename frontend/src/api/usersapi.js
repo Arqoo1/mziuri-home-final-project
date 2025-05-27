@@ -41,3 +41,14 @@ export const resetPasswordUser = (data, token) => {
     withCredentials: true,
   });
 };
+
+export const contact = async (data) => {
+  return axios.post(
+    'http://localhost:5000/api/users/contact',
+    data,
+    {
+      headers: { 'Content-Type': 'application/json' },
+      withCredentials: true,
+    }
+  );
+};
