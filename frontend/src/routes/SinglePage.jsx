@@ -1,83 +1,107 @@
 import React, { useState, useEffect } from 'react';
-import { useLoader } from '../hooks/useLoader';
 import { useParams } from 'react-router-dom';
-import { fetchSingleProduct } from '../api/productapi';
-import { addToCart } from '../api/cartapi';
+import { fetchSingleProduct, addToCart } from '../api/productapi';
+import { useLoader } from '../hooks/useLoader';
 import Rating from '../components/Rating';
 import RouteBanner from '../components/RouteBanner';
 import { useTranslation } from 'react-i18next';
+import { useUserData } from '../Context/UserContext';
 
-function SinglePage({ isAuthenticated }) {
-  const { id } = useParams();
+function SinglePage() {
+  const { id: productId } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { useDataLoader } = useLoader();
   const { i18n } = useTranslation();
+  const { loggedIn, setCart, userData } = useUserData();
 
   useEffect(() => {
-    const getProduct = async () => {
+    const loadProduct = async () => {
       try {
         setLoading(true);
-        const productData = await useDataLoader(() => fetchSingleProduct(id));
-        setProduct(productData);
+        const data = await useDataLoader(() => fetchSingleProduct(productId));
+        setProduct(data);
       } catch (err) {
-        console.error('Error fetching product:', err);
-        setError(err.message);
+        setError(err.message || 'Failed to fetch product');
       } finally {
         setLoading(false);
       }
     };
 
-    if (id) {
-      getProduct();
-    }
-  }, [id]);
+    if (productId) loadProduct();
+  }, [productId]);
 
-  const handleAddToCart = async () => {
-    const cartItem = {
-      title: localizedTitle,
-      price: product.salePrice || product.price,
-      quantity,
-      image: product.image,
-    };
+const handleAddToCart = async () => {
+  if (!product) return;
 
-    try {
-      if (isAuthenticated) {
-        await addToCart(cartItem); // backend
-      } else {
-        // localStorage logic
-        const localCart = JSON.parse(localStorage.getItem('guestCart')) || [];
-        const existingIndex = localCart.findIndex((item) => item.title === cartItem.title);
-        if (existingIndex !== -1) {
-          localCart[existingIndex].quantity += cartItem.quantity;
-        } else {
-          localCart.push(cartItem);
+  try {
+    if (loggedIn && userData?._id) {
+      const response = await addToCart(userData._id, productId, quantity);
+
+      // Backend only returns [{ _id, productId, quantity }]
+      const rawCart = response.data || [];
+
+      // Enrich cart manually using current product if it matches
+      const enrichedCart = rawCart.map((item) => {
+        if (item.productId === productId || item._id === productId) {
+          return {
+            ...item,
+            _id: item.productId || item._id,
+            title: product.title,
+            image: product.image,
+            price: product.salePrice || product.price,
+          };
         }
-        localStorage.setItem('guestCart', JSON.stringify(localCart));
+        return item;
+      });
+
+      setCart(enrichedCart);
+    } else {
+      // Guest logic
+      const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
+
+      const existingIndex = guestCart.findIndex((item) => item._id === productId);
+      if (existingIndex >= 0) {
+        guestCart[existingIndex].quantity += quantity;
+      } else {
+        guestCart.push({
+          _id: productId,
+          title: product.title,
+          image: product.image,
+          price: product.salePrice || product.price,
+          quantity,
+        });
       }
-      console.log('cartItem:', cartItem), alert('Added to cart!');
-    } catch (error) {
-      alert(`Failed to add to cart: ${error.message}`);
+
+      localStorage.setItem('guestCart', JSON.stringify(guestCart));
+      setCart(guestCart);
     }
-  };
+
+    alert('Added to cart!');
+  } catch (err) {
+    console.error('Add to cart failed:', err);
+    alert(`Failed to add to cart: ${err.message}`);
+  }
+};
+
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
   if (!product) return <p>Product not found</p>;
 
-  const stars = Rating(product.rating);
   const localizedTitle =
     typeof product.title === 'object' ? product.title[i18n.language] : product.title;
   const localizedDescription =
     typeof product.description === 'object'
       ? product.description[i18n.language]
       : product.description;
+  const stars = Rating(product.rating);
+
   return (
     <main className="single-product-page">
       <RouteBanner page="Single Page" />
-
       <section className="product-wrapper">
         <img
           src={product.image}
@@ -85,24 +109,25 @@ function SinglePage({ isAuthenticated }) {
         />
         <div className="product-details">
           <h2>{localizedTitle}</h2>
-          {product.salePrice ? (
-            <p className="product-price">
-              <span className="sale-price">${product.salePrice}</span>
-              <span className="original-price">${product.price}</span>
-            </p>
-          ) : (
-            <p className="product-price">${product.price}</p>
-          )}
+          <p className="product-price">
+            {product.salePrice ? (
+              <>
+                <span className="sale-price">${product.salePrice}</span>
+                <span className="original-price">${product.price}</span>
+              </>
+            ) : (
+              <>${product.price}</>
+            )}
+          </p>
           <div className="rating">{stars}</div>
           <p className="descp">{localizedDescription}</p>
           <div className="add-to-cart">
             <div className="amount-chooser">
               <input
                 type="number"
-                id="amount"
                 min="1"
                 value={quantity}
-                onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+                onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
               />
             </div>
             <button

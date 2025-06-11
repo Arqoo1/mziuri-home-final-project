@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import Users from "../models/users.js";
 import bcrypt from "bcrypt";
-import {mailSender, sendContactMail} from "../utils/mailSender.js";
+import { mailSender, sendContactMail } from "../utils/mailSender.js";
 
 export const registerUser = async (req, res) => {
   try {
@@ -96,29 +96,26 @@ export const logoutUser = (req, res) => {
 
 export const getToken = (req, res) => {
   try {
-    const token = req.cookies.token;
-    if (!token) return res.json({ err: "Please login now!" });
+    const authHeader = req.headers.authorization;
+    if (!authHeader) return res.status(401).json({ err: "No token provided" });
 
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-      if (err) return res.status(400).json({ msg: "Please login now!" });
-      res.json({ token });
-    });
+    const token = authHeader.split(" ")[1];
+    res.json({ token });
   } catch (err) {
-    res.status(500).json({ msg: err.message });
+    res.status(500).json({ err: err.message });
   }
 };
 
 export const getUser = async (req, res) => {
   try {
-    const token = req.header("Authorization");
-
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.id;
+    const userId = req.user.id; // from authMiddleware
 
     const userData = await Users.findById(userId).select("-password");
+    if (!userData) return res.status(404).json({ err: "User not found" });
+
     res.status(200).json({ data: userData });
   } catch (err) {
-    res.status(500).json({ msg: err.message });
+    res.status(500).json({ err: "Server error" });
   }
 };
 
@@ -176,15 +173,14 @@ export const resetPasswordUser = async (req, res) => {
 };
 
 export const contact = async (req, res) => {
-    try {
-        const { email, subject, message } = req.body;
-        console.log(req.body)
-        await sendContactMail(email, subject, message)
+  try {
+    const { email, subject, message } = req.body;
+    console.log(req.body);
+    await sendContactMail(email, subject, message);
 
-        res.status(200).json({msg: "Email has sent!"})
-    } catch (err) {
-        console.log(err)
-        return res.status(500).json({msg: err.message})
-    }
-
-}
+    res.status(200).json({ msg: "Email has sent!" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ msg: err.message });
+  }
+};

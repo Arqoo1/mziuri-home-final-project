@@ -43,12 +43,46 @@ export const resetPasswordUser = (data, token) => {
 };
 
 export const contact = async (data) => {
-  return axios.post(
-    'http://localhost:5000/api/users/contact',
-    data,
-    {
-      headers: { 'Content-Type': 'application/json' },
-      withCredentials: true,
-    }
-  );
+  return axios.post('http://localhost:5000/api/users/contact', data, {
+    headers: { 'Content-Type': 'application/json' },
+    withCredentials: true,
+  });
+};
+
+export const getToken = async () => {
+  const token = localStorage.getItem('token');
+
+  if (!token) throw new Error('No token found in localStorage');
+
+  try {
+    const response = await axios.post(`http://localhost:5000/api/users/get-token`, null, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: false, // You no longer need cookies
+    });
+    return response.data.token; // Or however your backend responds
+  } catch (error) {
+    const message = error.response?.data?.err || 'Failed to get token';
+    throw new Error(message);
+  }
+};
+export const getUser = async () => {
+  const token = localStorage.getItem('token');
+  console.log(localStorage.getItem('token'));
+
+  if (!token) throw new Error('No token in localStorage');
+  const res = await fetch('http://localhost:5000/api/users/get-user', {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`, // <--- this is critical
+      'Content-Type': 'application/json',
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch user');
+  }
+
+  return await res.json();
 };

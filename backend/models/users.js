@@ -8,10 +8,36 @@ const UsersSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    required: [true, "Please provide an email"],
+    unique: [true, "email is already registered"],
   },
   password: {
     type: String,
   },
+  cart: [
+    {
+      productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Products",
+      },
+      quantity: {
+        type: Number,
+        default: 1,
+      },
+    },
+  ],
+  wishlist: [
+    {
+      productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Products",
+      },
+      quantity: {
+        type: Number,
+        default: 1,
+      },
+    },
+  ],
 });
 
 export default mongoose.model("Users", UsersSchema);

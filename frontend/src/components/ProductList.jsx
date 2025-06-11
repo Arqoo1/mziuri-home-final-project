@@ -14,7 +14,7 @@ function ProductList() {
   const { useDataLoader } = useLoader();
   const [selectedTags, setSelectedTags] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(null);
-
+  const [productClassName, setProductClassName] = useState('');
   const allTags = React.useMemo(() => {
     const tagSet = new Set();
     products.forEach((product) => {
@@ -75,6 +75,8 @@ function ProductList() {
           setSort={setSort}
           isSelectOpen={isSelectOpen}
           setIsSelectOpen={setIsSelectOpen}
+          productClassName={productClassName}
+          setProductClassName={setProductClassName}
         />
 
         {filteredProducts.length > 0 ? (
@@ -83,6 +85,7 @@ function ProductList() {
               <Product
                 key={product._id}
                 product={product}
+                className={productClassName}
               />
             ))}
           </div>

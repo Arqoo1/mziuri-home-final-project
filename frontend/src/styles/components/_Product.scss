@@ -94,3 +94,29 @@
     color: $primary-color;
   }
 }
+.product-in-list {
+  width: 100%;
+  flex-direction: row;
+  height: 300px;
+  img {
+    width: 30% !important;
+    height: 100%;
+    object-fit: cover;
+  }
+  .product-inform {
+    align-items: start;
+    text-align: start;
+    width: 70%;
+  }
+  .product-price {
+    justify-content: start;
+  }
+  // .icon-wrapper{
+  //   opacity: 1;
+  //   i{
+  //     opacity: 1;
+  //     top: 200px;
+  //   }
+  // }
+}
+

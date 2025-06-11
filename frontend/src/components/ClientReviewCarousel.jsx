@@ -35,10 +35,16 @@ function ClientReviewCarousel() {
   }
 
   const renderSlide = (slide) => (
-    <div className="review-card" key={slide.id || slide.clientName}>
+    <div
+      className="review-card"
+      key={slide.id || slide.clientName}
+    >
       <span>We Love Our Clients</span>
       <h2>What They're Saying</h2>
-      <img src={slide.image} alt={`Review from ${slide.clientName}`} />
+      <img
+        src={slide.image}
+        alt={`Review from ${slide.clientName}`}
+      />
       <p>{slide.review}</p>
       <h4>
         <span>{slide.clientName}</span>
@@ -55,6 +61,7 @@ function ClientReviewCarousel() {
         loop={true}
         prevBtnClass="arrow left"
         nextBtnClass="arrow right"
+        effect="fade"
       />
     </section>
   );

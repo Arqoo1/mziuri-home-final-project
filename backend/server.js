@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import productRoutes from "./routes/productRoutes.js";
 import UsersRouter from "./routes/UsersRouter.js";
 import ReviewRouter from "./routes/ReviewRouter.js";
-import CartRoutes from "./routes/CartRoutes.js"; //all crud operations (for cart)
+// import CartRoutes from "./routes/CartRoutes.js"; //all crud operations (for cart)
 import { rateLimit } from "express-rate-limit";
 import helmet from "helmet";
 import compression from "compression";
@@ -46,6 +46,6 @@ mongoose
 app.use("/api/products", productRoutes);
 app.use("/api/users", UsersRouter);
 app.use("/api/reviews", ReviewRouter);
-app.use("/api/cart-items",   CartRoutes); //all crud operations (for cart)
+// app.use("/api/cart-items",   CartRoutes); 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

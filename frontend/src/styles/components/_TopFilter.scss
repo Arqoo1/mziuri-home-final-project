@@ -1,4 +1,4 @@
-@use "../abstracts/index.scss" as *;
+@use '../abstracts/index.scss' as *;
 
 .top-filter {
   display: flex;
@@ -12,15 +12,20 @@
   .icon-group {
     display: flex;
     gap: 10px;
+    align-items: center;
 
     i {
-      font-size: 18px;
+      font-size: 23px;
       cursor: pointer;
       color: #333;
-      transition: color 0.2s ease;
+      padding: 10px;
+      transition:
+        color 0.3s ease,
+        border 0.3s ease;
+      border: 2px solid transparent;
 
-      &:hover {
-        color: #555;
+      &.active {
+        border: 2px solid #000000;
       }
     }
   }

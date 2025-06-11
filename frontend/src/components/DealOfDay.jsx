@@ -57,6 +57,7 @@ function DealOfDay() {
         prevBtnClass=""
         nextBtnClass=""
         pagination={true}
+        effect="fade"
         renderSlide={(product) => <Product product={product} />}
       />
     </section>

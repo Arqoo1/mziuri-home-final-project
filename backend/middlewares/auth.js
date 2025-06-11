@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 export const authMiddleware = (req, res, next) => {
-  const authHeader = req.headers.authorization; // ← this line was missing before
+  const authHeader = req.headers.authorization; 
   console.log("AUTH HEADER:", authHeader);
 
   const token = authHeader?.split(" ")[1];

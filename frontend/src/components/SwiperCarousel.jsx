@@ -13,7 +13,7 @@ const SwiperCarousel = ({
   prevBtnClass = 'carousel-btn prev',
   nextBtnClass = 'carousel-btn next',
   wrapperClass = '',
-  pagination = false, // new prop
+  pagination = false,
 }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
 

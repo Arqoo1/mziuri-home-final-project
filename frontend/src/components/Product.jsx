@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import Rating from '../components/Rating';
 import { useTranslation } from 'react-i18next';
 
-function Product({ product }) {
+function Product({ product, className = '' }) {
   const navigate = useNavigate();
-  const { _id, title, price, salePrice, rating, image } = product;
+  const { _id, title, price, salePrice, rating, image, description } = product;
   const stars = Rating(rating);
 
   const { i18n } = useTranslation();
@@ -16,8 +16,8 @@ function Product({ product }) {
 
   return (
     <div
-      className="product-card"
-      // onClick={handleClick}
+      className={`product-card ${className}`}
+      onClick={handleClick}
     >
       <div className="icon-wrapper">
         <i className="fa-solid fa-heart"></i>
@@ -29,16 +29,23 @@ function Product({ product }) {
         className="product-img"
       />
 
-      <h3>{typeof title === 'object' ? title[i18n.language] : title}</h3>
-      {salePrice ? (
-        <p className="product-price">
-          <span className="sale-price">${salePrice}</span>
-          <span className="original-price">${price}</span>{' '}
-        </p>
-      ) : (
-        <p className="product-price">${price}</p>
-      )}
-      <p className="rating">{stars}</p>
+      <div className="product-inform">
+        <h3>{typeof title === 'object' ? title[i18n.language] : title}</h3>
+        <p className="rating">{stars}</p>
+        {salePrice ? (
+          <p className="product-price">
+            <span className="sale-price">${salePrice}</span>
+            <span className="original-price">${price}</span>{' '}
+          </p>
+        ) : (
+          <p className="product-price">${price}</p>
+        )}
+        {className.includes('product-in-list') && description && (
+          <p className="product-description">
+            {typeof description === 'object' ? description[i18n.language] : description}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

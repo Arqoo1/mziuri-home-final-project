@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+  useNavigate,
+  Navigate,
+} from 'react-router-dom';
 
 import './styles/styles.scss';
 import Header from './layouts/Header';
@@ -7,6 +14,10 @@ import Main from './layouts/Main';
 import Footer from './layouts/Footer';
 import useDocumentTitle from './hooks/useDocumentTitle';
 import useScrollTop from './hooks/useScrollTop';
+import { getUser } from './api/usersapi';
+import { getToken } from './api/usersapi';
+
+import { useUserData } from './Context/UserContext';
 
 import {
   Home,
@@ -28,25 +39,56 @@ import {
 } from './routes';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(Boolean(localStorage.getItem('token')));
+  const { loggedIn, setLoggedIn, setCart, cart, setUserData } = useUserData();
+  const navigate = useNavigate();
+
+  const initializeGuestCart = () => {
+    const guestCart = localStorage.getItem('guestCart');
+    if (!guestCart) {
+      localStorage.setItem('guestCart', JSON.stringify([]));
+    }
+  };
 
   useEffect(() => {
-    if (isAuthenticated) {
-      localStorage.removeItem('guestCart');
-    }
-  }, [isAuthenticated]);
-  useEffect(() => {
-    const checkAuth = () => {
-      const authStatus = Boolean(localStorage.getItem('token'));
-      setIsAuthenticated(authStatus);
-      if (authStatus) {
-        localStorage.removeItem('guestCart');
+    const getUserInfo = async () => {
+      try {
+        const token = getToken();
+        if (!token) {
+          setLoggedIn(false);
+          initializeGuestCart();
+          const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
+          setCart(guestCart);
+          setUserData(null);
+          return;
+        }
+        const res = await getUser(token);
+        if (res.data) {
+          setUserData(res.data); // <-- Set user data here
+          setCart(res.data.cart);
+          setLoggedIn(true);
+        } else {
+          setUserData(null);
+          setLoggedIn(false);
+          initializeGuestCart();
+          const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
+          setCart(guestCart);
+        }
+      } catch (error) {
+        console.error(error);
+        setUserData(null);
+        setLoggedIn(false);
+        initializeGuestCart();
+        const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
+        setCart(guestCart);
       }
     };
-
-    window.addEventListener('storage', checkAuth);
-    return () => window.removeEventListener('storage', checkAuth);
-  }, []);
+    getUserInfo();
+  }, [navigate, setLoggedIn, setCart, setUserData]);
+  useEffect(() => {
+    if (!loggedIn) {
+      localStorage.setItem('guestCart', JSON.stringify(cart));
+    }
+  }, [cart, loggedIn]);
 
   //   if (
   //   !isAuthenticated &&
@@ -72,7 +114,7 @@ function App() {
           />
           <Route
             path="/shop/:id"
-            element={<SinglePage isAuthenticated={isAuthenticated} />}
+            element={<SinglePage loggedIn={loggedIn} />}
           />
           <Route
             path="/about"
@@ -85,20 +127,20 @@ function App() {
           <Route
             path="/login"
             element={
-              isAuthenticated ? (
+              loggedIn ? (
                 <Navigate
                   to="/"
                   replace
                 />
               ) : (
-                <Login setIsAuthenticated={setIsAuthenticated} />
+                <Login loggedIn={loggedIn} />
               )
             }
           />
           <Route
             path="/register"
             element={
-              isAuthenticated ? (
+              loggedIn ? (
                 <Navigate
                   to="/"
                   replace
