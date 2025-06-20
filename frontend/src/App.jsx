@@ -39,15 +39,9 @@ import {
 } from './routes';
 
 function App() {
-  const { loggedIn, setLoggedIn, setCart, cart, setUserData } = useUserData();
+  const { loggedIn, setLoggedIn, setCart, cart, setUserData, wishlist, setWishlist } =
+    useUserData();
   const navigate = useNavigate();
-
-  const initializeGuestCart = () => {
-    const guestCart = localStorage.getItem('guestCart');
-    if (!guestCart) {
-      localStorage.setItem('guestCart', JSON.stringify([]));
-    }
-  };
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -55,41 +49,48 @@ function App() {
         const token = getToken();
         if (!token) {
           setLoggedIn(false);
-          initializeGuestCart();
-          const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
-          setCart(guestCart);
           setUserData(null);
+
+          const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
+          const guestWishlist = JSON.parse(localStorage.getItem('guestWishlist') || '[]');
+          setCart(guestCart);
+          setWishlist(guestWishlist);
           return;
         }
         const res = await getUser(token);
         if (res.data) {
-          setUserData(res.data); // <-- Set user data here
-          setCart(res.data.cart);
+          setUserData(res.data);
+          setCart(res.data.cart || []);
+          setWishlist(res.data.wishlist || []);
           setLoggedIn(true);
+
+          localStorage.removeItem('guestCart');
+          localStorage.removeItem('guestWishlist');
         } else {
           setUserData(null);
           setLoggedIn(false);
-          initializeGuestCart();
-          const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
-          setCart(guestCart);
         }
       } catch (error) {
         console.error(error);
         setUserData(null);
         setLoggedIn(false);
-        initializeGuestCart();
-        const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
-        setCart(guestCart);
+        setCart(JSON.parse(localStorage.getItem('guestCart') || '[]'));
+        setWishlist(JSON.parse(localStorage.getItem('guestWishlist') || '[]'));
       }
     };
     getUserInfo();
-  }, [navigate, setLoggedIn, setCart, setUserData]);
+  }, [navigate, setLoggedIn, setCart, setWishlist, setUserData]);
   useEffect(() => {
     if (!loggedIn) {
       localStorage.setItem('guestCart', JSON.stringify(cart));
     }
   }, [cart, loggedIn]);
 
+  useEffect(() => {
+    if (!loggedIn) {
+      localStorage.setItem('guestWishlist', JSON.stringify(wishlist));
+    }
+  }, [wishlist, loggedIn]);
   //   if (
   //   !isAuthenticated &&
   //   !["/login", "/register"].includes(location.pathname)

@@ -1,5 +1,5 @@
 import express from "express";
-import { loginUser, contact, logoutUser, getToken, getUser, registerUser, forgotPasswordUser, resetPasswordUser} from "../controllers/users.js";
+import { loginUser, contact, logoutUser, updateUserWishlist,  updateUserCart, getToken, getUser, registerUser, forgotPasswordUser, resetPasswordUser} from "../controllers/users.js";
 import { authMiddleware } from '../middlewares/auth.js';
 
 const UsersRouter = express.Router()
@@ -14,6 +14,8 @@ UsersRouter.put('/forgot-password', forgotPasswordUser)
 UsersRouter.put('/reset-password', resetPasswordUser)
 UsersRouter.post('/contact', contact)
 
+UsersRouter.put('/cart', authMiddleware, updateUserCart);
+UsersRouter.put('/wishlist', authMiddleware, updateUserWishlist);
 
 
 export default UsersRouter

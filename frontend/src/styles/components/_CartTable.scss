@@ -1,9 +1,10 @@
 @use '../abstracts/index.scss' as *;
 
 .cart-table {
-  width: 80%;
+  width: calc(100% - 80px);
   border-collapse: collapse;
   margin: 50px auto;
+  margin-bottom: 0px;
 
   th,
   td {

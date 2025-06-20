@@ -1,0 +1,73 @@
+@use '../abstracts/index.scss' as *;
+
+.cart-summary {
+  margin: 40px;
+  border-top: 1px solid #ddd;
+  width: 40%;
+  display: flex;
+  font-size: 20px;
+  flex-direction: column;
+  background-color: $bg-color;
+  button {
+    padding: 15px;
+    background-color: #000;
+    border: none;
+    color: white;
+    font-size: 18px;
+  }
+  .summary-row {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 20px;
+
+    &.total {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+  }
+  .checkout-title {
+    padding: 20px;
+  }
+}
+.coupon-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: calc(100% - 80px);
+  margin: 0px auto;
+  padding: 20px;
+  border: 2px solid rgba(4, 4, 4, 0.075);
+  border-top: none;
+  & > button {
+    padding: 15px;
+    background-color: #000;
+    color: white;
+    border: none;
+  }
+}
+.coupon-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 50%;
+  input {
+    width: 80%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+  button {
+    width: 20%;
+    padding: 15px;
+    background-color: #000;
+    color: white;
+    border: none;
+  }
+}
+.wishlist-mode{
+  margin-bottom: 50px;
+}

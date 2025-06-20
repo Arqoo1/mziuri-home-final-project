@@ -1,0 +1,122 @@
+@use '../abstracts/index.scss' as *;
+
+.checkout-container {
+  width: 100%;
+  padding: 1rem;
+  .checkout {
+    padding: 40px 0px;
+    display: flex;
+    align-items: start;
+    .label {
+      color: black;
+    }
+    textarea {
+      max-height: 350px;
+    }
+    .returning-customer,
+    .coupon-toggle {
+      margin-bottom: 1rem;
+      color: #0056b3;
+      cursor: pointer;
+    }
+
+    .coupon-input-container {
+      margin-bottom: 2rem;
+      display: flex;
+      gap: 1rem;
+      opacity: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: all 0.4s ease;
+
+      &.visible {
+        opacity: 1;
+        max-height: 100px;
+      }
+
+      input {
+        flex: 1;
+        padding: 0.5rem;
+      }
+
+      button {
+        padding: 0.5rem 1rem;
+        background: #222;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+    }
+    .checkout-summary {
+      width: 50%;
+      padding-left: 30px;
+      background-color: $bg-color;
+    }
+    input, select, textarea{
+        background-color: white;
+    }
+    select, textarea{
+        border: 1px solid #ccc;
+    }
+    .checkout-form {
+      display: flex;
+      width: 50%;
+      flex-direction: column;
+      gap: 1.2rem;
+      padding-right: 30px;
+      .half-inputs {
+        display: flex;
+        gap: 1rem;
+
+        .half-input {
+          flex: 1;
+
+          &:first-child {
+            margin-right: 0.5rem;
+          }
+
+          &:last-child {
+            margin-left: 0.5rem;
+          }
+        }
+      }
+
+      .form-title {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .form-subtitle {
+        font-size: 1rem;
+        color: #666;
+        margin-bottom: 0.5rem;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          margin-bottom: 0.3rem;
+        }
+
+        input,
+        select,
+        textarea {
+          padding: 0.5rem;
+          border: 1px solid #ccc;
+          border-radius: 4px;
+        }
+
+        &.checkbox {
+          flex-direction: row;
+          align-items: center;
+
+          input {
+            width: auto;
+            margin-right: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+}

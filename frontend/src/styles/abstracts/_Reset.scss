@@ -119,7 +119,9 @@ textarea,
   text-decoration: none;
   outline: 0;
 }
-
+button{
+  cursor: pointer;
+}
 // input{
 // 	&.input-field{
 // 		border: 1px solid $border-color;

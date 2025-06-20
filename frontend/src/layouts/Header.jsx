@@ -35,6 +35,8 @@ function Header() {
           <Link to="/about">{t('about')}</Link>
           <Link to="/contact">{t('contact')}</Link>
           <Link to="/cart">{t('cart')}</Link>
+          <Link to="/wishlist">{t('wishlist')}</Link>
+          <Link to="/login">{t('login')}</Link>
         </nav>
 
         <select

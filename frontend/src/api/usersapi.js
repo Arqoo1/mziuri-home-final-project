@@ -69,7 +69,7 @@ export const getToken = async () => {
 };
 export const getUser = async () => {
   const token = localStorage.getItem('token');
-  console.log(localStorage.getItem('token'));
+  // console.log(localStorage.getItem('token'));
 
   if (!token) throw new Error('No token in localStorage');
   const res = await fetch('http://localhost:5000/api/users/get-user', {
@@ -85,4 +85,52 @@ export const getUser = async () => {
   }
 
   return await res.json();
+};
+
+export const updateUserCart = async (cart) => {
+  const token = localStorage.getItem('token');
+  if (!token) throw new Error('No token in localStorage');
+
+  try {
+    const response = await axios.put(
+      '/api/users/cart',
+      { cart },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+        baseURL: 'http://localhost:5000', // explicitly setting baseURL to your backend server
+      }
+    );
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.err || 'Failed to update cart';
+    throw new Error(message);
+  }
+};
+
+export const updateUserWishlist = async (wishlist) => {
+  const token = localStorage.getItem('token');
+  if (!token) throw new Error('No token in localStorage');
+
+  try {
+    const response = await axios.put(
+      '/api/users/wishlist',
+      { wishlist },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+        baseURL: 'http://localhost:5000',
+      }
+    );
+    return response.data;
+  } catch (error) {
+    const message = error.response?.data?.err || 'Failed to update wishlist';
+    throw new Error(message);
+  }
 };

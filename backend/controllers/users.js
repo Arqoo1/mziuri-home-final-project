@@ -184,3 +184,59 @@ export const contact = async (req, res) => {
     return res.status(500).json({ msg: err.message });
   }
 };
+
+export const updateUserCart = async (req, res) => {
+  try {
+    const userId = req.user.id; // assuming auth middleware sets req.user
+    const newCart = req.body.cart; // expecting cart array sent in request body
+
+    if (!Array.isArray(newCart)) {
+      return res.status(400).json({ message: "Cart must be an array" });
+    }
+
+    // Find user by ID and update cart
+    const updatedUser = await Users.findByIdAndUpdate(
+      userId,
+      { cart: newCart },
+      { new: true }
+    ).select("cart"); // select only cart to return
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    return res.status(200).json({ cart: updatedUser.cart });
+  } catch (error) {
+    console.error("Error updating user cart:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const updateUserWishlist = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { wishlist } = req.body;
+
+    if (!Array.isArray(wishlist)) {
+      return res.status(400).json({ err: "Wishlist must be an array" });
+    }
+
+    const user = await Users.findByIdAndUpdate(
+      userId,
+      { wishlist },
+      { new: true }
+    );
+
+    if (!user) {
+      return res.status(404).json({ err: "User not found" });
+    }
+
+    res.json({
+      message: "Wishlist updated successfully",
+      wishlist: user.wishlist,
+    });
+  } catch (error) {
+    console.error("Error updating wishlist:", error);
+    res.status(500).json({ err: "Failed to update wishlist" });
+  }
+};
