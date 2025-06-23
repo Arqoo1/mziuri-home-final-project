@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/logo.webp';
 import { useTranslation } from 'react-i18next';
+import { useCurrency } from '../Context/CurrencyContext';
 
 function Header() {
   const [showSearch, setShowSearch] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-
   const { t, i18n } = useTranslation();
+  const { currency, changeCurrency } = useCurrency();
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
     localStorage.setItem('lang', lng);
   };
+
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -21,6 +23,10 @@ function Header() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleCurrencyChange = (e) => {
+    changeCurrency(e.target.value);
+  };
 
   return (
     <>
@@ -33,10 +39,10 @@ function Header() {
           <Link to="/">{t('home')}</Link>
           <Link to="/shop">{t('shop')}</Link>
           <Link to="/about">{t('about')}</Link>
-          <Link to="/contact">{t('contact')}</Link>
+          {/* <Link to="/contact">{t('contact')}</Link>
           <Link to="/cart">{t('cart')}</Link>
           <Link to="/wishlist">{t('wishlist')}</Link>
-          <Link to="/login">{t('login')}</Link>
+          <Link to="/login">{t('login')}</Link> */}
         </nav>
 
         <select
@@ -55,6 +61,14 @@ function Header() {
           ></i>
           <i className="fa fa-shopping-cart"></i>
           <i className="fa fa-bars"></i>
+          <select
+            onChange={handleCurrencyChange}
+            value={currency}
+          >
+            <option value="USD">USD</option>
+            <option value="GEL">GEL</option>
+            <option value="EUR">EUR</option>
+          </select>
         </div>
       </header>
 

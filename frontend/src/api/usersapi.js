@@ -4,16 +4,20 @@ const API = axios.create({
   baseURL: 'http://localhost:5000/api/users',
   withCredentials: true,
 });
+
+// REGISTER
 export const register = async (formData) => {
   try {
     const { data } = await API.post('/register', formData);
     return data;
   } catch (err) {
-    const errorMessage = err.response?.data?.err || 'Registration failed. Try again.';
+    const errorMessage =
+      err.response?.data?.err || err.response?.data?.message || 'Registration failed. Try again.';
     throw new Error(errorMessage);
   }
 };
 
+// LOGIN
 export const login = async (formData) => {
   try {
     const requestData = {
@@ -24,76 +28,89 @@ export const login = async (formData) => {
     const { data } = await API.post('/login', requestData);
     return data;
   } catch (err) {
-    const errorMessage = err.response?.data?.err || 'Login failed. Please check your credentials.';
+    const errorMessage =
+      err.response?.data?.err || err.response?.data?.message || 'Login failed. Please check your credentials.';
     throw new Error(errorMessage);
   }
 };
 
+// FORGOT PASSWORD
 export const forgotPasswordUser = (data) => {
-  return axios.put(`http://localhost:5000/api/users/forgot-password`, data, {
-    withCredentials: true,
-  });
+  return API.put('/forgot-password', data);
 };
 
+// RESET PASSWORD
 export const resetPasswordUser = (data, token) => {
-  return axios.put(`http://localhost:5000/api/users/reset-password`, data, {
-    headers: { Authorization: token },
-    withCredentials: true,
+  return API.put('/reset-password', data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 };
 
+// CONTACT
 export const contact = async (data) => {
-  return axios.post('http://localhost:5000/api/users/contact', data, {
-    headers: { 'Content-Type': 'application/json' },
-    withCredentials: true,
-  });
+  try {
+    const response = await API.post('/contact', data, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.data;
+  } catch (err) {
+    const errorMessage =
+      err.response?.data?.err || err.response?.data?.message || 'Failed to send contact message';
+    throw new Error(errorMessage);
+  }
 };
 
+// GET TOKEN
 export const getToken = async () => {
   const token = localStorage.getItem('token');
-
   if (!token) throw new Error('No token found in localStorage');
 
   try {
-    const response = await axios.post(`http://localhost:5000/api/users/get-token`, null, {
+    const response = await API.post('/get-token', null, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      withCredentials: false, // You no longer need cookies
+      withCredentials: false,
     });
-    return response.data.token; // Or however your backend responds
+    return response.data.token;
   } catch (error) {
-    const message = error.response?.data?.err || 'Failed to get token';
+    const message =
+      error.response?.data?.err || error.response?.data?.message || 'Failed to get token';
     throw new Error(message);
   }
 };
+
+// GET USER
 export const getUser = async () => {
   const token = localStorage.getItem('token');
-  // console.log(localStorage.getItem('token'));
-
   if (!token) throw new Error('No token in localStorage');
-  const res = await fetch('http://localhost:5000/api/users/get-user', {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`, // <--- this is critical
-      'Content-Type': 'application/json',
-    },
-  });
 
-  if (!res.ok) {
-    throw new Error('Failed to fetch user');
+  try {
+    const response = await API.get('/get-user', {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    const message =
+      error.response?.data?.err || error.response?.data?.message || 'Failed to fetch user';
+    throw new Error(message);
   }
-
-  return await res.json();
 };
 
+// UPDATE CART
 export const updateUserCart = async (cart) => {
   const token = localStorage.getItem('token');
   if (!token) throw new Error('No token in localStorage');
 
   try {
     const response = await axios.put(
-      '/api/users/cart',
+      'http://localhost:5000/api/users/cart',
       { cart },
       {
         headers: {
@@ -101,23 +118,24 @@ export const updateUserCart = async (cart) => {
           'Content-Type': 'application/json',
         },
         withCredentials: true,
-        baseURL: 'http://localhost:5000', // explicitly setting baseURL to your backend server
       }
     );
     return response.data;
   } catch (error) {
-    const message = error.response?.data?.err || 'Failed to update cart';
+    const message =
+      error.response?.data?.err || error.response?.data?.message || 'Failed to update cart';
     throw new Error(message);
   }
 };
 
+// UPDATE WISHLIST
 export const updateUserWishlist = async (wishlist) => {
   const token = localStorage.getItem('token');
   if (!token) throw new Error('No token in localStorage');
 
   try {
     const response = await axios.put(
-      '/api/users/wishlist',
+      'http://localhost:5000/api/users/wishlist',
       { wishlist },
       {
         headers: {
@@ -125,12 +143,12 @@ export const updateUserWishlist = async (wishlist) => {
           'Content-Type': 'application/json',
         },
         withCredentials: true,
-        baseURL: 'http://localhost:5000',
       }
     );
     return response.data;
   } catch (error) {
-    const message = error.response?.data?.err || 'Failed to update wishlist';
+    const message =
+      error.response?.data?.err || error.response?.data?.message || 'Failed to update wishlist';
     throw new Error(message);
   }
 };

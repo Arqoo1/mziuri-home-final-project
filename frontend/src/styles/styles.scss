@@ -19,11 +19,13 @@
 @use "./components/scrollToTop";
 @use "./components/ImageCarousel";
 @use "./components/OurHistory";
-
+@use "./components/FeaturedProducts";
+@use "./components/CompareModal";
 @use "./components/OurTeam";
 @use "./components/ClientReview";
 @use "./components/DealOfDay";
 @use "./components/CartTable";
+@use "./components/AddConfirmationModal";
 
 
 @use "./routes/SinglePage";
@@ -34,3 +36,4 @@
 @use "./routes/ForgotPassword";
 @use "./routes/Checkout";
 @use "./routes/Cart";
+@use "./routes/Compare";

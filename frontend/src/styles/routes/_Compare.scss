@@ -1,0 +1,152 @@
+.compare-table {
+  width: calc(100% - 80px);
+  margin: 50px auto;
+  border-collapse: collapse;
+  text-align: center;
+  table-layout: fixed;
+  ;
+
+  // Let the first column auto-size, rest fixed
+  th:first-child,
+  td:first-child {
+    width: auto;
+  }
+
+  th:not(:first-child),
+  td:not(:first-child) {
+    width: 30%// fixed width for product columns
+  }
+
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 30px;
+    vertical-align: middle;
+  }
+
+  th {
+    background-color: #f8f8f8;
+    font-weight: 600;
+
+}
+
+  td {
+    .add-btn {
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.875rem;
+
+      &:hover {
+        background-color: #218838;
+      }
+    }
+
+    img {
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      border-radius: 4px;
+      margin-bottom: 5px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #333;
+    }
+  }
+}
+
+// Modal styles (optional, kept from before)
+.modal-overlay {
+    position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+
+  .modal-content {
+      background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    max-height: 80vh;
+    overflow-y: auto;
+    width: 500px;
+    position: relative;
+
+    h3 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #444;
+    }
+    
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-size: 1.5rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #666;
+
+      &:hover {
+        color: #000;
+      }
+    }
+
+    .product-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      li {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        border-bottom: 1px solid #eee;
+        padding: 10px 0;
+
+        &:hover {
+          background-color: #f9f9f9;
+        }
+        
+        img {
+          width: 50px;
+          height: 50px;
+          object-fit: contain;
+          margin-right: 10px;
+        }
+
+        &.disabled {
+          pointer-events: none;
+          opacity: 0.5;
+        }
+      }
+    }
+  }
+}
+.remove-btn {
+  margin-left: 10px;
+  background-color: #9b1919;
+  color: white;
+  border: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  
+  &:hover {
+    background-color: rgb(230, 23, 23);
+  }
+}

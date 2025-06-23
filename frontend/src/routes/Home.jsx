@@ -7,6 +7,7 @@ import ImageCarousel from '../components/ImageCarousel';
 import ClientReviewCarousel from '../components/ClientReviewCarousel';
 import OurHistory from '../components/OurHistory';
 import DealOfDay from '../components/DealOfDay';
+import FeaturedProducts from '../components/FeaturedProducts';
 
 function Home() {
   const { useFakeLoader } = useLoader();
@@ -16,9 +17,11 @@ function Home() {
     <>
       <Carousel />
       <CategoriesContainer />
+      <FeaturedProducts />
       <DealOfDay />
       <OurHistory />
       <ClientReviewCarousel />
+
       <ImageCarousel />
     </>
   );

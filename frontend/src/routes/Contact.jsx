@@ -4,6 +4,7 @@ import ContactUs from '../components/ContactUs';
 import InputGroup from '../components/InputGroup';
 import { validateFullName, validateEmail, validateMessage } from '../utils/validations';
 import * as api from '../api/usersapi.js';
+import Map from '../components/Map.jsx';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -151,6 +152,7 @@ function Contact() {
           </form>
         </div>
       </section>
+      <Map />
     </>
   );
 }

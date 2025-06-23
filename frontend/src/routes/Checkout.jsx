@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import RouteBanner from '../components/RouteBanner';
 import InputGroup from '../components/InputGroup';
-import CouponInput from '../components/CouponBox';
+import { useCurrency } from '../Context/CurrencyContext';
 
 function Checkout() {
   const { state } = useLocation();
@@ -13,33 +13,17 @@ function Checkout() {
     total = 0,
     appliedCoupon = null,
   } = state || {};
-
+  
+  const [selectedMethod, setSelectedMethod] = useState('');
   const [showCouponInput, setShowCouponInput] = useState(false);
+
+  const { convert, symbol } = useCurrency();
 
   return (
     <>
       <RouteBanner page="Checkout" />
 
       <section className="checkout-container">
-        <div className="returning-customer">
-          Returning customer? <Link to="/login">Click here to login</Link>
-        </div>
-
-        <div
-          className="coupon-toggle"
-          onClick={() => setShowCouponInput((prev) => !prev)}
-        >
-          Have a coupon? Click here to enter your code
-        </div>
-
-        {showCouponInput && (
-          <CouponInput
-            onApply={() => {
-              alert('Coupon re-entry not supported here.');
-            }}
-          />
-        )}
-
         <section className="checkout">
           <form className="checkout-form">
             {/* Form fields remain unchanged */}
@@ -111,41 +95,133 @@ function Checkout() {
             </InputGroup>
           </form>
 
-          {/* ✅ REAL ORDER SUMMARY */}
           <section className="checkout-summary">
             <p className="checkout-title">Your Order</p>
 
-            {cart.map((item, index) => (
-              <div className="order-item" key={index}>
-                <span className="item-name">
-                  {(typeof item.title === 'object' ? item.title.en : item.title) || 'Unnamed'} x {item.quantity}
-                </span>
-                <span className="item-price">
-                  ${(item.price * item.quantity).toFixed(2)}
+            <div className="order-table">
+              <div className="table-header">
+                <span>Product</span>
+                <span>Total</span>
+              </div>
+
+              {cart.map((item, index) => (
+                <div className="table-row" key={index}>
+                  <span>
+                    {(typeof item.title === 'object' ? item.title.en : item.title) ||
+                      'Unnamed'}{' '}
+                    <strong>×{item.quantity}</strong>
+                  </span>
+                  <span>
+                    {symbol}
+                    {convert(item.price * item.quantity)}
+                  </span>
+                </div>
+              ))}
+
+              <div className="table-row">
+                <strong>Cart Subtotal</strong>
+                <span>
+                  {symbol}
+                  {convert(subtotal)}
                 </span>
               </div>
-            ))}
 
-            <div className="summary-row">
-              <span>Subtotal:</span>
-              <span>${subtotal.toFixed(2)}</span>
-            </div>
+              {discount > 0 && (
+                <div className="table-row">
+                  <span>
+                    Discount{appliedCoupon?.code ? ` (${appliedCoupon.code})` : ''}
+                  </span>{' '}
+                  <span>
+                    -{symbol}
+                    {convert(discount)}
+                  </span>
+                </div>
+              )}
 
-            {discount > 0 && (
-              <div className="summary-row">
-                <span>Discount{appliedCoupon ? ` (${appliedCoupon})` : ''}:</span>
-                <span>-${discount.toFixed(2)}</span>
+              <div className="table-row total-row">
+                <strong>Total</strong>
+                <strong>
+                  {symbol}
+                  {convert(total)}
+                </strong>
               </div>
-            )}
-
-            <div className="order-total">
-              <span>Total:</span>
-              <span>${total.toFixed(2)}</span>
             </div>
 
-            <button type="submit" className="checkout-button">
-              Place Order
-            </button>
+            <div className="payment-methods">
+              <div>
+                <p
+                  onClick={() =>
+                    setSelectedMethod(selectedMethod === 'bank' ? '' : 'bank')
+                  }
+                  className="clickable-method"
+                >
+                  Direct Bank Transfer
+                </p>
+                <div
+                  className={`methodscontainer ${
+                    selectedMethod === 'bank' ? 'show' : ''
+                  }`}
+                >
+                  {selectedMethod === 'bank' && (
+                    <>
+                      Make your payment directly into our bank account. Please use your
+                      Order ID as the payment reference. Your order won’t be shipped until
+                      the funds have cleared in our account.
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <p
+                  onClick={() =>
+                    setSelectedMethod(selectedMethod === 'cheque' ? '' : 'cheque')
+                  }
+                  className="clickable-method"
+                >
+                  Cheque Payment
+                </p>
+                <div
+                  className={`methodscontainer ${
+                    selectedMethod === 'cheque' ? 'show' : ''
+                  }`}
+                >
+                  {selectedMethod === 'cheque' && (
+                    <>
+                      Please send your cheque to Store Name, Store Street, Store Town,
+                      Store State / County, Store Postcode.
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <div>
+                <p
+                  onClick={() =>
+                    setSelectedMethod(selectedMethod === 'paypal' ? '' : 'paypal')
+                  }
+                  className="clickable-method"
+                >
+                  PayPal
+                </p>
+                <div
+                  className={`methodscontainer ${
+                    selectedMethod === 'paypal' ? 'show' : ''
+                  }`}
+                >
+                  {selectedMethod === 'paypal' && (
+                    <>
+                      Pay via PayPal; you can pay with your credit card if you don’t have a
+                      PayPal account.
+                    </>
+                  )}
+                </div>
+              </div>
+
+              <button type="submit" className="checkout-button">
+                Place Order
+              </button>
+            </div>
           </section>
         </section>
       </section>

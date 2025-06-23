@@ -1,0 +1,56 @@
+.FeaturedProducts {
+  padding: 2rem;
+  width: 100%;
+  position: relative;
+  text-align: center;
+  &>span {
+    font-family: 'Great Vibes', cursive;
+    font-size: 34px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #e72463;
+  }
+  &>h2{
+    margin: 2rem 0rem;
+    font-size: 60px;
+    letter-spacing: 4px;
+    font-family: "Josefin Slab", serif;
+    color: #000;
+  }
+  .swiper {
+    margin-bottom: 1.5rem;
+  }
+
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+  }
+
+  .product-card {
+    width: 100%;
+  }
+
+  .custom-pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+    gap: 0.5rem;
+  }
+
+  #featured-pagination .swiper-pagination-bullet {
+    background: #000;
+    opacity: 0.5;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    transition:
+      opacity 0.3s,
+      transform 0.3s;
+    cursor: pointer;
+  }
+
+  #featured-pagination .swiper-pagination-bullet-active {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}

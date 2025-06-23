@@ -1,0 +1,34 @@
+import React from 'react';
+
+function AddConfirmationModal({
+  productTitle,
+  action, // "cart" or "wishlist"
+  onClose,
+  onConfirm,
+}) {
+  const capitalizedAction = action === 'cart' ? 'Cart' : 'Wishlist';
+
+  return (
+    <div
+      className="modal-overlay"
+      onClick={onClose}
+    >
+      <div
+        className="modal-content"
+        onClick={(e) => e.stopPropagation()}
+      >
+       <p className='title'>Flower</p>
+        <h2>"{productTitle}"</h2>
+        <p>
+          Do you want to add this product to your <strong>{capitalizedAction}</strong>?
+        </p>
+        <div>
+          <button onClick={onClose}>Close</button>
+          <button onClick={onConfirm}>Add to {capitalizedAction}</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default AddConfirmationModal;

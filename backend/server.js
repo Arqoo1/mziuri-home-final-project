@@ -11,7 +11,7 @@ import helmet from "helmet";
 import compression from "compression";
 import dotenv from "dotenv";
 import CouponRoutes from './routes/CouponRoutes.js';
-
+import currencyRoutes from './routes/currencyRoutes.js';
 const app = express();
 dotenv.config();
 app.use(express.json());
@@ -20,8 +20,8 @@ const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
 const limiter = rateLimit({
-  windowMs: 5 * 60 * 1000, //5 minutes
-  max: 1000, // limit each IP to 100 requests per windowMs
+  windowMs: 5 * 60 * 1000, 
+  max: 5000, 
   message: "Too many requests from this IP, please try again later",
 });
 app.use(limiter);
@@ -32,8 +32,7 @@ app.use(
   })
 );
 app.use(helmet());
-app.use(cookieParser()); //to access cookies in node.js
-app.use(compression());
+app.use(cookieParser()); 
 
 mongoose
   .connect(MONGO_URI)
@@ -49,5 +48,6 @@ app.use("/api/users", UsersRouter);
 app.use("/api/reviews", ReviewRouter);
 // app.use("/api/cart-items",   CartRoutes); 
 app.use('/api/coupons', CouponRoutes);
+app.use('/api/currency', currencyRoutes);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

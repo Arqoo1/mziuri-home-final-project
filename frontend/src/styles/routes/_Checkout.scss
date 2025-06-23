@@ -1,8 +1,8 @@
 @use '../abstracts/index.scss' as *;
 
 .checkout-container {
-  width: 100%;
-  padding: 1rem;
+  width: calc(100% - 80px);
+  margin: 0 auto;
   .checkout {
     padding: 40px 0px;
     display: flex;
@@ -49,14 +49,20 @@
     }
     .checkout-summary {
       width: 50%;
-      padding-left: 30px;
+      padding: 30px;
       background-color: $bg-color;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
     }
-    input, select, textarea{
-        background-color: white;
+    input,
+    select,
+    textarea {
+      background-color: white;
     }
-    select, textarea{
-        border: 1px solid #ccc;
+    select,
+    textarea {
+      border: 1px solid #ccc;
     }
     .checkout-form {
       display: flex;
@@ -119,4 +125,77 @@
       }
     }
   }
+}
+.order-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.table-header,
+.table-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+}
+
+.table-header {
+  font-weight: bold;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.total-row {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+
+.payment-methods{
+
+padding-top: 20px; 
+div{
+  margin-bottom: 10px;
+} // padding: 30px 0px;
+}
+.methodscontainer {
+  // padding: 10px;
+  background-color: $white-color;
+  font-size: 18px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 1.5s ease;
+  // margin-bottom: 1rem;
+
+  &.show {
+    max-height: 200px; // Adjust if needed
+    opacity: 1;
+  }
+}
+
+.clickable-method {
+  cursor: pointer;
+  font-weight: 600;
+  padding: 2px 0px;
+  color: black;
+  font-size: 20px;
+  // margin: 1rem 0 0.5rem;
+  &:hover {
+    color: $primary-color;
+  }
+}
+.checkout-button{
+  background-color: black;
+  color: $white-color;
+  width: 100%;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
 }

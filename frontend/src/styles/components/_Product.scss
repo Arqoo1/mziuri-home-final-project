@@ -56,6 +56,9 @@
     i:nth-child(2) {
       transition-delay: 0.25s;
     }
+    i:nth-child(3) {
+      transition-delay: 0.45s;
+    }
   }
 
   &:hover .icon-wrapper {
@@ -119,4 +122,3 @@
   //   }
   // }
 }
-

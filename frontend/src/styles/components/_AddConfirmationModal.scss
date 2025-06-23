@@ -1,0 +1,66 @@
+@use '../abstracts/index.scss' as *;
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  display: flex;
+  align-self: center;
+  flex-direction: column;
+  background-color: white;
+  gap: 20px;
+  border-radius: 8px;
+  width: 100%;
+
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+  .title {
+    font-size: 24px;
+    color: $primary-color;
+    letter-spacing: 1px;
+  }
+  strong{
+    color: black;
+  }
+  & > div {
+    display: flex;
+    justify-content: space-around;
+    button {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+
+      &:first-child {
+        padding: 10px 30px;
+        background: none;
+        border-radius: 4px;
+
+        border: $primary-color 1px solid;
+        &:hover {
+          background-color: $primary-color;
+          color: white;
+        }
+      }
+
+      &:last-child {
+        background-color: $primary-color;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        &:hover {
+            background-color: darken($primary-color, 10%);
+        }
+      }
+    }
+  }
+}
