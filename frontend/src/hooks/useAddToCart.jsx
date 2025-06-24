@@ -14,21 +14,19 @@ export function useAddToCart() {
         const rawCart = response.data || [];
 
         // Enrich cart with product details and set productId explicitly
-        const enrichedCart = rawCart.map((item) => {
-          // Assume `item._id` is cart item id,
-          // but you want productId to be the product's id in this cart item
+const enrichedCart = rawCart.map((item) => {
+  // Make sure productId is set explicitly:
+  const productIdFromResponse = item.productId || item._id;
 
-          // If backend embeds product info as item.product (or similar), do:
-          const productIdFromBackend = item.productId || item.product?._id || item._id;
-
-          return {
-            ...item,
-            productId: productIdFromBackend,
-            title: product.title,
-            image: product.image,
-            price: product.salePrice || product.price,
-          };
-        });
+  return {
+    ...item,
+    productId: productIdFromResponse,   // <-- add this line!
+    _id: productIdFromResponse,         // keep _id for compatibility
+    title: product.title,
+    image: product.image,
+    price: product.salePrice || product.price,
+  };
+});
 
         setCart(enrichedCart);
       } else {
