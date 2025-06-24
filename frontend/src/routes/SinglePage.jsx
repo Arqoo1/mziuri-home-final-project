@@ -9,7 +9,6 @@ import AddConfirmationModal from '../components/AddConfirmationModal';
 import { useAddToCart } from '../hooks/useAddToCart';
 import { useWishlist } from '../hooks/useWishlist';
 import { useCurrency } from '../Context/CurrencyContext';
-import { useUserData } from '../Context/UserContext';
 
 function SinglePage() {
   const { id: productId } = useParams();
@@ -60,20 +59,14 @@ function SinglePage() {
     setModalOpen(true);
   };
 
-const handleConfirmAdd = () => {
-  if (modalAction === 'cart') {
-    addToCart(
-      {
-        ...product,
-        productId: product._id,  
-      },
-      quantity
-    );
-  } else if (modalAction === 'wishlist') {
-    addToWishlist(product);
-  }
-  setModalOpen(false);
-};
+  const handleConfirmAdd = () => {
+    if (modalAction === 'cart') {
+      addToCart(product, quantity);
+    } else if (modalAction === 'wishlist') {
+      addToWishlist(product);
+    }
+    setModalOpen(false);
+  };
 
   return (
     <main className="single-product-page">

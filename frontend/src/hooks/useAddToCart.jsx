@@ -1,3 +1,4 @@
+// hooks/useAddToCart.js
 import { useUserData } from '../Context/UserContext';
 import { addToCart as apiAddToCart } from '../api/productapi';
 
@@ -14,20 +15,23 @@ export function useAddToCart() {
         // User logged in - use backend
         const response = await apiAddToCart(userData._id, productId, quantity);
 
+        // Backend returns cart items (raw)
         const rawCart = response.data || [];
 
-        // Enrich cart with product details and set productId explicitly
         const enrichedCart = rawCart.map((item) => {
-          // Make sure productId is set explicitly:
-          const productIdFromResponse = item.productId || item._id;
-
+          if (item.productId === productId || item._id === productId) {
+            return {
+              ...item,
+              _id: item.productId || item._id,
+              productId: item.productId || item._id, // ✅ Add this line
+              title: product.title,
+              image: product.image,
+              price: product.salePrice || product.price,
+            };
+          }
           return {
             ...item,
-            productId: productIdFromResponse, // <-- add this line!
-            _id: productIdFromResponse, // keep _id for compatibility
-            title: product.title,
-            image: product.image,
-            price: product.salePrice || product.price,
+            productId: item.productId || item._id, // ✅ Ensure other items have it too
           };
         });
 
@@ -36,12 +40,11 @@ export function useAddToCart() {
         // Guest user - store in localStorage
         const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
 
-        const existingIndex = guestCart.findIndex((item) => item.productId === productId);
+        const existingIndex = guestCart.findIndex((item) => item._id === productId);
         if (existingIndex >= 0) {
           guestCart[existingIndex].quantity += quantity;
         } else {
           guestCart.push({
-            productId: productId, // add productId explicitly here
             _id: productId,
             title: product.title,
             image: product.image,
