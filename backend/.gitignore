@@ -19,8 +19,7 @@ yarn-error.log*
 .env.production.local
 
 # Build output
-/dist
-/build
+
 
 # IDE settings
 .vscode/
