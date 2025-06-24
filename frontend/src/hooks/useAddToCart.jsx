@@ -15,10 +15,15 @@ export function useAddToCart() {
 
         // Enrich cart with product details and set productId explicitly
         const enrichedCart = rawCart.map((item) => {
+          // Assume `item._id` is cart item id,
+          // but you want productId to be the product's id in this cart item
+
+          // If backend embeds product info as item.product (or similar), do:
+          const productIdFromBackend = item.productId || item.product?._id || item._id;
+
           return {
             ...item,
-            productId: item.productId || item._id, // add this line
-            _id: item._id,
+            productId: productIdFromBackend,
             title: product.title,
             image: product.image,
             price: product.salePrice || product.price,
