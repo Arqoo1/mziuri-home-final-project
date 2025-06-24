@@ -1,7 +1,7 @@
 import Product from "../models/Product.js";
 import User from "../models/users.js";
 import { getCache, setCache } from "../utils/cache.js";
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 export const getProducts = async (req, res) => {
   try {
@@ -106,7 +106,6 @@ export const addToCart = async (req, res) => {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // Check if product already in cart
     const existingItem = user.cart.find(
       (item) => item.productId && item.productId.equals(productId)
     );
@@ -115,17 +114,14 @@ export const addToCart = async (req, res) => {
       existingItem.quantity += quantity;
     } else {
       user.cart.push({
-        productId: mongoose.Types.ObjectId(productId),
+        productId: new mongoose.Types.ObjectId(productId),
         quantity,
       });
     }
 
     await user.save();
-
-    // Populate product details for response if needed
     await user.populate("cart.productId");
 
-    // Map cart to return productId as string
     const responseCart = user.cart.map((item) => ({
       _id: item._id,
       productId: item.productId ? item.productId.toString() : null,
@@ -153,7 +149,9 @@ export const removeFromCart = async (req, res) => {
 
     res.status(200).json(user.cart);
   } catch (err) {
-    res.status(500).json({ message: "Error removing from cart", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error removing from cart", error: err.message });
   }
 };
 
