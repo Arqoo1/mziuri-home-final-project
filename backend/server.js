@@ -38,13 +38,27 @@ app.use(
     credentials: true,
   })
 );
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'", "*"],
+        mediaSrc: ["'self'", "*"],
+        imgSrc: ["'self'", "*", "data:"], // note: no quotes around data: here
+        connectSrc: ["'self'", "*"],
+        scriptSrc: ["'self'", "*"],
+      },
+    },
+  })
+);
 app.use(cookieParser());
 
 mongoose
   .connect(MONGO_URI)
   .then(() => console.log("Connected to MongoDB"))
-  .catch((error) => console.error("Failed to connect to MongoDB:", error.message));
+  .catch((error) =>
+    console.error("Failed to connect to MongoDB:", error.message)
+  );
 
 // API routes
 app.use("/api/products", productRoutes);
