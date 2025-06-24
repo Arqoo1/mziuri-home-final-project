@@ -12,7 +12,7 @@ import { useCurrency } from '../Context/CurrencyContext';
 import { useTranslation } from 'react-i18next';
 
 function Cart() {
-  const { cart, setCart, loggedIn } = useUserData();
+  const { cart, setCart, loggedIn, userData } = useUserData();
   const [enrichedCart, setEnrichedCart] = useState([]);
   const [discount, setDiscount] = useState(0);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
@@ -20,7 +20,6 @@ function Cart() {
   const navigate = useNavigate();
   const { convert, symbol } = useCurrency();
   const { t } = useTranslation();
-
   useEffect(() => {
     const enrichItems = async () => {
       if (!cart || cart.length === 0) {
@@ -28,35 +27,22 @@ function Cart() {
         return;
       }
 
-      const promises = cart
-        .filter((item) => item.productId) // only items with productId
-        .map(async (item) => {
-          try {
-            const productData = await fetchSingleProduct(item.productId);
-            return {
-              ...item,
-              title: productData.title,
-              image: productData.image,
-              price: productData.salePrice || productData.price,
-              stock: productData.stock,
-            };
-          } catch (error) {
-            console.warn(`Product not found for ID ${item.productId}, removing from cart.`);
-            return null;
-          }
-        });
+      const promises = cart.map(async (item) => {
+        if (item.price !== undefined) return item;
+        const productData = await fetchSingleProduct(item.productId || item._id);
+        return {
+          ...item,
+          title: productData.title,
+          image: productData.image,
+          price: productData.salePrice || productData.price,
+          stock: productData.stock,
+        };
+      });
 
-      const results = (await Promise.all(promises)).filter(Boolean);
+      const results = await Promise.all(promises);
       setEnrichedCart(results);
-
-      // Clean cart from items without productId or invalid productId
-      const validCartItems = cart.filter(
-        (item) => item.productId && results.some((res) => res.productId === item.productId)
-      );
-      if (validCartItems.length !== cart.length) {
-        setCart(validCartItems);
-      }
     };
+
     enrichItems();
   }, [cart]);
 

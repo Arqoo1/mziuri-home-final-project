@@ -59,14 +59,20 @@ function SinglePage() {
     setModalOpen(true);
   };
 
-  const handleConfirmAdd = () => {
-    if (modalAction === 'cart') {
-      addToCart(product, quantity);
-    } else if (modalAction === 'wishlist') {
-      addToWishlist(product);
-    }
-    setModalOpen(false);
-  };
+const handleConfirmAdd = () => {
+  if (modalAction === 'cart') {
+    addToCart(
+      {
+        ...product,
+        productId: product._id,  
+      },
+      quantity
+    );
+  } else if (modalAction === 'wishlist') {
+    addToWishlist(product);
+  }
+  setModalOpen(false);
+};
 
   return (
     <main className="single-product-page">
