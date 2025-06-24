@@ -1,7 +1,3 @@
-// hooks/useAddToCart.js
-import { useUserData } from '../Context/UserContext';
-import { addToCart as apiAddToCart } from '../api/productapi';
-
 export function useAddToCart() {
   const { loggedIn, setCart, userData, cart } = useUserData();
 
@@ -15,21 +11,18 @@ export function useAddToCart() {
         // User logged in - use backend
         const response = await apiAddToCart(userData._id, productId, quantity);
 
-        // Backend returns cart items (raw)
         const rawCart = response.data || [];
 
-        // Enrich cart with product details (merge)
-        const enrichedCart = rawCart.map(item => {
-          if (item.productId === productId || item._id === productId) {
-            return {
-              ...item,
-              _id: item.productId || item._id,
-              title: product.title,
-              image: product.image,
-              price: product.salePrice || product.price,
-            };
-          }
-          return item;
+        // Enrich cart with product details and set productId explicitly
+        const enrichedCart = rawCart.map((item) => {
+          return {
+            ...item,
+            productId: item.productId || item._id, // add this line
+            _id: item._id,
+            title: product.title,
+            image: product.image,
+            price: product.salePrice || product.price,
+          };
         });
 
         setCart(enrichedCart);
@@ -37,11 +30,12 @@ export function useAddToCart() {
         // Guest user - store in localStorage
         const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
 
-        const existingIndex = guestCart.findIndex(item => item._id === productId);
+        const existingIndex = guestCart.findIndex((item) => item.productId === productId);
         if (existingIndex >= 0) {
           guestCart[existingIndex].quantity += quantity;
         } else {
           guestCart.push({
+            productId: productId, // add productId explicitly here
             _id: productId,
             title: product.title,
             image: product.image,
