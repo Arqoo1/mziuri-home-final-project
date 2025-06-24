@@ -29,11 +29,12 @@ function Cart() {
       }
 
       const promises = cart.map(async (item) => {
-        if (item.price !== undefined) return item;
+        // Get productId safely: first try productId, then _id (only if _id looks like productId)
+        const productId = item.productId || item._id;
 
-        const productId = item.productId || item.product;
+        // If no productId or it looks like a cart item ID (not product), skip it safely
         if (!productId) {
-          console.warn('Skipping cart item with no productId:', item);
+          console.warn('Cart item missing productId and _id, skipping', item);
           return null;
         }
 
@@ -48,15 +49,23 @@ function Cart() {
             stock: productData.stock,
           };
         } catch (error) {
-          console.warn(`Failed fetching product ${productId}:`, error.message);
-          return null; 
+          console.warn(`Product not found for ID ${productId}, removing from cart.`);
+          return null; // skip invalid products
         }
       });
 
+      // Wait for all and remove nulls
       const results = (await Promise.all(promises)).filter(Boolean);
       setEnrichedCart(results);
-    };
 
+      // Also update cart in state, removing invalid items
+      const validCartItems = cart.filter((item) =>
+        results.some((res) => res.productId === (item.productId || item._id))
+      );
+      if (validCartItems.length !== cart.length) {
+        setCart(validCartItems);
+      }
+    };
     enrichItems();
   }, [cart]);
 
