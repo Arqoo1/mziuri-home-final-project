@@ -18,7 +18,6 @@ const UsersSchema = new mongoose.Schema({
     {
       productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Product", // ✅ now matches the model name
       },
       quantity: {
         type: Number,
@@ -30,7 +29,6 @@ const UsersSchema = new mongoose.Schema({
     {
       productId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Product", // ✅ now matches the model name
       },
       quantity: {
         type: Number,

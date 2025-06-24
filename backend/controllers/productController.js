@@ -107,63 +107,67 @@ export const addToCart = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     const existingItem = user.cart.find(
-      (item) => item.productId && item.productId.equals(productId)
+      (item) => item.productId.toString() === productId.toString()
     );
 
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
-      user.cart.push({
-        productId: new mongoose.Types.ObjectId(productId),
-        quantity,
-      });
+      user.cart.push({ productId, quantity });
     }
 
     await user.save();
-    await user.populate("cart.productId");
-
-    const responseCart = user.cart.map((item) => ({
-      _id: item._id,
-      productId: item.productId ? item.productId.toString() : null,
-      quantity: item.quantity,
-    }));
-
-    res.status(200).json(responseCart);
-  } catch (err) {
-    console.error("Error adding to cart:", err);
-    res
-      .status(500)
-      .json({ message: "Error adding to cart", error: err.message });
-  }
-};
-
-// Remove from Cart
-export const removeFromCart = async (req, res) => {
-  const { userId, productId } = req.body;
-  try {
-    const user = await User.findById(userId);
-    if (!user) return res.status(404).json({ message: "User not found" });
-
-    user.cart = user.cart.filter((item) => !item.productId.equals(productId));
-    await user.save();
-
     res.status(200).json(user.cart);
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Error removing from cart", error: err.message });
+    console.error("Add to cart error:", err);
+    res.status(500).json({
+      message: "Error adding to cart",
+      error: err.message,
+    });
   }
 };
 
-// Add to Wishlist
-export const addToWishlist = async (req, res) => {
-  const { userId, productId, quantity = 1 } = req.body;
+// ✅ Remove from Cart
+export const removeFromCart = async (req, res) => {
+  const { userId, productId } = req.body;
+
+  if (!userId || !productId) {
+    return res.status(400).json({ message: "Missing userId or productId" });
+  }
+
   try {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const existingItem = user.wishlist.find((item) =>
-      item.productId.equals(productId)
+    user.cart = user.cart.filter(
+      (item) => item.productId.toString() !== productId.toString()
+    );
+
+    await user.save();
+    res.status(200).json(user.cart);
+  } catch (err) {
+    console.error("Remove from cart error:", err);
+    res.status(500).json({
+      message: "Error removing from cart",
+      error: err.message,
+    });
+  }
+};
+
+// ✅ Add to Wishlist
+export const addToWishlist = async (req, res) => {
+  const { userId, productId, quantity = 1 } = req.body;
+
+  if (!userId || !productId) {
+    return res.status(400).json({ message: "Missing userId or productId" });
+  }
+
+  try {
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const existingItem = user.wishlist.find(
+      (item) => item.productId.toString() === productId.toString()
     );
 
     if (existingItem) {
@@ -175,27 +179,37 @@ export const addToWishlist = async (req, res) => {
     await user.save();
     res.status(200).json(user.wishlist);
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Error adding to wishlist", error: err.message });
+    console.error("Add to wishlist error:", err);
+    res.status(500).json({
+      message: "Error adding to wishlist",
+      error: err.message,
+    });
   }
 };
 
-// Remove from Wishlist
+// ✅ Remove from Wishlist
 export const removeFromWishlist = async (req, res) => {
   const { userId, productId } = req.body;
+
+  if (!userId || !productId) {
+    return res.status(400).json({ message: "Missing userId or productId" });
+  }
+
   try {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
     user.wishlist = user.wishlist.filter(
-      (item) => !item.productId.equals(productId)
+      (item) => item.productId.toString() !== productId.toString()
     );
+
     await user.save();
     res.status(200).json(user.wishlist);
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Error removing from wishlist", error: err.message });
+    console.error("Remove from wishlist error:", err);
+    res.status(500).json({
+      message: "Error removing from wishlist",
+      error: err.message,
+    });
   }
 };
