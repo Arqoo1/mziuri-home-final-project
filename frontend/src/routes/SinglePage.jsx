@@ -9,6 +9,7 @@ import AddConfirmationModal from '../components/AddConfirmationModal';
 import { useAddToCart } from '../hooks/useAddToCart';
 import { useWishlist } from '../hooks/useWishlist';
 import { useCurrency } from '../Context/CurrencyContext';
+import { useUserData } from '../Context/UserContext';
 
 function SinglePage() {
   const { id: productId } = useParams();

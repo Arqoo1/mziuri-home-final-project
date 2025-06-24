@@ -1,3 +1,6 @@
+import { useUserData } from '../Context/UserContext';
+import { addToCart as apiAddToCart } from '../api/productapi';
+
 export function useAddToCart() {
   const { loggedIn, setCart, userData, cart } = useUserData();
 
@@ -14,19 +17,19 @@ export function useAddToCart() {
         const rawCart = response.data || [];
 
         // Enrich cart with product details and set productId explicitly
-const enrichedCart = rawCart.map((item) => {
-  // Make sure productId is set explicitly:
-  const productIdFromResponse = item.productId || item._id;
+        const enrichedCart = rawCart.map((item) => {
+          // Make sure productId is set explicitly:
+          const productIdFromResponse = item.productId || item._id;
 
-  return {
-    ...item,
-    productId: productIdFromResponse,   // <-- add this line!
-    _id: productIdFromResponse,         // keep _id for compatibility
-    title: product.title,
-    image: product.image,
-    price: product.salePrice || product.price,
-  };
-});
+          return {
+            ...item,
+            productId: productIdFromResponse, // <-- add this line!
+            _id: productIdFromResponse, // keep _id for compatibility
+            title: product.title,
+            image: product.image,
+            price: product.salePrice || product.price,
+          };
+        });
 
         setCart(enrichedCart);
       } else {
