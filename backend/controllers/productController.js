@@ -105,39 +105,58 @@ export const addToCart = async (req, res) => {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
+    // Find by productId field now
     const existingItem = user.cart.find(
-      (item) => item.product && item.product.equals(productId)
+      (item) => item.productId && item.productId.equals(productId)
     );
 
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
-      user.cart.push({ product: productId, quantity });
+      user.cart.push({ productId, quantity }); // store as productId
     }
 
     await user.save();
-    res.status(200).json(user.cart);
+
+    // Return cart items with productId explicitly included
+    // If Mongoose is returning ObjectIds, you might want to convert them to string for frontend
+    const responseCart = user.cart.map(item => ({
+      _id: item._id,
+      productId: item.productId.toString(),
+      quantity: item.quantity,
+    }));
+
+    res.status(200).json(responseCart);
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Error adding to cart", error: err.message });
+    res.status(500).json({ message: "Error adding to cart", error: err.message });
   }
 };
+
 
 // Remove from Cart
 export const removeFromCart = async (req, res) => {
   const { userId, productId } = req.body;
+
   try {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    user.cart = user.cart.filter((item) => !item.productId.equals(productId));
+    // Filter cart by productId (consistent field)
+    user.cart = user.cart.filter(
+      (item) => !item.productId.equals(productId)
+    );
+
     await user.save();
-    res.status(200).json(user.cart);
+
+    const responseCart = user.cart.map(item => ({
+      _id: item._id,
+      productId: item.productId.toString(),
+      quantity: item.quantity,
+    }));
+
+    res.status(200).json(responseCart);
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Error removing from cart", error: err.message });
+    res.status(500).json({ message: "Error removing from cart", error: err.message });
   }
 };
 
