@@ -12,7 +12,7 @@ import { useCurrency } from '../Context/CurrencyContext';
 import { useTranslation } from 'react-i18next';
 
 function Cart() {
-  const { cart, setCart, loggedIn, userData } = useUserData();
+  const { cart, setCart, loggedIn } = useUserData();
   const [enrichedCart, setEnrichedCart] = useState([]);
   const [discount, setDiscount] = useState(0);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
@@ -20,6 +20,8 @@ function Cart() {
   const navigate = useNavigate();
   const { convert, symbol } = useCurrency();
   const { t } = useTranslation();
+
+  // Enrich cart with product details
   useEffect(() => {
     const enrichItems = async () => {
       if (!cart || cart.length === 0) {
@@ -28,24 +30,35 @@ function Cart() {
       }
 
       const promises = cart.map(async (item) => {
-        if (item.price !== undefined) return item;
-        const productData = await fetchSingleProduct(item.productId || item._id);
-        return {
-          ...item,
-          title: productData.title,
-          image: productData.image,
-          price: productData.salePrice || productData.price,
-          stock: productData.stock,
-        };
+        if (item.price !== undefined && item.title && item.image) {
+          return { ...item, productId: item.productId || item._id };
+        }
+
+        try {
+          const productData = await fetchSingleProduct(item.productId || item._id);
+          return {
+            ...item,
+            productId: item.productId || item._id,
+            title: productData.title,
+            image: productData.image,
+            price: productData.salePrice || productData.price,
+            stock: productData.stock,
+          };
+        } catch (err) {
+          console.warn('Product not found during enrichment:', item);
+          return null; // Remove if product no longer exists
+        }
       });
 
       const results = await Promise.all(promises);
-      setEnrichedCart(results);
+      const filtered = results.filter(Boolean); // remove nulls
+      setEnrichedCart(filtered);
     };
 
     enrichItems();
   }, [cart]);
 
+  // Subtotal calculation
   const subtotal = enrichedCart.reduce((acc, item) => {
     const price = Number(item.price);
     const quantity = Number(item.quantity);
@@ -73,6 +86,7 @@ function Cart() {
     try {
       const productToAdd = {
         ...product,
+        productId: product._id, // ✅ Ensures fetchSingleProduct works
         quantity: 1,
         price: product.salePrice || product.price,
       };
@@ -88,6 +102,7 @@ function Cart() {
     }
   };
 
+  // Apply coupon discount
   useEffect(() => {
     if (!appliedCoupon) {
       setDiscount(0);

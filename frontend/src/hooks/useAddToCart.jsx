@@ -1,4 +1,3 @@
-// hooks/useAddToCart.js
 import { useUserData } from '../Context/UserContext';
 import { addToCart as apiAddToCart } from '../api/productapi';
 
@@ -12,40 +11,34 @@ export function useAddToCart() {
 
     try {
       if (loggedIn && userData?._id) {
-        // User logged in - use backend
         const response = await apiAddToCart(userData._id, productId, quantity);
-
-        // Backend returns cart items (raw)
         const rawCart = response.data || [];
 
-        const enrichedCart = rawCart.map((item) => {
-          if (item.productId === productId || item._id === productId) {
-            return {
-              ...item,
-              _id: item.productId || item._id,
-              productId: item.productId || item._id, // ✅ Add this line
-              title: product.title,
-              image: product.image,
-              price: product.salePrice || product.price,
-            };
-          }
+        const enrichedCart = rawCart.map(item => {
+          const id = item.productId || item._id;
+
           return {
             ...item,
-            productId: item.productId || item._id, // ✅ Ensure other items have it too
+            _id: id,
+            productId: id,
+            title: item.title || product.title,
+            image: item.image || product.image,
+            price: item.price || product.salePrice || product.price,
+            quantity: item.quantity || quantity,
           };
         });
 
         setCart(enrichedCart);
       } else {
-        // Guest user - store in localStorage
         const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
+        const existingIndex = guestCart.findIndex(item => item._id === productId);
 
-        const existingIndex = guestCart.findIndex((item) => item._id === productId);
         if (existingIndex >= 0) {
           guestCart[existingIndex].quantity += quantity;
         } else {
           guestCart.push({
             _id: productId,
+            productId: productId,
             title: product.title,
             image: product.image,
             price: product.salePrice || product.price,
