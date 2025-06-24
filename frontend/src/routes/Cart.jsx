@@ -12,7 +12,7 @@ import { useCurrency } from '../Context/CurrencyContext';
 import { useTranslation } from 'react-i18next';
 
 function Cart() {
-  const { cart, setCart, loggedIn, userData } = useUserData();
+  const { cart, setCart, loggedIn } = useUserData();
   const [enrichedCart, setEnrichedCart] = useState([]);
   const [discount, setDiscount] = useState(0);
   const [appliedCoupon, setAppliedCoupon] = useState(null);
@@ -20,6 +20,7 @@ function Cart() {
   const navigate = useNavigate();
   const { convert, symbol } = useCurrency();
   const { t } = useTranslation();
+
   useEffect(() => {
     const enrichItems = async () => {
       if (!cart || cart.length === 0) {
@@ -28,23 +29,31 @@ function Cart() {
       }
 
       const promises = cart.map(async (item) => {
-
         if (item.price !== undefined) return item;
 
-        const productId = item.productId || item.product || item._id;
-        const productData = await fetchSingleProduct(productId);
+        const productId = item.productId || item.product;
+        if (!productId) {
+          console.warn('Skipping cart item with no productId:', item);
+          return null;
+        }
 
-        return {
-          ...item,
-          productId: productId,
-          title: productData.title,
-          image: productData.image,
-          price: productData.salePrice || productData.price,
-          stock: productData.stock,
-        };
+        try {
+          const productData = await fetchSingleProduct(productId);
+          return {
+            ...item,
+            productId,
+            title: productData.title,
+            image: productData.image,
+            price: productData.salePrice || productData.price,
+            stock: productData.stock,
+          };
+        } catch (error) {
+          console.warn(`Failed fetching product ${productId}:`, error.message);
+          return null; 
+        }
       });
 
-      const results = await Promise.all(promises);
+      const results = (await Promise.all(promises)).filter(Boolean);
       setEnrichedCart(results);
     };
 
