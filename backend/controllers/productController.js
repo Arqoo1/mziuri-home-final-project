@@ -105,33 +105,33 @@ export const addToCart = async (req, res) => {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // Find by productId field now
     const existingItem = user.cart.find(
-      (item) => item.productId && item.productId.equals(productId)
+      (item) => item.product && item.product.equals(productId)
     );
 
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
-      user.cart.push({ productId, quantity }); // store as productId
+      user.cart.push({ product: productId, quantity });
     }
 
     await user.save();
 
-    // Return cart items with productId explicitly included
-    // If Mongoose is returning ObjectIds, you might want to convert them to string for frontend
-    const responseCart = user.cart.map(item => ({
+    // Map to expected shape for frontend, converting ObjectId to string
+    const responseCart = user.cart.map((item) => ({
       _id: item._id,
-      productId: item.productId.toString(),
+      productId: item.product ? item.product.toString() : null,
       quantity: item.quantity,
     }));
 
     res.status(200).json(responseCart);
   } catch (err) {
-    res.status(500).json({ message: "Error adding to cart", error: err.message });
+    console.error("Error adding to cart:", err);
+    res
+      .status(500)
+      .json({ message: "Error adding to cart", error: err.message });
   }
 };
-
 
 // Remove from Cart
 export const removeFromCart = async (req, res) => {
@@ -142,13 +142,11 @@ export const removeFromCart = async (req, res) => {
     if (!user) return res.status(404).json({ message: "User not found" });
 
     // Filter cart by productId (consistent field)
-    user.cart = user.cart.filter(
-      (item) => !item.productId.equals(productId)
-    );
+    user.cart = user.cart.filter((item) => !item.productId.equals(productId));
 
     await user.save();
 
-    const responseCart = user.cart.map(item => ({
+    const responseCart = user.cart.map((item) => ({
       _id: item._id,
       productId: item.productId.toString(),
       quantity: item.quantity,
@@ -156,7 +154,9 @@ export const removeFromCart = async (req, res) => {
 
     res.status(200).json(responseCart);
   } catch (err) {
-    res.status(500).json({ message: "Error removing from cart", error: err.message });
+    res
+      .status(500)
+      .json({ message: "Error removing from cart", error: err.message });
   }
 };
 
