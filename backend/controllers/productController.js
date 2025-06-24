@@ -105,22 +105,29 @@ export const addToCart = async (req, res) => {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
+    // Check if product already in cart
     const existingItem = user.cart.find(
-      (item) => item.product && item.product.equals(productId)
+      (item) => item.productId && item.productId.equals(productId)
     );
 
     if (existingItem) {
       existingItem.quantity += quantity;
     } else {
-      user.cart.push({ product: productId, quantity });
+      user.cart.push({
+        productId: mongoose.Types.ObjectId(productId),
+        quantity,
+      });
     }
 
     await user.save();
 
-    // Map to expected shape for frontend, converting ObjectId to string
+    // Populate product details for response if needed
+    await user.populate("cart.productId");
+
+    // Map cart to return productId as string
     const responseCart = user.cart.map((item) => ({
       _id: item._id,
-      productId: item.product ? item.product.toString() : null,
+      productId: item.productId ? item.productId.toString() : null,
       quantity: item.quantity,
     }));
 
@@ -136,27 +143,16 @@ export const addToCart = async (req, res) => {
 // Remove from Cart
 export const removeFromCart = async (req, res) => {
   const { userId, productId } = req.body;
-
   try {
     const user = await User.findById(userId);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    // Filter cart by productId (consistent field)
     user.cart = user.cart.filter((item) => !item.productId.equals(productId));
-
     await user.save();
 
-    const responseCart = user.cart.map((item) => ({
-      _id: item._id,
-      productId: item.productId.toString(),
-      quantity: item.quantity,
-    }));
-
-    res.status(200).json(responseCart);
+    res.status(200).json(user.cart);
   } catch (err) {
-    res
-      .status(500)
-      .json({ message: "Error removing from cart", error: err.message });
+    res.status(500).json({ message: "Error removing from cart", error: err.message });
   }
 };
 
