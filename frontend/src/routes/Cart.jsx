@@ -28,39 +28,30 @@ function Cart() {
         return;
       }
 
-      const promises = cart.map(async (item) => {
-        // Get productId safely: first try productId, then _id (only if _id looks like productId)
-        const productId = item.productId || item._id;
+      const promises = cart
+        .filter((item) => item.productId) // only items with productId
+        .map(async (item) => {
+          try {
+            const productData = await fetchSingleProduct(item.productId);
+            return {
+              ...item,
+              title: productData.title,
+              image: productData.image,
+              price: productData.salePrice || productData.price,
+              stock: productData.stock,
+            };
+          } catch (error) {
+            console.warn(`Product not found for ID ${item.productId}, removing from cart.`);
+            return null;
+          }
+        });
 
-        // If no productId or it looks like a cart item ID (not product), skip it safely
-        if (!productId) {
-          console.warn('Cart item missing productId and _id, skipping', item);
-          return null;
-        }
-
-        try {
-          const productData = await fetchSingleProduct(productId);
-          return {
-            ...item,
-            productId,
-            title: productData.title,
-            image: productData.image,
-            price: productData.salePrice || productData.price,
-            stock: productData.stock,
-          };
-        } catch (error) {
-          console.warn(`Product not found for ID ${productId}, removing from cart.`);
-          return null; // skip invalid products
-        }
-      });
-
-      // Wait for all and remove nulls
       const results = (await Promise.all(promises)).filter(Boolean);
       setEnrichedCart(results);
 
-      // Also update cart in state, removing invalid items
-      const validCartItems = cart.filter((item) =>
-        results.some((res) => res.productId === (item.productId || item._id))
+      // Clean cart from items without productId or invalid productId
+      const validCartItems = cart.filter(
+        (item) => item.productId && results.some((res) => res.productId === item.productId)
       );
       if (validCartItems.length !== cart.length) {
         setCart(validCartItems);
