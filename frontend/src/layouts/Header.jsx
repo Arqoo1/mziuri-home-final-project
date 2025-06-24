@@ -7,6 +7,8 @@ import { useCurrency } from '../Context/CurrencyContext';
 function Header() {
   const [showSearch, setShowSearch] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false); // <-- New state
+
   const { t, i18n } = useTranslation();
   const { currency, changeCurrency } = useCurrency();
 
@@ -19,7 +21,6 @@ function Header() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    handleScroll();
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -35,32 +36,49 @@ function Header() {
           src={logo}
           alt="Logo"
         />
+
         <nav>
           <Link to="/">{t('home')}</Link>
           <Link to="/shop">{t('shop')}</Link>
           <Link to="/about">{t('about')}</Link>
-          {/* <Link to="/contact">{t('contact')}</Link>
-          <Link to="/cart">{t('cart')}</Link>
-          <Link to="/wishlist">{t('wishlist')}</Link>
-          <Link to="/login">{t('login')}</Link> */}
+          <Link to="/contact">{t('contact')}</Link>
+          <Link to="/compare">{t('compare')}</Link>
+          <Link to="/login">{t('login')}</Link>
         </nav>
 
-        <select
-          onChange={(e) => changeLanguage(e.target.value)}
-          name=""
-          id=""
-          value={i18n.language}
-        >
-          <option value="en">English</option>
-          <option value="ka">Georgia</option>
-        </select>
         <div className="icons">
           <i
             className="fa fa-search"
             onClick={() => setShowSearch((prev) => !prev)}
           ></i>
           <i className="fa fa-shopping-cart"></i>
-          <i className="fa fa-bars"></i>
+          <i
+            className="fa fa-bars"
+            onClick={() => setMenuOpen((prev) => !prev)}
+          ></i>
+        </div>
+      </header>
+
+      {menuOpen && (
+        <div className="burger-menu-wrapper">
+          {/* Only shown in mobile */}
+          <div className="burger-nav">
+            <Link to="/">{t('home')}</Link>
+            <Link to="/shop">{t('shop')}</Link>
+            <Link to="/about">{t('about')}</Link>
+            <Link to="/contact">{t('contact')}</Link>
+            <Link to="/compare">{t('compare')}</Link>
+            <Link to="/login">{t('login')}</Link>
+          </div>
+
+          <select
+            onChange={(e) => changeLanguage(e.target.value)}
+            value={i18n.language}
+          >
+            <option value="en">English</option>
+            <option value="ka">Georgian</option>
+          </select>
+
           <select
             onChange={handleCurrencyChange}
             value={currency}
@@ -70,7 +88,7 @@ function Header() {
             <option value="EUR">EUR</option>
           </select>
         </div>
-      </header>
+      )}
 
       {showSearch && (
         <div className="search-bar-wrapper">

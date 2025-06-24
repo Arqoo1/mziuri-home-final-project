@@ -1,51 +1,53 @@
+import { t } from 'i18next';
+
 export const validateFullName = (value) => {
   if (!value) {
-    return 'Full name is required';
+    return t('validation.fullNameRequired');
   } else if (!value.includes(' ')) {
-    return 'Full name must contain at least one space';
+    return t('validation.fullNameSpace');
   }
 };
 
 export const validateEmail = (value) => {
   if (!value) {
-    return 'Email is required';
+    return t('validation.emailRequired');
   } else if (!value.includes('@') || !value.includes('.')) {
-    return 'Email is invalid';
+    return t('validation.emailInvalid');
   }
 };
 
 export const validatePassword = (value) => {
   if (!value) {
-    return 'Password is required';
+    return t('validation.passwordRequired');
   } else if (value.length < 8) {
-    return 'Password must be at least 8 characters';
+    return t('validation.passwordMinLength');
   }
 };
 
 export const validateConfirmPassword = (value) => {
   if (!value) {
-    return 'Password is required';
+    return t('validation.passwordRequired');
   } else if (value.length < 8) {
-    return 'Password must be at least 8 characters';
+    return t('validation.passwordMinLength');
   }
 };
 
-export const validateSelect = (value) => {
+export const validateSelect = (value, key = 'selectRequired') => {
   if (!value || value === '') {
-    return 'This field is required';
+    return t(`validation.${key}`);
   }
 };
-
 export const validateCheckbox = (value) => {
   if (!value) {
-    return 'You must accept terms and conditions';
+    return t('validation.checkboxRequired');
   }
 };
+
 export const validateMessage = (value) => {
   if (!value || value.trim() === '') {
-    return 'Message is required';
+    return t('validation.messageRequired');
   } else if (value.length < 10) {
-    return 'Message must be at least 10 characters';
+    return t('validation.messageMinLength');
   }
   return null;
 };

@@ -9,6 +9,7 @@ import CouponInput from '../components/CouponBox';
 import { validateCoupon } from '../api/couponapi';
 import ProductsModal from '../components/ProductsModal';
 import { useCurrency } from '../Context/CurrencyContext';
+import { useTranslation } from 'react-i18next';
 
 function Cart() {
   const { cart, setCart, loggedIn, userData } = useUserData();
@@ -18,7 +19,7 @@ function Cart() {
   const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
   const { convert, symbol } = useCurrency();
-
+  const { t } = useTranslation();
   useEffect(() => {
     const enrichItems = async () => {
       if (!cart || cart.length === 0) {
@@ -125,33 +126,33 @@ function Cart() {
               }
             }}
           />
-          <button onClick={openModal}>Update Cart</button>
+          <button onClick={openModal}>{t('couponSection.updateCart')}</button>
         </section>
 
         {appliedCoupon && (
           <p className="applied-coupon-msg">
-            Coupon "<strong>{appliedCoupon.code}</strong>" applied successfully.
+            {t('couponSection.couponAppliedSuccess', { code: appliedCoupon.code })}
           </p>
         )}
 
         <div className="cart-summary">
-          <p className="checkout-title">Cart Summary</p>
+          <p className="checkout-title">{t('couponSection.cartSummaryTitle')}</p>
           <div className="summary-row">
-            <span>Sub Total:</span>
+            <span>{t('couponSection.subTotal')}</span>
             <span>
               {symbol}
               {convert(subtotal)}
             </span>
           </div>
           <div className="summary-row">
-            <span>Sale:</span>
+            <span>{t('couponSection.sale')}</span>
             <span>
               {symbol}
               {convert(discount)}
             </span>
           </div>
           <div className="summary-row total">
-            <span>Total:</span>
+            <span>{t('couponSection.total')}</span>
             <span>
               {symbol}
               {convert(total)}
@@ -161,7 +162,7 @@ function Cart() {
             onClick={handleProceedToCheckout}
             disabled={enrichedCart.length === 0 || total <= 0}
           >
-            Proceed to Checkout
+            {t('couponSection.proceedToCheckout')}
           </button>
         </div>
       </section>

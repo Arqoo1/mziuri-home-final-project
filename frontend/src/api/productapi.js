@@ -1,5 +1,7 @@
 import axios from 'axios';
-const API_URL = 'http://localhost:5000/api/products';
+
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+const API_URL = `${API_BASE_URL}/api/products`;
 
 export const fetchProductData = async (sort = '') => {
   try {
@@ -30,15 +32,15 @@ const getAuthHeader = () => {
 export const addToCart = async (userId, productId, quantity = 1) => {
   const token = localStorage.getItem('token');
   const response = await axios.post(
-    `http://localhost:5000/api/products/add-to-cart`,
+    `${API_URL}/add-to-cart`,
     { userId, productId, quantity },
     { headers: { Authorization: `Bearer ${token}` } }
   );
-  return response.data; 
+  return response.data;
 };
 
 export const removeFromCart = async (userId, productId) => {
-  return axios.post(`http://localhost:5000/api/products/remove-from-cart`, {
+  return axios.post(`${API_URL}/remove-from-cart`, {
     userId,
     productId,
   });
@@ -46,7 +48,7 @@ export const removeFromCart = async (userId, productId) => {
 
 // WISHLIST 
 export const addToWishlist = async (userId, productId, quantity = 1) => {
-  return axios.post(`http://localhost:5000/api/products/add-to-wishlist`, {
+  return axios.post(`${API_URL}/add-to-wishlist`, {
     userId,
     productId,
     quantity,
@@ -54,7 +56,7 @@ export const addToWishlist = async (userId, productId, quantity = 1) => {
 };
 
 export const removeFromWishlist = async (userId, productId) => {
-  return axios.post(`http://localhost:5000/api/products/remove-from-wishlist`, {
+  return axios.post(`${API_URL}/remove-from-wishlist`, {
     userId,
     productId,
   });

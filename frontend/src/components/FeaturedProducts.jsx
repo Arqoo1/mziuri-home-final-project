@@ -5,9 +5,10 @@ import { Controller, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import Product from './Product';
+import { useTranslation } from 'react-i18next';
 
 function FeaturedProducts() {
-  const [featuredProducts, setFeaturedProducts] = useState([]);
+  const { t } = useTranslation();
   const [topRowProducts, setTopRowProducts] = useState([]);
   const [bottomRowProducts, setBottomRowProducts] = useState([]);
   const [topSwiper, setTopSwiper] = useState(null);
@@ -16,13 +17,14 @@ function FeaturedProducts() {
   useEffect(() => {
     async function loadProducts() {
       const products = await fetchProductData();
-      const filtered = products.filter((p) => p.tags?.includes('featured'));
+      const filtered = products.filter((p) =>
+        p.tags?.some((tag) => tag.en.toLowerCase() === 'featured')
+      );
+      console.log('Filtered featured products:', filtered);
       const half = Math.ceil(filtered.length / 2);
-
       setTopRowProducts(filtered.slice(0, half));
       setBottomRowProducts(filtered.slice(half));
     }
-
     loadProducts();
   }, []);
 
@@ -35,9 +37,9 @@ function FeaturedProducts() {
 
   return (
     <section className="FeaturedProducts">
-      <span>Wonderful gift</span>
-      <h2>Featured Products</h2>
-      {/* Top row swiper */}
+      <span>{t('wonderful_gift')}</span>
+      <h2>{t('featured_products')}</h2>
+
       <Swiper
         modules={[Controller, Pagination]}
         onSwiper={setTopSwiper}
@@ -46,6 +48,12 @@ function FeaturedProducts() {
         slidesPerGroup={1}
         grabCursor={true}
         pagination={{ el: '#featured-pagination', clickable: true }}
+        breakpoints={{
+          0: { slidesPerView: 1 },
+          600: { slidesPerView: 2 },
+          900: { slidesPerView: 3 },
+          1240: { slidesPerView: 4 },
+        }}
       >
         {topRowProducts.map((product) => (
           <SwiperSlide key={product._id}>
@@ -54,7 +62,6 @@ function FeaturedProducts() {
         ))}
       </Swiper>
 
-      {/* Bottom row swiper */}
       <Swiper
         modules={[Controller]}
         onSwiper={setBottomSwiper}
@@ -62,6 +69,12 @@ function FeaturedProducts() {
         slidesPerView={4}
         slidesPerGroup={1}
         grabCursor={true}
+        breakpoints={{
+          0: { slidesPerView: 1 },
+          600: { slidesPerView: 2 },
+          900: { slidesPerView: 3 },
+          1240: { slidesPerView: 4 },
+        }}
       >
         {bottomRowProducts.map((product) => (
           <SwiperSlide key={product._id}>
@@ -70,7 +83,6 @@ function FeaturedProducts() {
         ))}
       </Swiper>
 
-      {/* Pagination container under both rows */}
       <div
         className="custom-pagination"
         id="featured-pagination"

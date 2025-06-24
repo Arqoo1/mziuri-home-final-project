@@ -1,4 +1,4 @@
-@use "../abstracts/index.scss" as *;
+@use '../abstracts/index.scss' as *;
 
 footer {
   display: flex;
@@ -18,11 +18,21 @@ footer {
     color: $white-color;
     font-size: 17px;
     line-height: 29px;
+    @media (max-width: 1100px) {
+      font-size: 16px;
+    }
     h2 {
       font-weight: 600;
       color: $white-color;
+      @media (max-width: 1100px) {
+        font-size: 16px;
+      }
     }
-
+    .detailsContainer:last-child {
+      @media (max-width: 950px) {
+        display: none;
+      }
+    }
     .detailsContainer {
       width: 25%;
       display: flex;
@@ -30,6 +40,15 @@ footer {
       align-items: start;
       gap: 30px;
       padding: 0px 10px;
+      @media (max-width: 1100px) {
+        font-size: 14px;
+        @media (max-width: 950px) {
+          width: auto;
+        }
+      }
+      @media (max-width: 1100px) {
+        font-size: 12px;
+      }
       .footerList {
         display: flex;
         flex-direction: column;
@@ -47,22 +66,31 @@ footer {
     }
     .logoContainer {
       width: 30%;
+      @media (max-width: 1100px) {
+        font-size: 12px;
+      }
       .socialLinkContainer {
         display: flex;
         align-items: center;
         gap: 20px;
         width: 100%;
+        @media (max-width: 1100px) {
+          gap: 10px;
+        }
         i {
           border: 1px solid $white-color;
           border-radius: 100%;
           padding: 10px;
           color: $white-color;
-          font-size: 15px;
+          font-size: 13px;
           transition: all 0.3s ease-in-out;
           cursor: pointer;
           &:hover {
             background-color: $primary-color;
             border: 1px solid $primary-color;
+          }
+          @media (max-width: 1100px) {
+            font-size: 10px;
           }
         }
       }

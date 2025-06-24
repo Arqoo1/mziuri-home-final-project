@@ -1,23 +1,28 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 function ContactUs() {
+  const { t } = useTranslation();
+
   return (
     <section className="our-contactinfo">
       <div className="info-container">
         <i className="fa-solid fa-location-dot"></i>
-        <h5>Our Location</h5>
-        <p>(800) 123 456 789 / (800) 123 456 789</p>
-        <p>info@example.com</p>
+        <h5>{t('ourLocation')}</h5>
+        <p>{t('phonePrimary')}</p>
+        <p>{t('emailPrimary')}</p>
       </div>
       <div className="info-container">
-        <i className="fa-solid fa-mobile-screen"></i> <h5>Contact us Anytime</h5>
-        <p>Mobile: 012 345 678</p>
-        <p>Fax: 123 456 789</p>
+        <i className="fa-solid fa-mobile-screen"></i>
+        <h5>{t('contactUsAnytime')}</h5>
+        <p>{t('mobile')}</p>
+        <p>{t('fax')}</p>
       </div>
       <div className="info-container">
-        <i className="fa-solid fa-envelope"></i> <h5>Support Overall</h5>
-        <p>Support24/7@example.com</p>
-        <p>info@example.com</p>
+        <i className="fa-solid fa-envelope"></i>
+        <h5>{t('supportOverall')}</h5>
+        <p>{t('supportEmail')}</p>
+        <p>{t('emailPrimary')}</p>
       </div>
     </section>
   );

@@ -30,7 +30,7 @@
     color: $primary-color;
     letter-spacing: 1px;
   }
-  strong{
+  strong {
     color: black;
   }
   & > div {
@@ -45,10 +45,11 @@
         background: none;
         border-radius: 4px;
 
-        border: $primary-color 1px solid;
+        border: black 1px solid;
         &:hover {
           background-color: $primary-color;
           color: white;
+          border:none;
         }
       }
 
@@ -57,9 +58,6 @@
         color: white;
         border: none;
         border-radius: 4px;
-        &:hover {
-            background-color: darken($primary-color, 10%);
-        }
       }
     }
   }

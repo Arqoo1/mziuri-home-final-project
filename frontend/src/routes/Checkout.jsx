@@ -3,6 +3,7 @@ import { useLocation, Link } from 'react-router-dom';
 import RouteBanner from '../components/RouteBanner';
 import InputGroup from '../components/InputGroup';
 import { useCurrency } from '../Context/CurrencyContext';
+import { useTranslation } from 'react-i18next';
 
 function Checkout() {
   const { state } = useLocation();
@@ -13,102 +14,101 @@ function Checkout() {
     total = 0,
     appliedCoupon = null,
   } = state || {};
-  
+
   const [selectedMethod, setSelectedMethod] = useState('');
   const [showCouponInput, setShowCouponInput] = useState(false);
 
   const { convert, symbol } = useCurrency();
+  const { t } = useTranslation();
 
   return (
     <>
-      <RouteBanner page="Checkout" />
+      <RouteBanner page={t('checkout')} />
 
       <section className="checkout-container">
         <section className="checkout">
           <form className="checkout-form">
-            {/* Form fields remain unchanged */}
-            <InputGroup label="Country *" name="country">
+            <InputGroup label={t('country') + ' *'} name="country">
               <select id="country" name="country" required>
-                <option value="">Select a country</option>
-                <option value="us">United States</option>
-                <option value="uk">United Kingdom</option>
-                <option value="ge">Georgia</option>
+                <option value="">{t('selectCountry')}</option>
+                <option value="us">{t('unitedStates')}</option>
+                <option value="uk">{t('unitedKingdom')}</option>
+                <option value="ge">{t('georgia')}</option>
               </select>
             </InputGroup>
 
-            <InputGroup label="Company Name" name="company">
+            <InputGroup label={t('companyName')} name="company">
               <input type="text" id="company" name="company" />
             </InputGroup>
 
             <div className="half-inputs">
-              <InputGroup label="First Name" name="FirstName">
+              <InputGroup label={t('firstName')} name="FirstName">
                 <input type="text" id="FirstName" name="FirstName" />
               </InputGroup>
-              <InputGroup label="Last Name" name="LastName">
+              <InputGroup label={t('lastName')} name="LastName">
                 <input type="text" id="LastName" name="LastName" />
               </InputGroup>
             </div>
 
-            <InputGroup label="Address *" name="address">
+            <InputGroup label={t('address') + ' *'} name="address">
               <input type="text" id="address" name="address" required />
             </InputGroup>
 
-            <InputGroup label="Town / City *" name="city">
+            <InputGroup label={t('townCity') + ' *'} name="city">
               <input type="text" id="city" name="city" required />
             </InputGroup>
 
             <div className="half-inputs">
-              <InputGroup label="State / Country *" name="state">
+              <InputGroup label={t('stateCountry') + ' *'} name="state">
                 <input type="text" id="state" name="state" required />
               </InputGroup>
-              <InputGroup label="Postcode / Zip *" name="postcode">
+              <InputGroup label={t('postcodeZip') + ' *'} name="postcode">
                 <input type="text" id="postcode" name="postcode" required />
               </InputGroup>
             </div>
 
             <div className="half-inputs">
-              <InputGroup label="Email Address *" name="email">
+              <InputGroup label={t('emailAddress') + ' *'} name="email">
                 <input type="email" id="email" name="email" required />
               </InputGroup>
-              <InputGroup label="Phone *" name="phone">
+              <InputGroup label={t('phone') + ' *'} name="phone">
                 <input type="tel" id="phone" name="phone" required />
               </InputGroup>
             </div>
 
             <div className="form-group checkbox">
               <input type="checkbox" id="createAccount" />
-              <label htmlFor="createAccount">Create an account?</label>
+              <label htmlFor="createAccount">{t('createAccount')}</label>
             </div>
 
             <div className="form-group checkbox">
               <input type="checkbox" id="shipToDifferent" />
-              <label htmlFor="shipToDifferent">Ship to a different address?</label>
+              <label htmlFor="shipToDifferent">{t('shipToDifferentAddress')}</label>
             </div>
 
-            <InputGroup label="Order Notes" name="notes">
+            <InputGroup label={t('orderNotes')} name="notes">
               <textarea
                 id="notes"
                 name="notes"
-                placeholder="Notes about your order, e.g. special notes for delivery."
+                placeholder={t('notesPlaceholder')}
                 rows="4"
               />
             </InputGroup>
           </form>
 
           <section className="checkout-summary">
-            <p className="checkout-title">Your Order</p>
+            <p className="checkout-title">{t('yourOrder')}</p>
 
             <div className="order-table">
               <div className="table-header">
-                <span>Product</span>
-                <span>Total</span>
+                <span>{t('product')}</span>
+                <span>{t('total')}</span>
               </div>
 
               {cart.map((item, index) => (
                 <div className="table-row" key={index}>
                   <span>
-                    {(typeof item.title === 'object' ? item.title.en : item.title) ||
-                      'Unnamed'}{' '}
+                    {(typeof item.title === 'object' ? item.title.en : item.title) || 'Unnamed'}{' '}
                     <strong>×{item.quantity}</strong>
                   </span>
                   <span>
@@ -119,7 +119,7 @@ function Checkout() {
               ))}
 
               <div className="table-row">
-                <strong>Cart Subtotal</strong>
+                <strong>{t('cartSubtotal')}</strong>
                 <span>
                   {symbol}
                   {convert(subtotal)}
@@ -129,7 +129,7 @@ function Checkout() {
               {discount > 0 && (
                 <div className="table-row">
                   <span>
-                    Discount{appliedCoupon?.code ? ` (${appliedCoupon.code})` : ''}
+                    {t('discount')}{appliedCoupon?.code ? ` (${appliedCoupon.code})` : ''}
                   </span>{' '}
                   <span>
                     -{symbol}
@@ -139,7 +139,7 @@ function Checkout() {
               )}
 
               <div className="table-row total-row">
-                <strong>Total</strong>
+                <strong>{t('total')}</strong>
                 <strong>
                   {symbol}
                   {convert(total)}
@@ -155,7 +155,7 @@ function Checkout() {
                   }
                   className="clickable-method"
                 >
-                  Direct Bank Transfer
+                  {t('directBankTransfer')}
                 </p>
                 <div
                   className={`methodscontainer ${
@@ -164,9 +164,7 @@ function Checkout() {
                 >
                   {selectedMethod === 'bank' && (
                     <>
-                      Make your payment directly into our bank account. Please use your
-                      Order ID as the payment reference. Your order won’t be shipped until
-                      the funds have cleared in our account.
+                      {t('directBankTransferDescription')}
                     </>
                   )}
                 </div>
@@ -179,7 +177,7 @@ function Checkout() {
                   }
                   className="clickable-method"
                 >
-                  Cheque Payment
+                  {t('chequePayment')}
                 </p>
                 <div
                   className={`methodscontainer ${
@@ -188,8 +186,7 @@ function Checkout() {
                 >
                   {selectedMethod === 'cheque' && (
                     <>
-                      Please send your cheque to Store Name, Store Street, Store Town,
-                      Store State / County, Store Postcode.
+                      {t('chequePaymentDescription')}
                     </>
                   )}
                 </div>
@@ -202,7 +199,7 @@ function Checkout() {
                   }
                   className="clickable-method"
                 >
-                  PayPal
+                  {t('paypal')}
                 </p>
                 <div
                   className={`methodscontainer ${
@@ -211,15 +208,14 @@ function Checkout() {
                 >
                   {selectedMethod === 'paypal' && (
                     <>
-                      Pay via PayPal; you can pay with your credit card if you don’t have a
-                      PayPal account.
+                      {t('paypalDescription')}
                     </>
                   )}
                 </div>
               </div>
 
               <button type="submit" className="checkout-button">
-                Place Order
+                {t('placeOrder')}
               </button>
             </div>
           </section>

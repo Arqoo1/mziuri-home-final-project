@@ -1,3 +1,7 @@
+import { useTranslation } from 'react-i18next';
+
+
+
 const TopFilter = ({
   sort,
   setSort,
@@ -9,7 +13,7 @@ const TopFilter = ({
   const handleSelectClick = () => {
     setIsSelectOpen(!isSelectOpen);
   };
-
+  const { t } = useTranslation();
   const isSecondView = productClassName === 'product-in-list';
 
   return (
@@ -17,11 +21,11 @@ const TopFilter = ({
       <div className="icon-group">
         <i
           className={`fas fa-th-list ${!isSecondView ? 'active' : ''}`}
-          onClick={() => setProductClassName('')} // original view, remove class
+          onClick={() => setProductClassName('')}
         ></i>
         <i
           className={`fas fa-th ${isSecondView ? 'active' : ''}`}
-          onClick={() => setProductClassName('product-in-list')} // styled view, add class
+          onClick={() => setProductClassName('product-in-list')}
         ></i>
       </div>
 
@@ -32,12 +36,13 @@ const TopFilter = ({
           onChange={(e) => setSort(e.target.value)}
           onClick={handleSelectClick}
         >
-          <option value="price_asc">Price: Low to High</option>
-          <option value="price_desc">Price: High to Low</option>
-          <option value="alphabetical_asc">Name: A to Z</option>
-          <option value="alphabetical_desc">Name: Z to A</option>
-          <option value="rating_desc">Rating: High to Low</option>
-          <option value="rating_asc">Rating: Low to High</option>{' '}
+<option value="price_asc">{t("price_low_to_high")}</option>
+<option value="price_desc">{t("price_high_to_low")}</option>
+<option value="alphabetical_asc">{t("name_a_to_z")}</option>
+<option value="alphabetical_desc">{t("name_z_to_a")}</option>
+<option value="rating_desc">{t("rating_high_to_low")}</option>
+<option value="rating_asc">{t("rating_low_to_high")}</option>
+
         </select>
         <div className={`select-arrow ${isSelectOpen ? 'rotate' : ''}`}>
           <i className="fas fa-chevron-down"></i>

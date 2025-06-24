@@ -167,8 +167,11 @@ function ItemsTable({ items, setItems, loggedIn, updateBackend, isCart = true })
                   />
                 </td>
                 <td>{getLocalizedValue(item.title)}</td>
-                <td>{symbol}{convertedPrice}</td>
-                {!isCart && <td>{item.stock ? t('in stock') : t('out of stock')}</td>}
+                <td>
+                  {symbol}
+                  {convertedPrice}
+                </td>
+                {!isCart && <td>{item.stock ? t('in Stock') : t('out of Stock')}</td>}
                 {isCart && (
                   <td>
                     <input
@@ -181,14 +184,19 @@ function ItemsTable({ items, setItems, loggedIn, updateBackend, isCart = true })
                     />
                   </td>
                 )}
-                {isCart && <td>{symbol}{convertedTotal}</td>}
+                {isCart && (
+                  <td>
+                    {symbol}
+                    {convertedTotal}
+                  </td>
+                )}
                 {!isCart && (
                   <td>
                     <button
                       className="add-to-cart-button"
                       onClick={() => openModal(item, 'cart')}
                     >
-                      {t('add to cart')}
+                      {t('Add To Cart')}
                     </button>
                   </td>
                 )}

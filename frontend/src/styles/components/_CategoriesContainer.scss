@@ -1,4 +1,4 @@
-@use "../abstracts/index.scss" as *;
+@use '../abstracts/index.scss' as *;
 
 .categories-container {
   width: 100%;
@@ -6,7 +6,9 @@
   padding: 40px;
   display: flex;
   gap: 20px;
-
+  @media (max-width: 700px) {
+    flex-direction: column;
+  }
   div {
     display: flex;
     align-items: center;
@@ -18,15 +20,16 @@
     height: 100%;
     background-color: #c49f9f;
     cursor: pointer;
-
+    @media (max-width: 700px) {
+      width: 100%;
+    }
     &:hover {
-      box-shadow: 0 0 10px 5px  rgba(0, 0, 0, 0.2);
+      box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.2);
       transition: box-shadow 0.6s ease;
 
       .category-content {
         background-color: $primary-color;
         transition: background-color 0.4s ease;
-
       }
       p {
         color: white;
@@ -44,7 +47,9 @@
     flex-direction: row;
     justify-content: space-between;
     gap: 10px;
-
+    @media (max-width: 700px) {
+      width: 100%;
+    }
     & > div {
       cursor: pointer;
 
@@ -55,7 +60,6 @@
         .category-content {
           background-color: $primary-color;
           transition: background-color 0.4s ease;
-
         }
         p {
           color: white;
@@ -92,8 +96,19 @@
     align-items: center;
     justify-content: center;
     padding: 10px;
+    @media (max-width: 1050px) {
+      font-size: 13px;
+    }
     p {
       color: $primary-color;
+    }
+    h3 {
+      @media (max-width: 1050px) {
+        font-size: 16px;
+      }
+      @media (max-width: 750px) {
+        font-size: 13px;
+      }
     }
   }
 }

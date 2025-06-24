@@ -9,6 +9,12 @@
   gap: 30px;
   text-align: center;
   padding: 100px 250px;
+  @media (max-width: 1200px) {
+    padding: 100px 50px;
+  }
+      @media (max-width: 900px) {
+    padding: 50px 40px;
+    }
   // background-color: $bg-color;
 
   span {
@@ -17,20 +23,40 @@
     font-weight: 600;
     letter-spacing: 3px;
     font-family: $different-font-style-2;
+    @media (max-width: 900px) {
+      font-size: 19px;
+    }
   }
-  h2{
+  h2 {
     font-size: 80px;
     font-family: $different-font-style;
     font-weight: 600;
+    @media (max-width: 900px) {
+      font-size: 70px;
+    }
+            @media (max-width: 600px) {
+      font-size: 40px;
+    }
   }
-  p{
+  p {
     font-size: 20px;
     line-height: 40px;
+    @media (max-width: 900px) {
+      font-size: 17px;
+    }
+            @media (max-width: 600px) {
+      font-size: 15px;
+    }
   }
-  .history-text{
+  .history-text {
     font-size: 22px;
     color: $black-color;
     line-height: 40px;
-
+    @media (max-width: 900px) {
+      font-size: 17px;
+    }
+        @media (max-width: 600px) {
+      font-size: 15px;
+    }
   }
 }

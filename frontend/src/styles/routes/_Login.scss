@@ -1,4 +1,4 @@
-@use "../abstracts/Variables" as *;
+@use '../abstracts/index.scss' as *;
 
 .login-container,
 .register-container {
@@ -62,4 +62,12 @@
     display: flex;
     gap: 5px;
   }
+}
+.forgot-password-link{
+  color: $primary-color;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s ease-in-out;
+
 }

@@ -1,18 +1,21 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import logo from '../assets/logo-footer.webp';
+
 function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer>
       <section className="infoContainer">
         <div className="detailsContainer logoContainer">
           <img
             src={logo}
-            alt="Logo"
+            alt={t('footer.logoAlt')}
             className="logoFooter"
           />
           <p>
-            Lorem Khaled Ipsum is a major key to success. To be successful you’ve got to work hard
-            you’ve got to make it.
+            {t('footer.description')}
           </p>
           <div className="socialLinkContainer">
             <i className="fa-brands fa-facebook-f"></i>
@@ -22,53 +25,57 @@ function Footer() {
             <i className="fa-brands fa-vimeo-v"></i>
           </div>
         </div>
+
         <div className="detailsContainer">
-          <h2>Information</h2>
+          <h2>{t('footer.information')}</h2>
           <ul className="footerList">
-            <li>Our Company</li>
-            <li>Contact Us</li>
-            <li>Our Services</li>
-            <li>Why We?</li>
-            <li>Careers</li>
+            <li>{t('footer.ourCompany')}</li>
+            <li>{t('footer.contactUs')}</li>
+            <li>{t('footer.ourServices')}</li>
+            <li>{t('footer.whyWe')}</li>
+            <li>{t('footer.careers')}</li>
           </ul>
         </div>
+
         <div className="detailsContainer">
-          <h2>Quicklink</h2>
+          <h2>{t('footer.quicklink')}</h2>
           <ul className="footerList">
-            <li>About</li>
-            <li>Blog</li>
-            <li>Shop</li>
-            <li>Cart</li>
-            <li>Contact</li>
+            <li>{t('footer.about')}</li>
+            <li>{t('footer.blog')}</li>
+            <li>{t('footer.shop')}</li>
+            <li>{t('footer.cart')}</li>
+            <li>{t('footer.contact')}</li>
           </ul>
         </div>
+
         <div className="detailsContainer">
-          <h2>Support</h2>
+          <h2>{t('footer.support')}</h2>
           <ul className="footerList">
-            <li>Online Support</li>
-            <li>Shipping Policy</li>
-            <li>Return Policy</li>
-            <li>Privacy Policy</li>
-            <li>Terms of Service</li>
+            <li>{t('footer.onlineSupport')}</li>
+            <li>{t('footer.shippingPolicy')}</li>
+            <li>{t('footer.returnPolicy')}</li>
+            <li>{t('footer.privacyPolicy')}</li>
+            <li>{t('footer.termsOfService')}</li>
           </ul>
         </div>
+
         <div className="detailsContainer">
-          <h2>See Information</h2>
+          <h2>{t('footer.seeInformation')}</h2>
           <ul className="footerList">
-            <li>123, ABC, Road ##, Main City, Your</li>
-            <li>address goes here.</li>
-            <li>Phone: 01234 567 890</li>
-            <li>Email: https://example.com</li>
+            <li>{t('footer.addressLine1')}</li>
+            <li>{t('footer.addressLine2')}</li>
+            <li>{t('footer.phone')}</li>
+            <li>{t('footer.email')}</li>
           </ul>
         </div>
       </section>
+
       <section className="copyright">
         <p>
-          {' '}
-          <span> © 2023 </span>- All rights reserved |
+          <span>© 2025</span> - {t('footer.allRightsReserved')}
         </p>
         <p>
-          <strong> Developed by </strong> <span> Giorgi Arkania </span>
+          <strong>{t('footer.developedBy')}</strong> <span>{t('footer.developerName')}</span>
         </p>
       </section>
     </footer>

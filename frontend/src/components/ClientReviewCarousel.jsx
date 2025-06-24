@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { fetchReviews } from '../api/reviewapi';
 import SwiperCarousel from './SwiperCarousel';
+import { useTranslation } from 'react-i18next';
 
 function ClientReviewCarousel() {
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     const getReviews = async () => {
@@ -39,13 +41,13 @@ function ClientReviewCarousel() {
       className="review-card"
       key={slide.id || slide.clientName}
     >
-      <span>We Love Our Clients</span>
-      <h2>What They're Saying</h2>
+      <span>{t('testimonials.title')}</span>
+      <h2>{t('testimonials.subtitle')}</h2>
       <img
         src={slide.image}
         alt={`Review from ${slide.clientName}`}
       />
-      <p>{slide.review}</p>
+      <p>{typeof slide.review === 'object' ? slide.review[i18n.language] : slide.review}</p>
       <h4>
         <span>{slide.clientName}</span>
       </h4>

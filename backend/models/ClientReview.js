@@ -1,12 +1,17 @@
 import mongoose from 'mongoose';
 
+const translationSchema = new mongoose.Schema({
+  en: String,
+  ka: String,
+});
+
 const clientReviewSchema = new mongoose.Schema({
   image: {
     type: String,
     required: true,
   },
   review: {
-    type: String,
+    type: translationSchema,
     required: true,
     trim: true,
   },

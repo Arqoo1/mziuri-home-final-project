@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import InputGroup from '../components/InputGroup';
 import RouteBanner from '../components/RouteBanner';
 import Checkbox from '../components/Checkbox';
 import { login } from '../api/usersapi';
 import { validateEmail, validatePassword, validateCheckbox } from '../utils/validations';
+import { Link } from 'react-router-dom';
 
 function Login() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -57,28 +60,28 @@ function Login() {
           setIsAuthenticated(true);
           navigate('/');
         } else {
-          alert('Token not found in response.');
+          alert(t('login.tokenNotFound'));
         }
       } catch (error) {
-        alert(error.message || 'Login failed');
+        alert(error.message || t('login.failed'));
       }
     }
   };
 
   return (
     <>
-      <RouteBanner page="Login" />
+      <RouteBanner page={t('Login.login')} />
       <div className="login-container">
         <div>
-          <h2>Login</h2>
-          <p>Please login using account detail below.</p>
+          <h2>{t('Login.login')}</h2>
+          <p>{t('Login.subtitle')}</p>
         </div>
         <form
           onSubmit={handleSubmit}
           className="login-form"
         >
           <InputGroup
-            label="Email"
+            label={t('form.email')}
             name="email"
             error={errors.email}
           >
@@ -92,7 +95,7 @@ function Login() {
           </InputGroup>
 
           <InputGroup
-            label="Password"
+            label={t('form.password')}
             name="password"
             error={errors.password}
           >
@@ -119,10 +122,15 @@ function Login() {
                     checked={formData.rememberMe || false}
                     onChange={handleChange}
                   />
-                  <span className="terms">Remember me</span>
+                  <span className="terms">{t('Login.rememberMe')}</span>
                 </div>
               </label>
-              <a>forget password?</a>
+              <Link
+                to="/register"
+                className="forgot-password-link"
+              >
+                {t('Login.forgotPassword')}
+              </Link>{' '}
             </div>
           </InputGroup>
 
@@ -130,7 +138,7 @@ function Login() {
             type="submit"
             className="login-button"
           >
-            Login
+            {t('Login.login')}
           </button>
         </form>
       </div>

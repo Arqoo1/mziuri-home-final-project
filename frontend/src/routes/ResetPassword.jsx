@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { validatePassword, validateConfirmPassword } from '../utils/validations';
 import * as api from '../api/usersapi.js';
 import RouteBanner from '../components/RouteBanner.jsx';
 import InputGroup from '../components/InputGroup.jsx';
 
 function ResetPassword() {
+  const { t } = useTranslation();
   const [state, setState] = useState({});
   const [errorMessages, setErrorMessages] = useState({});
   const { token } = useParams();
@@ -29,6 +31,7 @@ function ResetPassword() {
     try {
       const response = await api.resetPasswordUser(state, token);
       if (response.data) {
+        alert(t('resetPassword.success'));
       }
     } catch (err) {
       console.error(err);
@@ -48,16 +51,16 @@ function ResetPassword() {
 
   return (
     <>
-      <RouteBanner page="Reset-Password" />
+      <RouteBanner page={t('resetPassword.pageTitle')} />
       <section className="resetPassword">
         <div className="formContainer">
           <form onSubmit={handleSubmit}>
             <div className="titlesContainer">
-              <h1 className="title">Reset Your Password</h1>
+              <h1 className="title">{t('resetPassword.title')}</h1>
             </div>
 
             <InputGroup
-              label="Password"
+              label={t('resetPassword.password')}
               name="password"
               error={errorMessages.password}
             >
@@ -65,7 +68,7 @@ function ResetPassword() {
                 type="password"
                 name="password"
                 id="password"
-                placeholder="Enter your password"
+                placeholder={t('resetPassword.passwordPlaceholder')}
                 value={state.password || ''}
                 onChange={handleChange}
                 className="input"
@@ -73,7 +76,7 @@ function ResetPassword() {
             </InputGroup>
 
             <InputGroup
-              label="Confirm Password"
+              label={t('resetPassword.confirmPassword')}
               name="confirmPassword"
               error={errorMessages.confirmPassword}
             >
@@ -81,23 +84,20 @@ function ResetPassword() {
                 type="password"
                 name="confirmPassword"
                 id="confirmPassword"
-                placeholder="Confirm your password"
+                placeholder={t('resetPassword.confirmPasswordPlaceholder')}
                 value={state.confirmPassword || ''}
                 onChange={handleChange}
                 className="input"
               />
             </InputGroup>
 
-            <button
-              type="submit"
-              className="submitButton"
-            >
-              Reset Password
+            <button type="submit" className="submitButton">
+              {t('resetPassword.button')}
             </button>
 
             <div className="additionalContainer">
               <p className="backToLogin">
-                Back to <Link to="/login">Log In</Link>
+                {t('resetPassword.backTo')} <Link to="/login">{t('resetPassword.login')}</Link>
               </p>
             </div>
           </form>

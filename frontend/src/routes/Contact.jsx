@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import RouteBanner from '../components/RouteBanner';
 import ContactUs from '../components/ContactUs';
 import InputGroup from '../components/InputGroup';
@@ -7,6 +8,8 @@ import * as api from '../api/usersapi.js';
 import Map from '../components/Map.jsx';
 
 function Contact() {
+  const { t } = useTranslation();
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,7 +33,7 @@ function Contact() {
     const newErrors = {
       name: validateFullName(data.name),
       email: validateEmail(data.email),
-      type: data.type ? null : 'Type is required',
+      type: data.type ? null : t('validation.typeRequired'),
       message: validateMessage(data.message),
     };
     Object.keys(newErrors).forEach((key) => {
@@ -67,14 +70,14 @@ function Contact() {
 
   return (
     <>
-      <RouteBanner page="Contact" />
+      <RouteBanner page={t('contact')} />
       <ContactUs />
       <section className="contact-form">
         <div className="form-container">
-          <h2>GET IN TOUCH</h2>
+          <h2>{t('getInTouch')}</h2>
           {submitSuccess && (
             <div className="success-message">
-              Thank you! Your message has been sent successfully.
+              {t('successMessage')}
             </div>
           )}
           <form
@@ -83,7 +86,7 @@ function Contact() {
           >
             <div className="half-inputs">
               <InputGroup
-                label="Full Name"
+                label={t('fullName')}
                 name="name"
                 error={errors.name}
               >
@@ -92,13 +95,13 @@ function Contact() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="John Doe"
+                  placeholder={t('fullNamePlaceholder')}
                   className="full-name"
                 />
               </InputGroup>
 
               <InputGroup
-                label="Email"
+                label={t('email')}
                 name="email"
                 error={errors.email}
               >
@@ -107,14 +110,14 @@ function Contact() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="your@email.com"
+                  placeholder={t('emailPlaceholder')}
                   className="email"
                 />
               </InputGroup>
             </div>
 
             <InputGroup
-              label="subject"
+              label={t('subject')}
               name="type"
               error={errors.type}
             >
@@ -123,13 +126,13 @@ function Contact() {
                 name="type"
                 value={formData.type}
                 onChange={handleChange}
-                placeholder="e.g. Feedback, Support, Inquiry"
+                placeholder={t('subjectPlaceholder')}
                 className="type"
               />
             </InputGroup>
 
             <InputGroup
-              label="Message"
+              label={t('message')}
               name="message"
               error={errors.message}
             >
@@ -137,7 +140,7 @@ function Contact() {
                 name="message"
                 value={formData.message}
                 onChange={handleChange}
-                placeholder="Your message here..."
+                placeholder={t('messagePlaceholder')}
                 rows="5"
               />
             </InputGroup>
@@ -147,7 +150,7 @@ function Contact() {
               className="submit-btn"
               disabled={isSubmitting}
             >
-              {isSubmitting ? 'Sending...' : 'Send Message'}
+              {isSubmitting ? t('sending') : t('sendMessage')}
             </button>
           </form>
         </div>

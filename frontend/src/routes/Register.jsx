@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { register } from '../api/usersapi';
+import { useTranslation } from 'react-i18next';
 
+import { register } from '../api/usersapi';
 import InputGroup from '../components/InputGroup';
 import RouteBanner from '../components/RouteBanner';
 import Checkbox from '../components/Checkbox';
@@ -13,6 +14,7 @@ import {
 } from '../utils/validations';
 
 function Register() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -56,63 +58,47 @@ function Register() {
 
   return (
     <>
-      <RouteBanner page="Register" />
+      <RouteBanner page={t('Register.title')} />
       <div className="register-container">
         <div>
-          <h2>Register</h2>
-          <p>Create your account to get started.</p>
+          <h2>{t('Register.title')}</h2>
+          <p>{t('Register.subtitle')}</p>
         </div>
-        <form
-          onSubmit={handleSubmit}
-          className="register-form"
-        >
-          <InputGroup
-            label="Username"
-            name="username"
-            error={errors.username}
-          >
+        <form onSubmit={handleSubmit} className="register-form">
+          <InputGroup label={t('Register.username')} name="username" error={errors.username}>
             <input
               type="text"
               name="username"
               value={formData.username}
               onChange={handleChange}
+              placeholder={t('Register.usernamePlaceholder')}
               className={errors.username ? 'input error' : 'input'}
             />
           </InputGroup>
 
-          <InputGroup
-            label="Email"
-            name="email"
-            error={errors.email}
-          >
+          <InputGroup label={t('Register.email')} name="email" error={errors.email}>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
+              placeholder={t('Register.emailPlaceholder')}
               className={errors.email ? 'input error' : 'input'}
             />
           </InputGroup>
 
-          <InputGroup
-            label="Password"
-            name="password"
-            error={errors.password}
-          >
+          <InputGroup label={t('Register.password')} name="password" error={errors.password}>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
+              placeholder={t('Register.passwordPlaceholder')}
               className={errors.password ? 'input error' : 'input'}
             />
           </InputGroup>
 
-          <InputGroup
-            label=""
-            name="rememberMe"
-            error={errors.rememberMe}
-          >
+          <InputGroup label="" name="rememberMe" error={errors.rememberMe}>
             <label className="termsRegister">
               <Checkbox
                 type="checkbox"
@@ -120,15 +106,12 @@ function Register() {
                 checked={formData.rememberMe || false}
                 onChange={handleChange}
               />
-              <span className="terms">I agree to Terms and Conditions</span>
+              <span className="terms">{t('Register.terms')}</span>
             </label>
           </InputGroup>
 
-          <button
-            type="submit"
-            className="register-button"
-          >
-            Register
+          <button type="submit" className="register-button">
+            {t('Register.submit')}
           </button>
         </form>
       </div>

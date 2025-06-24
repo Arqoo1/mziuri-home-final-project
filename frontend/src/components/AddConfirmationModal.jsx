@@ -17,7 +17,6 @@ function AddConfirmationModal({
         className="modal-content"
         onClick={(e) => e.stopPropagation()}
       >
-       <p className='title'>Flower</p>
         <h2>"{productTitle}"</h2>
         <p>
           Do you want to add this product to your <strong>{capitalizedAction}</strong>?

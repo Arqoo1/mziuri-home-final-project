@@ -1,86 +1,86 @@
 import Product from "../models/Product.js";
 import User from "../models/users.js";
+import { getCache, setCache } from '../utils/cache.js';
 
 export const getProducts = async (req, res) => {
   try {
     const { sort } = req.query;
-    let sortOption = [];
+    const cacheKey = `products_${sort || 'default'}`;
+    const cached = getCache(cacheKey);
 
+    if (cached) {
+      return res.status(200).json(cached);
+    }
+
+    let sortOption = [];
     switch (sort) {
       case "price_asc":
         sortOption = [
-          {
-            $addFields: {
-              effectivePrice: { $ifNull: ["$salePrice", "$price"] },
-            },
-          },
+          { $addFields: { effectivePrice: { $ifNull: ["$salePrice", "$price"] } } },
           { $sort: { effectivePrice: 1 } },
         ];
         break;
-
       case "price_desc":
         sortOption = [
-          {
-            $addFields: {
-              effectivePrice: { $ifNull: ["$salePrice", "$price"] },
-            },
-          },
+          { $addFields: { effectivePrice: { $ifNull: ["$salePrice", "$price"] } } },
           { $sort: { effectivePrice: -1 } },
         ];
         break;
-
       case "alphabetical_asc":
         sortOption = [{ $sort: { title: 1 } }];
         break;
-
       case "alphabetical_desc":
         sortOption = [{ $sort: { title: -1 } }];
         break;
-
       case "rating_asc":
         sortOption = [{ $sort: { rating: 1 } }];
         break;
-
       case "rating_desc":
         sortOption = [{ $sort: { rating: -1 } }];
         break;
-
       default:
         sortOption = [];
     }
 
-    const products =
-      sortOption.length > 0
-        ? await Product.aggregate(sortOption)
-        : await Product.find();
+    const products = sortOption.length > 0
+      ? await Product.aggregate(sortOption)
+      : await Product.find();
 
     if (!products || products.length === 0) {
       return res.status(404).json({ message: "No products found" });
     }
 
+    setCache(cacheKey, products, 300); // Cache for 5 minutes
     res.status(200).json(products);
   } catch (err) {
     console.error("Error fetching products:", err);
-    res
-      .status(500)
-      .json({ message: "Error fetching products", error: err.message });
+    res.status(500).json({ message: "Error fetching products", error: err.message });
   }
 };
 
 export const getProductById = async (req, res) => {
+  const id = req.params.id;
+  const cacheKey = `product_${id}`;
+  const cached = getCache(cacheKey);
+
+  if (cached) {
+    return res.status(200).json(cached);
+  }
+
   try {
-    const product = await Product.findById(req.params.id);
+    const product = await Product.findById(id);
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
+
+    setCache(cacheKey, product, 300); // Cache for 5 minutes
     res.status(200).json(product);
   } catch (err) {
     console.error("Error fetching product:", err);
-    res
-      .status(500)
-      .json({ message: "Error fetching product", error: err.message });
+    res.status(500).json({ message: "Error fetching product", error: err.message });
   }
 };
+
 export const addToCart = async (req, res) => {
   const { userId, productId, quantity = 1 } = req.body;
 

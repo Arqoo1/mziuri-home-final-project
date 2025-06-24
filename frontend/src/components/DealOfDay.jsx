@@ -3,10 +3,12 @@ import useCountdown from '../hooks/useCountdown';
 import Product from './Product';
 import { fetchProductData } from '../api/productapi';
 import SwiperCarousel from './SwiperCarousel';
+import { useTranslation } from 'react-i18next';
 
 function DealOfDay() {
   const { days, hours, minutes, seconds } = useCountdown(24 * 60 * 60 * 1000);
   const [saleProducts, setSaleProducts] = useState([]);
+  const { t, i18n } = useTranslation();
 
   const formatNumber = (num) => String(num).padStart(2, '0');
 
@@ -26,7 +28,7 @@ function DealOfDay() {
 
   return (
     <section className="deal-of-day">
-      <h3>Deal of The Day</h3>
+      <h2>{t('deal_of_the_day')}</h2>
 
       <div className="timer">
         {[
@@ -51,14 +53,17 @@ function DealOfDay() {
 
       <SwiperCarousel
         items={saleProducts}
-        slidesPerView={3}
         spaceBetween={20}
         loop={saleProducts.length > 3}
         prevBtnClass=""
         nextBtnClass=""
-        pagination={true}
         effect="fade"
         renderSlide={(product) => <Product product={product} />}
+        breakpoints={{
+          0: { slidesPerView: 1 },
+          600: { slidesPerView: 2 },
+          900: { slidesPerView: 3 }, // ✅ max at 3
+        }}
       />
     </section>
   );

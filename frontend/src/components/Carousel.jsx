@@ -1,26 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import slide1 from '../assets/slider1.webp';
-import slide2 from '../assets/slider2.webp';
-
-const slides = [
-  {
-    image: slide1,
-    header: 'TOP TREND',
-    title: '2022 Flower Trends',
-    description:
-      'Lorem ipsum dolor sit amet, pri autem nemore bonorum te. Autem fierent ullamcorper ius no, nec ea quodsi invenire. ',
-  },
-  {
-    image: slide2,
-    header: 'COLLECTION',
-    title: 'Flowers and Candle Birthday Gift',
-    description:
-      'Lorem ipsum dolor sit amet, pri autem nemore bonorum te. Autem fierent ullamcorper ius no, nec ea quodsi invenire. ',
-  },
-];
+import slides from '../data/slidesData.js';
+import { useTranslation } from 'react-i18next';
 
 function Carousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { t, i18n } = useTranslation();
 
   const goToSlide = (index) => {
     setCurrentIndex(index);
@@ -41,19 +25,21 @@ function Carousel() {
 
     return () => clearInterval(interval);
   }, []);
+const currentSlide = slides[currentIndex];
 
   return (
     <div className="carousel">
       <div className="carousel-slide">
         <img
-          src={slides[currentIndex].image}
+          src={currentSlide.image}
           alt={`Slide ${currentIndex + 1}`}
         />
         <div className="carousel-text">
-          <p className={`sliderText${currentIndex + 1}`}>{slides[currentIndex].header}</p>
-          <h2>{slides[currentIndex].title}</h2>
-          <p>{slides[currentIndex].description}</p>
-          <button className={`sliderBtn${currentIndex + 1}`}>Shop Now</button>
+          <p className={`sliderText${currentIndex + 1}`}>{t(currentSlide.header)}</p>
+          <h2>{t(currentSlide.title)}</h2>
+          <p>{t(currentSlide.description)}</p>
+
+          <button className={`sliderBtn${currentIndex + 1}`}>{t('shopNow')}</button>
         </div>
 
         <button

@@ -8,6 +8,7 @@ const SwiperCarousel = ({
   items = [],
   renderSlide,
   slidesPerView = 4,
+  breakpoints = {},
   loop = true,
   spaceBetween = 20,
   prevBtnClass = 'carousel-btn prev',
@@ -34,6 +35,7 @@ const SwiperCarousel = ({
         spaceBetween={spaceBetween}
         slidesPerView={slidesPerView}
         loop={loop}
+        breakpoints={breakpoints}
         className="carousel-track"
       >
         {items.map((item, index) => (

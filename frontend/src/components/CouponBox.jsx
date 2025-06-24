@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function CouponBox({ onApply }) {
   const [couponCode, setCouponCode] = useState('');
-
+const { t } = useTranslation();
   const handleApply = () => {
     if (!couponCode) {
       alert('Please enter a coupon code');
@@ -20,7 +21,7 @@ function CouponBox({ onApply }) {
         onChange={(e) => setCouponCode(e.target.value)}
       />
       <button type="button" onClick={handleApply}>
-        Apply Coupon
+        {t('couponSection.applyCoupon')}
       </button>
     </div>
   );

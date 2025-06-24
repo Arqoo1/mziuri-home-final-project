@@ -3,18 +3,18 @@
   width: 100%;
   position: relative;
   text-align: center;
-  &>span {
+  & > span {
     font-family: 'Great Vibes', cursive;
     font-size: 34px;
     font-weight: 600;
     letter-spacing: 3px;
     color: #e72463;
   }
-  &>h2{
+  & > h2 {
     margin: 2rem 0rem;
     font-size: 60px;
     letter-spacing: 4px;
-    font-family: "Josefin Slab", serif;
+    font-family: 'Josefin Slab', serif;
     color: #000;
   }
   .swiper {

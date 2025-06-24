@@ -2,11 +2,13 @@ import React, { useState } from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import InputGroup from './InputGroup';
+import { useTranslation } from 'react-i18next';
 
 function LeftFilter({
   setTitleFilter,
   setPriceRange,
   priceRange,
+  selectedTags,
   setSelectedTags,
   allTags,
   selectedCategory,
@@ -15,7 +17,7 @@ function LeftFilter({
 }) {
   const [titleFilter, setTitleFilterLocal] = useState('');
   const [localPriceRange, setLocalPriceRange] = useState(priceRange);
-  const [selectedTags, setLocalSelectedTags] = useState([]);
+  const { t, i18n } = useTranslation();
 
   const applyTitleFilter = (e) => {
     e.preventDefault();
@@ -29,21 +31,32 @@ function LeftFilter({
   };
 
   const handleTagToggle = (tag) => {
-    const newTags = selectedTags.includes(tag)
-      ? selectedTags.filter((tg) => tg !== tag)
-      : [...selectedTags, tag];
-    setLocalSelectedTags(newTags);
+    const exists = selectedTags.some((t) => t.en === tag.en);
+    const newTags = exists ? selectedTags.filter((t) => t.en !== tag.en) : [...selectedTags, tag];
     setSelectedTags(newTags);
   };
 
   const handleCategorySelect = (category) => {
-    setSelectedCategory((prevCategory) => (prevCategory === category ? null : category));
+    setSelectedCategory((prev) => (prev?.en === category.en ? null : category));
   };
+
+  // ✅ Deduplicate categories based on `en`
+  const uniqueCategories = [...new Map(allCategories.map((cat) => [cat.en, cat])).values()];
+
+  // ✅ Improved deduplication of tags using Set
+  const seen = new Set();
+  const uniqueTags = allTags.filter((tag) => {
+    const key = tag.en;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
 
   return (
     <div className="left-filter">
+      {/* Title Filter */}
       <div className="filter-section">
-        <h4 className="searchTitle">Search by Title</h4>
+        <h4 className="searchTitle">{t('search_by_title')}</h4>
         <InputGroup
           label=""
           name="titleFilter"
@@ -51,7 +64,7 @@ function LeftFilter({
           <div className="searchInputWrapper">
             <input
               type="text"
-              placeholder="Enter title..."
+              placeholder={t('enter_title')}
               value={titleFilter}
               onChange={(e) => setTitleFilterLocal(e.target.value)}
               className="searchInput"
@@ -62,35 +75,42 @@ function LeftFilter({
               onClick={applyTitleFilter}
               disabled={!titleFilter}
             >
-              <i className="fa fa-search"></i>{' '}
+              <i className="fa fa-search"></i>
             </button>
           </div>
         </InputGroup>
       </div>
 
+      {/* Category Filter */}
       <div className="filter-section">
-        <h4 className="searchTitle">Filter by Category</h4>
+        <h4 className="searchTitle">{t('filter_by_category')}</h4>
         <InputGroup
           label=""
           name="categoryFilter"
         >
           <ul className="category-list">
-            {allCategories.map((category) => (
-              <li
-                key={category}
-                className={`category-item ${selectedCategory === category ? 'selected' : ''}`}
-                onClick={() => handleCategorySelect(category)}
-              >
-                {category}
-                {selectedCategory === category && <span className="category-check">✓</span>}
-              </li>
-            ))}
+            {uniqueCategories.map((category, index) => {
+              const displayLabel = category[i18n.language] || category.en;
+              const isSelected = selectedCategory?.en === category.en;
+
+              return (
+                <li
+                  key={index}
+                  className={`category-item ${isSelected ? 'selected' : ''}`}
+                  onClick={() => handleCategorySelect(category)}
+                >
+                  {displayLabel}
+                  {isSelected && <span className="category-check">✓</span>}
+                </li>
+              );
+            })}
           </ul>
         </InputGroup>
       </div>
 
+      {/* Price Filter */}
       <div className="filter-section">
-        <h4 className="searchTitle">Price Filter</h4>
+        <h4 className="searchTitle">{t('price_filter')}</h4>
         <InputGroup
           label=""
           name="priceFilter"
@@ -114,28 +134,35 @@ function LeftFilter({
                 localPriceRange[0] === priceRange[0] && localPriceRange[1] === priceRange[1]
               }
             >
-              Apply Price
+              {t('apply_price')}
             </button>
           </div>
         </InputGroup>
       </div>
+
+      {/* Tag Filter */}
       <div className="filter-section">
-        <h4 className="searchTitle">Filter by Tags</h4>
+        <h4 className="searchTitle">{t('filter_by_tags')}</h4>
         <InputGroup
           label=""
           name="tagFilter"
         >
           <ul className="tag-list">
-            {allTags.map((tag) => (
-              <li
-                key={tag}
-                className={`tag-item ${selectedTags.includes(tag) ? 'selected' : ''}`}
-                onClick={() => handleTagToggle(tag)}
-              >
-                {tag}
-                {selectedTags.includes(tag) && <span className="tag-count">✓</span>}
-              </li>
-            ))}
+            {uniqueTags.map((tag) => {
+              const displayLabel = tag[i18n.language] || tag.en;
+              const isSelected = selectedTags.some((t) => t.en === tag.en);
+
+              return (
+                <li
+                  key={tag.en}
+                  className={`tag-item ${isSelected ? 'selected' : ''}`}
+                  onClick={() => handleTagToggle(tag)}
+                >
+                  {displayLabel}
+                  {isSelected && <span className="tag-count">✓</span>}
+                </li>
+              );
+            })}
           </ul>
         </InputGroup>
       </div>

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { validateEmail } from '../utils/validations';
 import * as api from '../api/usersapi.js';
 import RouteBanner from '../components/RouteBanner.jsx';
 import InputGroup from '../components/InputGroup.jsx';
 
 function ForgotPassword() {
+  const { t } = useTranslation();
   const [state, setState] = useState({});
   const [errorMessages, setErrorMessages] = useState({});
 
@@ -28,7 +30,7 @@ function ForgotPassword() {
     try {
       const response = await api.forgotPasswordUser(state);
       if (response.data) {
-        alert('Email has been sent');
+        alert(t('forgotPassword.success'));
       }
     } catch (err) {
       throw err;
@@ -44,17 +46,17 @@ function ForgotPassword() {
 
   return (
     <>
-      <RouteBanner page="Forgot-Password" />
+      <RouteBanner page={t('forgotPassword.pageTitle')} />
       <section className="forgotPassword">
         <div className="formContainer">
-          <form className='forgot-password-form' onSubmit={handleSubmit}>
+          <form className="forgot-password-form" onSubmit={handleSubmit}>
             <div className="titlesContainer">
-              <h1 className="title">Forgot your password?</h1>
-              <h3 className="subtitle">Password Change</h3>
+              <h1 className="title">{t('forgotPassword.title')}</h1>
+              <h3 className="subtitle">{t('forgotPassword.subtitle')}</h3>
             </div>
 
             <InputGroup
-              label="Email"
+              label={t('forgotPassword.email')}
               name="email"
               error={errorMessages.email}
             >
@@ -63,19 +65,19 @@ function ForgotPassword() {
                 name="email"
                 id="email"
                 className="input"
-                placeholder="you@example.com"
+                placeholder={t('forgotPassword.emailPlaceholder')}
                 value={state.email || ''}
                 onChange={handleChange}
               />
             </InputGroup>
 
             <button type="submit" className="submitButton">
-              Send
+              {t('forgotPassword.send')}
             </button>
 
             <div className="additionalContainer">
               <p className="rememberPass">
-                Remember your password? <Link to="/login">Log In</Link>
+                {t('forgotPassword.remember')} <Link to="/login">{t('forgotPassword.login')}</Link>
               </p>
             </div>
           </form>

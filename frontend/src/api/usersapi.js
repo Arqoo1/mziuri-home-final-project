@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+
 const API = axios.create({
-  baseURL: 'http://localhost:5000/api/users',
+  baseURL: `${API_BASE_URL}/api/users`,
   withCredentials: true,
 });
 
@@ -109,15 +111,14 @@ export const updateUserCart = async (cart) => {
   if (!token) throw new Error('No token in localStorage');
 
   try {
-    const response = await axios.put(
-      'http://localhost:5000/api/users/cart',
+    const response = await API.put(
+      '/cart',
       { cart },
       {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        withCredentials: true,
       }
     );
     return response.data;
@@ -134,15 +135,14 @@ export const updateUserWishlist = async (wishlist) => {
   if (!token) throw new Error('No token in localStorage');
 
   try {
-    const response = await axios.put(
-      'http://localhost:5000/api/users/wishlist',
+    const response = await API.put(
+      '/wishlist',
       { wishlist },
       {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        withCredentials: true,
       }
     );
     return response.data;

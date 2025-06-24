@@ -26,7 +26,6 @@ function Compare({ allProducts }) {
   return (
     <>
       <RouteBanner page="Compare" />
-      <h2>Compare Products</h2>
 
       <table className="compare-table">
         <thead>
