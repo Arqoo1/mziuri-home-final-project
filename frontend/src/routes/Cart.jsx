@@ -28,10 +28,15 @@ function Cart() {
       }
 
       const promises = cart.map(async (item) => {
+
         if (item.price !== undefined) return item;
-        const productData = await fetchSingleProduct(item.productId || item._id);
+
+        const productId = item.productId || item.product || item._id;
+        const productData = await fetchSingleProduct(productId);
+
         return {
           ...item,
+          productId: productId,
           title: productData.title,
           image: productData.image,
           price: productData.salePrice || productData.price,
