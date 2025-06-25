@@ -1,6 +1,6 @@
 # MZIURI-HOME-FINAL-PROJECT
 
-_Transforming Ideas Into Limitless Possibilities_
+https://flosun-ogqh.onrender.com
 
 ![last-commit](https://img.shields.io/github/last-commit/Arqoo1/mziuri-home-final-project?style=flat&logo=git&logoColor=white&color=0080ff)
 ![repo-top-language](https://img.shields.io/github/languages/top/Arqoo1/mziuri-home-final-project?style=flat&color=0080ff)
@@ -26,22 +26,6 @@ _Transforming Ideas Into Limitless Possibilities_
 
 ---
 
-## 📑 Table of Contents
-
-- [Overview](#overview)
-- [Features](#features)
-- [Screenshots](#screenshots)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Usage](#usage)
-  - [Testing](#testing)
-- [Folder Structure](#folder-structure)
-- [Contributing](#contributing)
-- [License](#license)
-
----
-
 ## 🔍 Overview
 
 **MZIURI-HOME-FINAL-PROJECT** is a full-stack, multilingual e-commerce web application powered by React and Node.js. It is built with scalability, modularity, and developer experience in mind.
@@ -62,7 +46,10 @@ Whether you're building a large online store or a niche market shop, this projec
 - **📦 API Layer** for product CRUD, reviews, users, and coupon handling.
 
 ---
-
+## Coupons
+- SAVE10 (Save 10% on your order)
+- FREESHIP (Get $5 off for shipping)
+- WELCOME15  (15% off for new users)
 ## 📸 Screenshots
 
 _Coming soon 
