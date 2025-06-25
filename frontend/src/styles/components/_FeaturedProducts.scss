@@ -12,6 +12,9 @@
     font-weight: 600;
     letter-spacing: 3px;
     color: #e72463;
+        @media (max-width: 500px) {
+      font-size: 20px;
+    }
   }
 
   & > h2 {
@@ -20,6 +23,9 @@
     letter-spacing: 4px;
     font-family: 'Josefin Slab', serif;
     color: #000;
+    @media (max-width: 500px) {
+      font-size: 30px;
+    }
   }
 
   .swiper {
@@ -46,7 +52,9 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    transition: opacity 0.3s, transform 0.3s;
+    transition:
+      opacity 0.3s,
+      transform 0.3s;
     cursor: pointer;
   }
 

@@ -103,13 +103,20 @@
 
   .category-content {
     background-color: white;
-    @include flex-layout(row, center, center);
+    text-align: center;
+    @include flex-layout(column, center, center);
     padding: 10px;
 
     @media (max-width: 1050px) {
       font-size: 13px;
     }
+        @media (max-width: 650px) {
+   width: 90%;
+        }
 
+          @media (max-width: 500px) {
+      font-size: 10px;
+    }
     p {
       color: $primary-color;
     }
@@ -122,6 +129,9 @@
       @media (max-width: 750px) {
         font-size: 13px;
       }
+          @media (max-width: 500px) {
+      font-size: 10px;
+    }
     }
   }
 }

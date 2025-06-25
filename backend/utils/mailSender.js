@@ -16,7 +16,7 @@ const mailSender = async (from, to, url) => {
     html: `
         <div style="width: 100%; background-color: rgb(250, 250, 250); text-align: center">
             <br>
-            <a href="http://localhost:5173/" style="text-align: center; font-size: 26px; color: #199890; text-decoration: none;font-weight: bold">Flosun</a>
+            <a href="http://localhost:5173/" style="text-align: center; font-size: 26px; color: #e72463; text-decoration: none;font-weight: bold">Flosun</a>
             <br>
             <br>
             <div style="font-size: 16px; margin: 0 auto; width: 50%; color: black; background-color: white; padding: 40px; ">
@@ -24,11 +24,11 @@ const mailSender = async (from, to, url) => {
                 <div style="margin-bottom: 20px;">If this was a mistake, just ignore this email and nothing will happen.</div>
                 <div style="margin-bottom: 30px;">To reset your password, click the button below.</div>
         
-                <a href=${url} style="text-align: center; font-size: 15px; text-align: center; background-color: #199890; padding: 10px 24px; text-decoration: none; border-radius: 3px; color:white">Reset Password</a>
+                <a href=${url} style="text-align: center; font-size: 15px; text-align: center; background-color: #e72463; padding: 10px 24px; text-decoration: none; border-radius: 3px; color:white">Reset Password</a>
             </div>
             <br>
             <br>
-            <p>© ${new Date().getFullYear()} MelodyMatch LLC</p>
+            <p>© ${new Date().getFullYear()} Flosun</p>
             <p>All rights reserved.</p>
             <br>
             <br>
@@ -62,13 +62,12 @@ const sendContactMail = async (to, subject, message) => {
     html: `
         <div style="width: 100%; background-color: rgb(250, 250, 250); text-align: center">
             <br>
-            <a href="http://localhost:5173/" style="text-align: center; font-size: 26px; color: #199890; text-decoration: none;font-weight: bold">FloSun</a>
+            <a href="http://localhost:5173/" style="text-align: center; font-size: 26px; color: #e72463; text-decoration: none;font-weight: bold">FloSun</a>
             <br>
             <br>
             <div style="font-size: 16px; margin: 0 auto; width: 50%; color: black; background-color: white; padding: 40px; ">
                 <div style="margin-bottom: 16px; font-size: 20px;">New Contact Form Submission:</div> 
-                <p>Email: <a href="mailto:${to}" style="color: #199890; text-decoration: none;">${to}</a></p>
-                <p>Subject: ${subject}</p>
+                <p>Email: <a href="mailto:${to}" style="color: #e72463; text-decoration: none;">${to}</a></p>
                 <div style="margin-top: 20px; padding: 15px; background-color: #ffffff; border: 1px solid #eee; border-radius: 4px;">
                     <p style="margin-top: 0;">Message:</p>
                     <p style="margin-bottom: 0;">${message}</p>
@@ -76,7 +75,7 @@ const sendContactMail = async (to, subject, message) => {
             </div>
             <br>
             <br>
-            <p>© ${new Date().getFullYear()} MelodyMatch LLC</p>
+            <p>© ${new Date().getFullYear()} Flosun</p>
             <p>All rights reserved.</p>
             <br>
             <br>

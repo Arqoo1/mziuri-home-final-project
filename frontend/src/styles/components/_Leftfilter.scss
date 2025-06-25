@@ -31,7 +31,10 @@
     gap: 30px;
     width: 100%;
     padding: 10px 0;
+.price-preview{
 
+  margin: 20px 0px
+}
     ul {
       @include flex-layout(row, flex-start, center, wrap);
       gap: 20px;
@@ -59,6 +62,7 @@
     border-radius: 50%;
     z-index: 333 !important;
     border: 2px solid #e72463 !important;
+    top: 2px
   }
 
   .searchInputWrapper {

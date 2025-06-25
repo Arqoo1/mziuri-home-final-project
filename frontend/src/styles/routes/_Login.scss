@@ -23,13 +23,16 @@
   & > div {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 30px;
     align-items: center;
     margin-bottom: 30px;
     h2 {
       font-size: 2rem;
       font-weight: 600;
       color: $primary-color;
+    }
+    p{
+      text-align: center;
     }
   }
   .login-button,

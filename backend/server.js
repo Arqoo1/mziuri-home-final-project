@@ -66,7 +66,6 @@ mongoose
 app.use("/api/products", productRoutes);
 app.use("/api/users", UsersRouter);
 app.use("/api/reviews", ReviewRouter);
-// app.use("/api/cart-items", CartRoutes);
 app.use("/api/coupons", CouponRoutes);
 app.use("/api/currency", currencyRoutes);
 

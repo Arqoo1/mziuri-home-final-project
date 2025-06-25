@@ -1,4 +1,4 @@
-@use "../abstracts/index.scss" as *;
+@use '../abstracts/index.scss' as *;
 
 .Imagecarousel {
   position: relative;
@@ -10,7 +10,10 @@
   height: auto;
   background-color: $bg-color;
   touch-action: pan-y;
+        @media (max-width: 650px) {
+padding: 20px 0px;
 
+    }
   &:active {
     cursor: grabbing;
   }
@@ -65,7 +68,14 @@
     width: 40px;
     height: 40px;
     @include flex-layout(row, center, center);
+    @media (max-width: 780px) {
+padding: 2px;
+    }
+        @media (max-width: 650px) {
+width: 30px;
+    height: 30px;
 
+    }
     &:hover {
       background-color: rgba(0, 0, 0, 0.7);
     }

@@ -78,12 +78,10 @@ function ForgotPassword() {
               type="submit"
               className="submitButton"
               text={t('forgotPassword.send')}
-            >
-            </Button>
+            ></Button>
             <div className="additionalContainer">
-              <p className="rememberPass">
-                {t('forgotPassword.remember')} <Link to="/login">{t('forgotPassword.login')}</Link>
-              </p>
+              <p className="rememberPass">{t('forgotPassword.remember')}</p>
+              <Link to="/login">{t('forgotPassword.login')}</Link>
             </div>
           </form>
         </div>

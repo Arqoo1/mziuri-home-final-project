@@ -7,19 +7,13 @@ import { useTranslation } from 'react-i18next';
 
 function Checkout() {
   const { state } = useLocation();
-  const {
-    cart = [],
-    subtotal = 0,
-    discount = 0,
-    total = 0,
-    appliedCoupon = null,
-  } = state || {};
+  const { cart = [], subtotal = 0, discount = 0, total = 0, appliedCoupon = null } = state || {};
 
   const [selectedMethod, setSelectedMethod] = useState('');
   const [showCouponInput, setShowCouponInput] = useState(false);
 
   const { convert, symbol } = useCurrency();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <>
@@ -28,8 +22,15 @@ function Checkout() {
       <section className="checkout-container">
         <section className="checkout">
           <form className="checkout-form">
-            <InputGroup label={t('country') + ' *'} name="country">
-              <select id="country" name="country" required>
+            <InputGroup
+              label={t('country') + ' *'}
+              name="country"
+            >
+              <select
+                id="country"
+                name="country"
+                required
+              >
                 <option value="">{t('selectCountry')}</option>
                 <option value="us">{t('unitedStates')}</option>
                 <option value="uk">{t('unitedKingdom')}</option>
@@ -37,56 +38,134 @@ function Checkout() {
               </select>
             </InputGroup>
 
-            <InputGroup label={t('companyName')} name="company">
-              <input type="text" id="company" name="company" />
+            <InputGroup
+              label={t('companyName')}
+              name="company"
+            >
+              <input
+                type="text"
+                id="company"
+                name="company"
+              />
             </InputGroup>
 
             <div className="half-inputs">
-              <InputGroup label={t('firstName')} name="FirstName">
-                <input type="text" id="FirstName" name="FirstName" />
+              <InputGroup
+                label={t('firstName')}
+                name="FirstName"
+              >
+                <input
+                  type="text"
+                  id="FirstName"
+                  name="FirstName"
+                />
               </InputGroup>
-              <InputGroup label={t('lastName')} name="LastName">
-                <input type="text" id="LastName" name="LastName" />
+              <InputGroup
+                label={t('lastName')}
+                name="LastName"
+              >
+                <input
+                  type="text"
+                  id="LastName"
+                  name="LastName"
+                />
               </InputGroup>
             </div>
 
-            <InputGroup label={t('address') + ' *'} name="address">
-              <input type="text" id="address" name="address" required />
+            <InputGroup
+              label={t('address') + ' *'}
+              name="address"
+            >
+              <input
+                type="text"
+                id="address"
+                name="address"
+                required
+              />
             </InputGroup>
 
-            <InputGroup label={t('townCity') + ' *'} name="city">
-              <input type="text" id="city" name="city" required />
+            <InputGroup
+              label={t('townCity') + ' *'}
+              name="city"
+            >
+              <input
+                type="text"
+                id="city"
+                name="city"
+                required
+              />
             </InputGroup>
 
             <div className="half-inputs">
-              <InputGroup label={t('stateCountry') + ' *'} name="state">
-                <input type="text" id="state" name="state" required />
+              <InputGroup
+                label={t('stateCountry') + ' *'}
+                name="state"
+              >
+                <input
+                  type="text"
+                  id="state"
+                  name="state"
+                  required
+                />
               </InputGroup>
-              <InputGroup label={t('postcodeZip') + ' *'} name="postcode">
-                <input type="text" id="postcode" name="postcode" required />
+              <InputGroup
+                label={t('postcodeZip') + ' *'}
+                name="postcode"
+              >
+                <input
+                  type="text"
+                  id="postcode"
+                  name="postcode"
+                  required
+                />
               </InputGroup>
             </div>
 
             <div className="half-inputs">
-              <InputGroup label={t('emailAddress') + ' *'} name="email">
-                <input type="email" id="email" name="email" required />
+              <InputGroup
+                label={t('emailAddress') + ' *'}
+                name="email"
+              >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  required
+                />
               </InputGroup>
-              <InputGroup label={t('phone') + ' *'} name="phone">
-                <input type="tel" id="phone" name="phone" required />
+              <InputGroup
+                label={t('phone') + ' *'}
+                name="phone"
+              >
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  required
+                />
               </InputGroup>
             </div>
 
             <div className="form-group checkbox">
-              <input type="checkbox" id="createAccount" />
+              <input
+                type="checkbox"
+                id="createAccount"
+              />
               <label htmlFor="createAccount">{t('createAccount')}</label>
             </div>
 
             <div className="form-group checkbox">
-              <input type="checkbox" id="shipToDifferent" />
+              <input
+                type="checkbox"
+                id="shipToDifferent"
+              />
               <label htmlFor="shipToDifferent">{t('shipToDifferentAddress')}</label>
             </div>
 
-            <InputGroup label={t('orderNotes')} name="notes">
+            <InputGroup
+              label={t('orderNotes')}
+              name="notes"
+            >
               <textarea
                 id="notes"
                 name="notes"
@@ -106,9 +185,14 @@ function Checkout() {
               </div>
 
               {cart.map((item, index) => (
-                <div className="table-row" key={index}>
+                <div
+                  className="table-row"
+                  key={index}
+                >
                   <span>
-                    {(typeof item.title === 'object' ? item.title.en : item.title) || 'Unnamed'}{' '}
+                    {(typeof item.title === 'object'
+                      ? item.title[i18n.language] || item.title.en
+                      : item.title) || 'Unnamed'}{' '}
                     <strong>×{item.quantity}</strong>
                   </span>
                   <span>
@@ -129,7 +213,8 @@ function Checkout() {
               {discount > 0 && (
                 <div className="table-row">
                   <span>
-                    {t('discount')}{appliedCoupon?.code ? ` (${appliedCoupon.code})` : ''}
+                    {t('discount')}
+                    {appliedCoupon?.code ? ` (${appliedCoupon.code})` : ''}
                   </span>{' '}
                   <span>
                     -{symbol}
@@ -150,71 +235,44 @@ function Checkout() {
             <div className="payment-methods">
               <div>
                 <p
-                  onClick={() =>
-                    setSelectedMethod(selectedMethod === 'bank' ? '' : 'bank')
-                  }
+                  onClick={() => setSelectedMethod(selectedMethod === 'bank' ? '' : 'bank')}
                   className="clickable-method"
                 >
                   {t('directBankTransfer')}
                 </p>
-                <div
-                  className={`methodscontainer ${
-                    selectedMethod === 'bank' ? 'show' : ''
-                  }`}
-                >
-                  {selectedMethod === 'bank' && (
-                    <>
-                      {t('directBankTransferDescription')}
-                    </>
-                  )}
+                <div className={`methodscontainer ${selectedMethod === 'bank' ? 'show' : ''}`}>
+                  {selectedMethod === 'bank' && <>{t('directBankTransferDescription')}</>}
                 </div>
               </div>
 
               <div>
                 <p
-                  onClick={() =>
-                    setSelectedMethod(selectedMethod === 'cheque' ? '' : 'cheque')
-                  }
+                  onClick={() => setSelectedMethod(selectedMethod === 'cheque' ? '' : 'cheque')}
                   className="clickable-method"
                 >
                   {t('chequePayment')}
                 </p>
-                <div
-                  className={`methodscontainer ${
-                    selectedMethod === 'cheque' ? 'show' : ''
-                  }`}
-                >
-                  {selectedMethod === 'cheque' && (
-                    <>
-                      {t('chequePaymentDescription')}
-                    </>
-                  )}
+                <div className={`methodscontainer ${selectedMethod === 'cheque' ? 'show' : ''}`}>
+                  {selectedMethod === 'cheque' && <>{t('chequePaymentDescription')}</>}
                 </div>
               </div>
 
               <div>
                 <p
-                  onClick={() =>
-                    setSelectedMethod(selectedMethod === 'paypal' ? '' : 'paypal')
-                  }
+                  onClick={() => setSelectedMethod(selectedMethod === 'paypal' ? '' : 'paypal')}
                   className="clickable-method"
                 >
                   {t('paypal')}
                 </p>
-                <div
-                  className={`methodscontainer ${
-                    selectedMethod === 'paypal' ? 'show' : ''
-                  }`}
-                >
-                  {selectedMethod === 'paypal' && (
-                    <>
-                      {t('paypalDescription')}
-                    </>
-                  )}
+                <div className={`methodscontainer ${selectedMethod === 'paypal' ? 'show' : ''}`}>
+                  {selectedMethod === 'paypal' && <>{t('paypalDescription')}</>}
                 </div>
               </div>
 
-              <button type="submit" className="checkout-button">
+              <button
+                type="submit"
+                className="checkout-button"
+              >
                 {t('placeOrder')}
               </button>
             </div>

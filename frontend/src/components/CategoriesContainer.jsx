@@ -6,10 +6,12 @@ import categorybanner3 from '../assets/categorybanner3.webp';
 import categorybanner4 from '../assets/categorybanner4.webp';
 import categorybanner5 from '../assets/categorybanner5.webp';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router-dom';
 
 function CategoriesContainer() {
   const [categories, setCategories] = useState([]);
   const { i18n } = useTranslation();
+  const navigate = useNavigate();
 
   const categoryBanners = [
     categorybanner1,
@@ -52,6 +54,7 @@ function CategoriesContainer() {
               backgroundSize: 'cover',
               backgroundPosition: 'center',
             }}
+            onClick={() => navigate('/shop')}
           >
             <div className="category-content">
               <h3>{categories[0][i18n.language] || categories[0].en}</h3>
@@ -71,6 +74,7 @@ function CategoriesContainer() {
                   backgroundSize: 'cover',
                   backgroundPosition: 'center',
                 }}
+                onClick={() => navigate('/shop')}
               >
                 <div className="category-content">
                   <h3>{category[i18n.language] || category.en}</h3>

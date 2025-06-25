@@ -6,11 +6,13 @@
   width: 100%;
   border: 1px solid $border-color;
   padding: 20px;
+  @media (max-width: 500px) {
+    justify-content: center;
+  }
 
   .icon-group {
     @include flex-layout(row, flex-start, center);
     gap: 10px;
-
     i {
       font-size: 23px;
       cursor: pointer;
@@ -20,9 +22,15 @@
         color 0.3s ease,
         border 0.3s ease;
       border: 2px solid transparent;
+      @media (max-width: 500px) {
+        display: none;
+      }
 
       &.active {
         border: 2px solid #000000;
+        @media (max-width: 500px) {
+          border: none;
+        }
       }
     }
   }

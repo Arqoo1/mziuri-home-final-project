@@ -91,14 +91,16 @@ function ResetPassword() {
               />
             </InputGroup>
 
-            <button type="submit" className="submitButton">
+            <button
+              type="submit"
+              className="submitButton"
+            >
               {t('resetPassword.button')}
             </button>
 
             <div className="additionalContainer">
-              <p className="backToLogin">
-                {t('resetPassword.backTo')} <Link to="/login">{t('resetPassword.login')}</Link>
-              </p>
+              <p>{t('resetPassword.backTo')}</p>
+              <Link to="/login">{t('resetPassword.login')}</Link>
             </div>
           </form>
         </div>
