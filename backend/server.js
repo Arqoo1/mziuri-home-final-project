@@ -34,8 +34,8 @@ app.use(limiter);
 
 app.use(
   cors({
-    // origin: "https://flosun-ogqh.onrender.com",
-    origin: "http://localhost:5173",
+    origin: "https://flosun-ogqh.onrender.com",
+    // origin: "http://localhost:5173",
 
     credentials: true,
   })
@@ -71,9 +71,9 @@ app.use("/api/coupons", CouponRoutes);
 app.use("/api/currency", currencyRoutes);
 
 // Serve frontend static files & SPA fallback
-// app.use(express.static(path.join(__dirname, "dist")));
-// app.get("/*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "dist", "index.html"));
-// });
+app.use(express.static(path.join(__dirname, "dist")));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

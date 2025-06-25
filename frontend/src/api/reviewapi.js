@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
-// const API_URL = `${API_BASE_URL}/api/reviews/client`;
-const API_URL = `http://localhost:5000/api/reviews/client`;
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+const API_URL = `${API_BASE_URL}/api/reviews/client`;
+// const API_URL = `http://localhost:5000/api/reviews/client`;
 
 
 export const fetchReviews = async () => {
