@@ -1,10 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import banner1 from '../assets/banner-img1.webp';
 import banner2 from '../assets/banner-img2.webp';
 import { useTranslation } from 'react-i18next';
+import Button from '../components/Button';
 
 function AboutOutFlower() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate('/shop');
+  };
 
   return (
     <section>
@@ -13,7 +20,7 @@ function AboutOutFlower() {
           <span>{t('aboutpage.section1.subtitle')}</span>
           <h3>{t('aboutpage.section1.title')}</h3>
           <p>{t('aboutpage.section1.description')}</p>
-          <button>{t('aboutpage.section1.button')}</button>
+          <Button text={t('aboutpage.section1.button')} onClick={handleNavigate} />
         </div>
         <div className="banner">
           <img src={banner1} alt="banner" />
@@ -28,7 +35,7 @@ function AboutOutFlower() {
           <span>{t('aboutpage.section2.subtitle')}</span>
           <h3>{t('aboutpage.section2.title')}</h3>
           <p>{t('aboutpage.section2.description')}</p>
-          <button>{t('aboutpage.section2.button')}</button>
+          <Button className="btn1" text={t('aboutpage.section1.button')} onClick={handleNavigate} />
         </div>
       </section>
     </section>

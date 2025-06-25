@@ -6,6 +6,8 @@ import {
   addToWishlist,
   removeFromWishlist,
   addToCart,
+  getReviewsByProduct,
+  addReview
 } from "../controllers/productController.js";
 import { authMiddleware } from "../middlewares/auth.js";
 
@@ -19,5 +21,6 @@ router.post("/add-to-wishlist", authMiddleware, addToWishlist);
 
 router.delete("/remove-from-cart", authMiddleware, removeFromCart);
 router.delete("/remove-from-wishlist", authMiddleware, removeFromWishlist);
-
+router.get('/review/:productId', getReviewsByProduct); 
+router.post('/review', addReview);
 export default router;

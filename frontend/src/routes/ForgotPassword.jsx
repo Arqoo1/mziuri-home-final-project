@@ -5,7 +5,7 @@ import { validateEmail } from '../utils/validations';
 import * as api from '../api/usersapi.js';
 import RouteBanner from '../components/RouteBanner.jsx';
 import InputGroup from '../components/InputGroup.jsx';
-
+import Button from '../components/Button';
 function ForgotPassword() {
   const { t } = useTranslation();
   const [state, setState] = useState({});
@@ -49,7 +49,10 @@ function ForgotPassword() {
       <RouteBanner page={t('forgotPassword.pageTitle')} />
       <section className="forgotPassword">
         <div className="formContainer">
-          <form className="forgot-password-form" onSubmit={handleSubmit}>
+          <form
+            className="forgot-password-form"
+            onSubmit={handleSubmit}
+          >
             <div className="titlesContainer">
               <h1 className="title">{t('forgotPassword.title')}</h1>
               <h3 className="subtitle">{t('forgotPassword.subtitle')}</h3>
@@ -71,10 +74,12 @@ function ForgotPassword() {
               />
             </InputGroup>
 
-            <button type="submit" className="submitButton">
-              {t('forgotPassword.send')}
-            </button>
-
+            <Button
+              type="submit"
+              className="submitButton"
+              text={t('forgotPassword.send')}
+            >
+            </Button>
             <div className="additionalContainer">
               <p className="rememberPass">
                 {t('forgotPassword.remember')} <Link to="/login">{t('forgotPassword.login')}</Link>

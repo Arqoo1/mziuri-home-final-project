@@ -126,7 +126,7 @@ function Login() {
                 </div>
               </label>
               <Link
-                to="/register"
+                to="/forgot-password"
                 className="forgot-password-link"
               >
                 {t('Login.forgotPassword')}

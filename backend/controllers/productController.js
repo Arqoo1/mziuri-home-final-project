@@ -2,6 +2,10 @@ import Product from "../models/Product.js";
 import User from "../models/users.js";
 import { getCache, setCache } from "../utils/cache.js";
 import mongoose from "mongoose";
+import { sendSuccessReviewEmail } from '../utils/mailSender.js';
+import Review from '../models/Review.js';
+
+
 
 export const getProducts = async (req, res) => {
   try {
@@ -212,5 +216,42 @@ export const removeFromWishlist = async (req, res) => {
       message: "Error removing from wishlist",
       error: err.message,
     });
+  }
+};
+
+
+
+
+
+export const getReviewsByProduct = async (req, res) => {
+  const { productId } = req.params;
+
+  try {
+    const reviews = await Review.find({ productId }).sort({ createdAt: -1 });
+    res.json(reviews);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+export const addReview = async (req, res) => {
+  const { productId, user, rating, review, userEmail, productName } = req.body;
+
+  if (!productId || !user || !review || !rating || !userEmail || !productName) {
+    return res.status(400).json({ message: 'All fields are required' });
+  }
+
+  try {
+    // Create and save the review to the database 
+    const newReview = new Review({ productId, user, review, rating });
+    await newReview.save();
+
+    // Send email directly to the user's email 
+    await sendSuccessReviewEmail(userEmail, productName);
+
+    res.status(201).json(newReview);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };

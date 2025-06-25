@@ -5,6 +5,7 @@ import { fetchSingleProduct } from '../api/productapi';
 import { updateUserCart } from '../api/usersapi';
 import AddConfirmationModal from './AddConfirmationModal';
 import { useCurrency } from '../Context/CurrencyContext';
+import Button from '../components/Button';
 
 function ItemsTable({ items, setItems, loggedIn, updateBackend, isCart = true }) {
   const { t, i18n } = useTranslation();
@@ -192,21 +193,19 @@ function ItemsTable({ items, setItems, loggedIn, updateBackend, isCart = true })
                 )}
                 {!isCart && (
                   <td>
-                    <button
-                      className="add-to-cart-button"
+                    <Button
+                      className="btn2"
                       onClick={() => openModal(item, 'cart')}
-                    >
-                      {t('Add To Cart')}
-                    </button>
+                      text={`${t('add_product')}`}
+                    />
                   </td>
                 )}
                 <td>
-                  <button
-                    className="delete-button"
+                  <Button
+                    className="remove-btn"
                     onClick={() => handleDelete(id)}
-                  >
-                    {t('remove')}
-                  </button>
+                    text={<i className="fa fa-trash"></i>}
+                  ></Button>
                 </td>
               </tr>
             );

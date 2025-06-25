@@ -10,17 +10,20 @@
   height: auto;
   background-color: $bg-color;
   touch-action: pan-y;
+
   &:active {
     cursor: grabbing;
   }
+
   .carousel-track {
-    display: flex;
+    @include flex-layout(row, flex-start, center);
     width: 100%;
     cursor: grab;
 
     &:active {
       cursor: grabbing;
     }
+
     .carousel-slide {
       flex: 0 0 25%;
       padding: 0 7.5px;
@@ -34,6 +37,7 @@
         transform: scale(1.04);
         z-index: 2;
       }
+
       img {
         width: 100%;
         height: 100%;
@@ -45,6 +49,7 @@
       }
     }
   }
+
   .carousel-btn {
     position: absolute;
     top: 50%;
@@ -59,9 +64,7 @@
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include flex-layout(row, center, center);
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.7);

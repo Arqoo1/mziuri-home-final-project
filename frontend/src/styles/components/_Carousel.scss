@@ -1,39 +1,45 @@
+@use '../abstracts/index.scss' as *;
+
+
 .carousel {
   position: relative;
   overflow: hidden;
   height: 90vh;
+
   @media (max-width: 900px) {
     height: 70vh;
   }
+
   .carousel-slide {
     position: relative;
     height: 100%;
     width: 100%;
+
     img {
       width: 100%;
       height: 100%;
       display: block;
-      // border-radius: 1rem;
     }
 
     .carousel-text {
       position: absolute;
-      display: flex;
-      flex-direction: column;
+      @include flex-layout(column, flex-start, flex-start);
       gap: 30px;
       color: black;
       top: 33%;
       left: 10%;
-      align-items: start;
       text-align: left;
       width: 40%;
+
       @media (max-width: 1000px) {
         width: auto;
         padding-right: 40px;
       }
+
       h2 {
         font-size: 2.5rem;
         margin-bottom: 0.5rem;
+
         @media (max-width: 600px) {
           font-size: 1rem;
         }
@@ -43,37 +49,42 @@
         font-size: 1.2rem;
         letter-spacing: 1px;
         line-height: 30px;
+
         @media (max-width: 600px) {
           font-size: 0.7rem;
         }
       }
+
+      .sliderText1,
       .sliderText2 {
-        background-color: black;
-        color: white;
         padding: 5px 10px;
+        color: white;
+
         @media (max-width: 600px) {
           font-size: 0.6rem;
           padding: 1px 7px;
         }
       }
+
       .sliderText1 {
         background-color: #e72463;
-        color: white;
-        padding: 5px 10px;
-        @media (max-width: 600px) {
-          font-size: 0.6rem;
-          padding: 1px 7px;
-        }
       }
+
+      .sliderText2 {
+        background-color: black;
+      }
+
       button {
         padding: 10px 30px;
         border: none;
         color: white;
         cursor: pointer;
       }
+
       .sliderBtn1 {
         background-color: #e72463;
       }
+
       .sliderBtn2 {
         background-color: black;
       }
@@ -105,8 +116,7 @@
     position: absolute;
     bottom: 15px;
     width: 100%;
-    display: flex;
-    justify-content: center;
+    @include flex-layout(row, center, center, nowrap);
     gap: 10px;
 
     .dot {

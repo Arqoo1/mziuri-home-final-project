@@ -1,19 +1,14 @@
 @use '../abstracts/index.scss' as *;
 
 .product-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
+  @include flex-layout(column, space-between, center);
   border: 1px solid #ccc;
   padding: 16px;
   border-radius: 10px;
   background: #fff;
   text-align: center;
   box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   width: 30%;
   user-select: none;
   position: relative;
@@ -23,8 +18,7 @@
     position: absolute;
     top: 20px;
     right: 10px;
-    display: flex;
-    flex-direction: column;
+    @include flex-layout(column, flex-start, center);
     gap: 8px;
     opacity: 0;
     pointer-events: none;
@@ -32,17 +26,16 @@
 
     i {
       font-size: 15px;
-      color: #ffffff;
-      background: #000000;
+      color: #fff;
+      background: #000;
       padding: 10px;
       border-radius: 50%;
       cursor: pointer;
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
       transform: translateY(-10px);
       opacity: 0;
-      transition:
-        transform 0.3s ease,
-        opacity 0.3s ease;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+
       &:hover {
         background-color: $primary-color;
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -52,7 +45,6 @@
     i:nth-child(1) {
       transition-delay: 0.1s;
     }
-
     i:nth-child(2) {
       transition-delay: 0.25s;
     }
@@ -61,19 +53,19 @@
     }
   }
 
-  &:hover .icon-wrapper {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
-  &:hover .icon-wrapper i {
-    transform: translateY(0);
-    opacity: 1;
-  }
-
   &:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+    .icon-wrapper {
+      opacity: 1;
+      pointer-events: auto;
+
+      i {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
   }
 
   .product-img {
@@ -97,28 +89,25 @@
     color: $primary-color;
   }
 }
+
 .product-in-list {
   width: 100%;
-  flex-direction: row;
+  @include flex-layout(row, flex-start, flex-start);
   height: 300px;
+
   img {
     width: 30% !important;
     height: 100%;
     object-fit: cover;
   }
+
   .product-inform {
     align-items: start;
     text-align: start;
     width: 70%;
   }
+
   .product-price {
     justify-content: start;
   }
-  // .icon-wrapper{
-  //   opacity: 1;
-  //   i{
-  //     opacity: 1;
-  //     top: 200px;
-  //   }
-  // }
 }

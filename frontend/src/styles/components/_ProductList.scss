@@ -1,22 +1,46 @@
-@use "../abstracts/index.scss" as *;
+@use '../abstracts/index.scss' as *;
 
 .product-list-wrapper {
   padding: 20px;
   width: 100%;
-  display: flex;
+  @include flex-layout(row, flex-start, stretch);
+
+  @media (max-width: 1170px) {
+    flex-wrap: wrap-reverse;
+    padding: 40px;
+  }
+
   .product-grid {
-    // display: flex;
+    @include flex-layout(row, center, stretch);
     flex-wrap: wrap;
     width: 75%;
     gap: 16px;
 
+    @media (max-width: 1170px) {
+      width: 100%;
+    }
+
     .products-container {
-      display: flex;
-      align-items: center;
+      @include flex-layout(row, flex-start, stretch);
       flex-wrap: wrap;
-      justify-content: space-between;
       gap: 20px;
       width: 100%;
+
+      .product-in-list {
+        width: 100% !important;
+      }
+
+      .product-card {
+        width: 100%;
+
+        @media (min-width: 751px) {
+          width: calc(50% - 10px);
+        }
+
+        @media (min-width: 1024px) {
+          width: calc(33.333% - 13.33px);
+        }
+      }
     }
 
     .no-products {
@@ -31,10 +55,8 @@
   .product-price {
     font-size: 16px;
     margin: 5px 0;
-    display: flex;
+    @include flex-layout(row, center, center);
     gap: 20px;
-    align-items: center;
-    justify-content: center;
 
     .original-price {
       text-decoration: line-through;

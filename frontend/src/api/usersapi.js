@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+const API_BASE_URL = 'http://localhost:5000';
 
 const API = axios.create({
   baseURL: `${API_BASE_URL}/api/users`,
@@ -31,7 +32,9 @@ export const login = async (formData) => {
     return data;
   } catch (err) {
     const errorMessage =
-      err.response?.data?.err || err.response?.data?.message || 'Login failed. Please check your credentials.';
+      err.response?.data?.err ||
+      err.response?.data?.message ||
+      'Login failed. Please check your credentials.';
     throw new Error(errorMessage);
   }
 };

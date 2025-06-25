@@ -4,11 +4,10 @@ function Rating({ rating }) {
   const totalStars = 5;
   const stars = [];
 
-  // Round to nearest half
   const roundedRating = Math.round(rating * 2) / 2;
 
   const starStyle = {
-    color: '#ffc107', 
+    color: '#e72463', 
     marginRight: '3px',
 
   };
@@ -16,7 +15,7 @@ function Rating({ rating }) {
   const emptyStarStyle = {
     color: 'transparent', 
 
-    WebkitTextStroke: '1px #ffc107',
+    WebkitTextStroke: '1px #e72463',
     marginRight: '3px',
   };
 
@@ -31,7 +30,6 @@ function Rating({ rating }) {
         />
       );
     } else if (i + 0.5 === roundedRating) {
-      // Half star - yellow fill + border (textShadow)
       stars.push(
         <i
           key={i}
@@ -41,7 +39,6 @@ function Rating({ rating }) {
         />
       );
     } else {
-      // Empty star - no fill, but yellow border
       stars.push(
         <i
           key={i}

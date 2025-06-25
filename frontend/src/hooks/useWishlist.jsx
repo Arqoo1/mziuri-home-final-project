@@ -12,7 +12,6 @@ export function useWishlist() {
 
     try {
       if (loggedIn && userData?._id) {
-        // Make a copy of wishlist
         const newWishlist = [...wishlist];
 
         const exists = newWishlist.some(item => item.productId === productId || item._id === productId);
@@ -25,7 +24,6 @@ export function useWishlist() {
           alert('Product is already in wishlist');
         }
       } else {
-        // Guest user
         const guestWishlist = JSON.parse(localStorage.getItem('guestWishlist')) || [];
         const exists = guestWishlist.some(item => item._id === productId);
         if (!exists) {

@@ -1,10 +1,10 @@
+@use '../abstracts/index.scss' as *;
+
 .modal-overlay {
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-layout(row, center, center);
   z-index: 999;
 }
 
@@ -33,8 +33,7 @@
     margin: 0;
 
     li {
-      display: flex;
-      align-items: center;
+      @include flex-layout(row, flex-start, center);
       margin-bottom: 10px;
       padding: 8px;
       border-bottom: 1px solid #ddd;

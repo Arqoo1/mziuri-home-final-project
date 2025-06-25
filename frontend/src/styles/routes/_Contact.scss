@@ -1,3 +1,4 @@
+
 @use '../abstracts/index.scss' as *;
 
 .our-contactinfo {
@@ -7,7 +8,13 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-
+  @media (max-width: 1100px) {
+    flex-wrap: wrap;
+    height: auto;
+  }
+  @media (max-width: 990px) {
+    flex-direction: column;
+  }
   & > div {
     width: 30%;
     height: 100%;
@@ -18,6 +25,19 @@
     gap: 10px;
     border: 2px solid $border-color-2;
 
+    @media (max-width: 1100px) {
+      width: 45%;
+      margin: 20px;
+      padding: 50px 20px;
+
+      &:nth-child(3) {
+        width: 100%;
+      }
+    }
+    @media (max-width: 990px) {
+      width: 100%;
+      margin: 20px 0px;
+    }
     &:hover {
       i {
         background-color: $primary-color;
@@ -33,6 +53,9 @@
     p {
       font-size: 1.2rem;
       text-align: center;
+      @media (max-width: 990px) {
+        font-size: 1rem;
+      }
     }
 
     i {
@@ -74,7 +97,9 @@
       .half-inputs {
         display: flex;
         gap: 20px;
-
+        @media (max-width: 450px) {
+          flex-direction: column;
+        }
         > div {
           flex: 1;
         }
@@ -135,4 +160,10 @@
   cursor: pointer;
   transition: background-color 0.3s;
   width: 100%;
+}
+.map-wrapper {
+  @media (max-width: 450px) {
+    height: 40vh !important;
+    padding: 0px !important;
+  }
 }

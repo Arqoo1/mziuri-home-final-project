@@ -21,9 +21,9 @@
     @media (max-width: 1000px) {
       width: 100px;
     }
-            @media (max-width: 750px) {
-              width: 120px;
-  }
+    @media (max-width: 750px) {
+      width: 120px;
+    }
   }
 }
 .icons {
@@ -36,6 +36,7 @@
 
   i {
     font-size: 17px;
+    color: black;
     &:hover {
       color: #e72463;
       transition: color 0.2s ease-in-out;
@@ -45,8 +46,8 @@
     }
     @media (max-width: 750px) {
       font-size: 18px;
-          font-size: 18px;
-  }
+      font-size: 18px;
+    }
   }
 }
 
@@ -60,8 +61,8 @@ nav {
   @media (max-width: 900px) {
     gap: 30px;
   }
-    @media (max-width: 750px) {
-    display: none; 
+  @media (max-width: 750px) {
+    display: none;
   }
   a {
     color: black;
@@ -105,7 +106,7 @@ nav {
   position: fixed;
   top: 105px;
   right: 40px;
-  width: 400px;
+  width: 40vw;
   background-color: white;
   border: 1px solid #ddd;
   padding: 1rem;
@@ -113,7 +114,9 @@ nav {
   gap: 0.75rem;
   z-index: 999;
   border-radius: 8px;
-  .burger-nav{
+  @media (max-width: 490px) {
+  }
+  .burger-nav {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
@@ -129,6 +132,23 @@ nav {
   }
 }
 
+.fa-shopping-cart {
+  position: relative;
+  div {
+    position: absolute;
+    top: -15px;
+    right: -13px;
+    width: 20px;
+    height: 20px;
+    background-color: #e72463;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 11px;
+    border-radius: 100%;
+  }
+}
 .burger-menu-wrapper select {
   padding: 0.5rem;
   font-size: 1rem;

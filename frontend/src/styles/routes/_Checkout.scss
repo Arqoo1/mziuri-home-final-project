@@ -3,16 +3,20 @@
 .checkout-container {
   width: calc(100% - 80px);
   margin: 0 auto;
+
   .checkout {
-    padding: 40px 0px;
+    padding: 40px 0;
     display: flex;
-    align-items: start;
+    align-items: flex-start;
+
     .label {
       color: black;
     }
+
     textarea {
       max-height: 350px;
     }
+
     .returning-customer,
     .coupon-toggle {
       margin-bottom: 1rem;
@@ -47,29 +51,34 @@
         cursor: pointer;
       }
     }
+
     .checkout-summary {
       width: 50%;
       padding: 30px;
       background-color: $bg-color;
       display: flex;
-      justify-content: center;
       flex-direction: column;
+      justify-content: center;
     }
+
     input,
     select,
     textarea {
       background-color: white;
     }
+
     select,
     textarea {
       border: 1px solid #ccc;
     }
+
     .checkout-form {
       display: flex;
       width: 50%;
       flex-direction: column;
       gap: 1.2rem;
       padding-right: 30px;
+
       .half-inputs {
         display: flex;
         gap: 1rem;
@@ -97,6 +106,7 @@
         color: #666;
         margin-bottom: 0.5rem;
       }
+
       .form-group {
         display: flex;
         flex-direction: column;
@@ -126,76 +136,76 @@
     }
   }
 }
+
 .order-table {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
   margin-top: 1rem;
-}
 
-.table-header,
-.table-row {
-  display: flex;
-  justify-content: space-between;
-  font-size: 16px;
-}
+  .table-header,
+  .table-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+  }
 
-.table-header {
-  font-weight: bold;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 0.5rem;
-  margin-bottom: 0.5rem;
-}
+  .table-header {
+    font-weight: bold;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
 
-.total-row {
-  font-size: 18px;
-  font-weight: bold;
-  margin-top: 1rem;
-}
-
-
-.payment-methods{
-
-padding-top: 20px; 
-div{
-  margin-bottom: 10px;
-} // padding: 30px 0px;
-}
-.methodscontainer {
-  // padding: 10px;
-  background-color: $white-color;
-  font-size: 18px;
-  max-height: 0;
-  opacity: 0;
-  overflow: hidden;
-  transition: all 1.5s ease;
-  // margin-bottom: 1rem;
-
-  &.show {
-    max-height: 200px; // Adjust if needed
-    opacity: 1;
+  .total-row {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 1rem;
   }
 }
 
-.clickable-method {
-  cursor: pointer;
-  font-weight: 600;
-  padding: 2px 0px;
-  color: black;
-  font-size: 20px;
-  // margin: 1rem 0 0.5rem;
-  &:hover {
-    color: $primary-color;
+.payment-methods {
+  padding-top: 20px;
+
+  div {
+    margin-bottom: 10px;
   }
-}
-.checkout-button{
-  background-color: black;
-  color: $white-color;
-  width: 100%;
-  padding: 13px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  font-weight: bold;
+
+  .methodscontainer {
+    background-color: $white-color;
+    font-size: 18px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 1.5s ease;
+
+    &.show {
+      max-height: 200px; // adjust if needed
+      opacity: 1;
+    }
+  }
+
+  .clickable-method {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 2px 0;
+    color: black;
+    font-size: 20px;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
+
+  .checkout-button {
+    background-color: black;
+    color: $white-color;
+    width: 100%;
+    padding: 13px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+  }
 }

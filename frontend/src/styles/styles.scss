@@ -27,6 +27,9 @@
 @use "./components/CartTable";
 @use "./components/AddConfirmationModal";
 @use "./components/Pagination";
+@use "./components/Reviews";
+@use "./components/Button";
+@use "./components/NotFound";
 
 
 @use "./routes/SinglePage";

@@ -1,0 +1,27 @@
+@use '../abstracts/index.scss' as *;
+
+.notfound {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+  width: 30vw;
+  height: 30vh;
+  margin: 50px auto;
+  background-color: $primary-color;
+  p {
+    color: black;
+    font-size: 18px;
+    @media (max-width: 540px) {
+      font-size: 12px;
+    }
+  }
+
+  @media (max-width: 1400px) {
+    width: 90vw;
+  }
+
+}
+  

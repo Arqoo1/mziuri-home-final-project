@@ -118,6 +118,7 @@
     "about": "About",
     "blog": "Blog",
     "shop": "Shop",
+    "contact":"contact",
     "cart": "Cart",
     "support": "Support",
     "onlineSupport": "Online Support",
@@ -248,5 +249,19 @@
   "title": "We Love Our Clients",
   "subtitle": "What They're Saying"
 },
-  "filter_by_tags": "Filter by Tags"
+  "filter_by_tags": "Filter by Tags",
+    "compare": "Compare",
+  "attribute": "Attribute",
+  "add_product": "Add Product",
+  "no_product": "No product",
+  "description": "Description",
+  "stock": "Stock",
+  "in_stock": "In Stock",
+  "out_of_stock": "Out of Stock",
+  "price": "Price",
+  "rating": "Rating",
+  "add_to_cart": "Add to Cart",
+  "add_to_wishlist": "Add to Wishlist",
+    "inStock": "In Stock",
+  "outOfStock": "Out of Stock"
 }

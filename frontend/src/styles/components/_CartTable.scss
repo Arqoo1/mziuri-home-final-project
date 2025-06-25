@@ -3,8 +3,11 @@
 .cart-table {
   width: calc(100% - 80px);
   border-collapse: collapse;
-  margin: 50px auto;
-  margin-bottom: 0px;
+  margin: 50px auto 0;
+
+  @media (max-width: 800px) {
+    width: auto;
+  }
 
   th,
   td {
@@ -12,9 +15,9 @@
     padding: 10px;
     text-align: center;
   }
-  td{
+
+  td {
     height: 200px;
-    
   }
 
   th {
@@ -22,16 +25,13 @@
   }
 
   .product-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex-layout(row, center, center);
     gap: 20px;
 
     .name-row {
       font-size: 16px;
       font-weight: bold;
       text-align: center;
-      // color: $theme-color;
     }
 
     .delete-button {
@@ -40,6 +40,53 @@
       font-size: 22px;
       color: rgb(139, 136, 136);
       cursor: pointer;
+    }
+  }
+
+  @media (max-width: 800px) {
+    display: block;
+    width: calc(100% - 80px);
+
+    thead {
+      display: none;
+    }
+
+    tbody {
+      @include flex-layout(column, flex-start, stretch);
+      gap: 20px;
+    }
+
+    tr {
+      @include flex-layout(column, flex-start, stretch);
+      background-color: #f9f9f9;
+      padding: 15px;
+      border: 1px solid #ddd;
+    }
+
+    td {
+      @include flex-layout(row, space-between, center);
+      padding: 10px 0;
+      border: none;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      height: auto;
+
+      @media (max-width: 800px) {
+        display: block;
+      }
+
+      &::before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-transform: capitalize;
+        margin-right: 10px;
+        flex-basis: 50%;
+        color: #333;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
     }
   }
 }

@@ -1,42 +1,45 @@
 @use "../abstracts/index.scss" as *;
 
+
 .route-banner {
   background-image: url(../../src/assets/routerbanner.webp);
   background-size: cover;
   background-repeat: no-repeat;
   text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-layout(column, center, center);
   gap: 20px;
-  flex-direction: column;
   margin-top: 100px;
   color: white;
   font-weight: 700;
   width: 100%;
   height: 50vh;
-  h2{
+
+  h2 {
     font-size: 30px;
-    font-weight:bolder;
+    font-weight: bolder;
     letter-spacing: 4px;
     font-family: $different-font-style-2;
   }
+
   h3 {
-    display: flex;
-    align-items: center;
+    @include flex-layout(row, flex-start, center);
     gap: 20px;
     color: black;
     font-size: 25px;
     font-weight: normal;
+
     span {
       font-size: 16px;
     }
+
     i {
       font-size: 15px;
     }
+
     a {
       color: black;
       text-decoration: none;
+
       &:hover {
         color: #e72463;
         transition: color 0.2s ease-in-out;

@@ -1,9 +1,9 @@
 @use "../abstracts/index.scss" as *;
 
 .inputGroup {
-  display: flex;
-  flex-direction: column;
+  @include flex-layout(column, flex-start, stretch);
   width: 100%;
+
   .label {
     font-weight: 500;
     color: $primary-color;
@@ -17,7 +17,6 @@
       font-size: 1rem;
       transition: border-color 0.2s ease;
       outline: none;
-      // margin-bottom: 10px;
 
       &.error {
         border-color: rgb(160, 0, 0);
@@ -34,6 +33,5 @@
   .error {
     border-color: rgb(219, 13, 13);
     font-weight: 600;
-
   }
 }

@@ -93,4 +93,28 @@ const sendContactMail = async (to, subject, message) => {
   });
 };
 
-export { mailSender, sendContactMail };
+const sendSuccessReviewEmail = async (recipientEmail, productName) => {
+  const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+      user: process.env.MAIL_SENDER_EMAIL,
+      pass: process.env.MAIL_SENDER_PASS,
+    },
+  });
+
+  const mailOptions = {
+    from: process.env.MAIL_SENDER_EMAIL,
+    to: recipientEmail,
+    subject: `Your Review for Earls-Restaurant! Thank You!`,
+    text: `Thank you for your review on our product: ${productName}. We appreciate your feedback!`,
+  };
+
+  try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent successfully:", info.response);
+  } catch (err) {
+    console.error("Error sending email:", err);
+  }
+};
+
+export { mailSender, sendContactMail, sendSuccessReviewEmail };

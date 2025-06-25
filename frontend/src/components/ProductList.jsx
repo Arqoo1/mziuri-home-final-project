@@ -77,7 +77,7 @@ function ProductList() {
   );
 
   useEffect(() => {
-    setCurrentPage(1); // Reset page on filters change
+    setCurrentPage(1); 
   }, [priceRange, selectedTags, selectedCategory, sort]);
 
   return (
@@ -93,7 +93,6 @@ function ProductList() {
         setSelectedCategory={setSelectedCategory}
         allCategories={allCategories}
       />
-
       <div className="product-grid">
         <TopFilter
           sort={sort}
@@ -106,7 +105,7 @@ function ProductList() {
 
         {filteredProducts.length > 0 ? (
           <>
-            <div className="products-container grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="products-container">
               {paginatedProducts.map((product) => (
                 <Product
                   key={product._id}

@@ -30,7 +30,7 @@ function ProductsModal({ excludedProducts = [], onAdd, onClose }) {
           &times;
         </button>
 
-        <div className="sort-control">
+        {/* <div className="sort-control">
           <label htmlFor="sort">Sort by:</label>
           <select id="sort" value={sort} onChange={handleSortChange}>
             <option value="default">Default</option>
@@ -39,7 +39,7 @@ function ProductsModal({ excludedProducts = [], onAdd, onClose }) {
             <option value="rating-desc">Rating</option>
             <option value="title-asc">Title A–Z</option>
           </select>
-        </div>
+        </div> */}
 
         <ul className="product-list">
           {allProducts.map((p) => {

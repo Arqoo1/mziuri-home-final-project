@@ -2,7 +2,7 @@ import React from 'react';
 
 function AddConfirmationModal({
   productTitle,
-  action, // "cart" or "wishlist"
+  action, 
   onClose,
   onConfirm,
 }) {

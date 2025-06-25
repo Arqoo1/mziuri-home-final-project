@@ -3,7 +3,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import InputGroup from './InputGroup';
 import { useTranslation } from 'react-i18next';
-
+import Button from './Button';
 function LeftFilter({
   setTitleFilter,
   setPriceRange,
@@ -40,10 +40,8 @@ function LeftFilter({
     setSelectedCategory((prev) => (prev?.en === category.en ? null : category));
   };
 
-  // ✅ Deduplicate categories based on `en`
   const uniqueCategories = [...new Map(allCategories.map((cat) => [cat.en, cat])).values()];
 
-  // ✅ Improved deduplication of tags using Set
   const seen = new Set();
   const uniqueTags = allTags.filter((tag) => {
     const key = tag.en;
@@ -127,15 +125,14 @@ function LeftFilter({
             <p className="price-preview">
               ${localPriceRange[0]} - ${localPriceRange[1]}
             </p>
-            <button
-              className="priceButton"
+            <Button
+              text={t('apply_price')}
+              className="btn1"
               onClick={applyPriceFilter}
               disabled={
                 localPriceRange[0] === priceRange[0] && localPriceRange[1] === priceRange[1]
               }
-            >
-              {t('apply_price')}
-            </button>
+            />
           </div>
         </InputGroup>
       </div>

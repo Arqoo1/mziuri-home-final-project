@@ -1,18 +1,15 @@
 @use '../abstracts/index.scss' as *;
 
 .top-filter {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex-layout(row, space-between, center);
   margin-bottom: 20px;
   width: 100%;
   border: 1px solid $border-color;
   padding: 20px;
 
   .icon-group {
-    display: flex;
+    @include flex-layout(row, flex-start, center);
     gap: 10px;
-    align-items: center;
 
     i {
       font-size: 23px;

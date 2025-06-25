@@ -23,7 +23,6 @@ function CategoriesContainer() {
     const getProducts = async () => {
       const products = await fetchProductData();
 
-      // Count categories by English name (unique key)
       const categoryCounts = products.reduce((acc, product) => {
         const category = product.category;
         if (category && category.en) {
@@ -33,7 +32,6 @@ function CategoriesContainer() {
         return acc;
       }, {});
 
-      // Convert counts object to array
       const categoriesArray = Object.values(categoryCounts);
 
       setCategories(categoriesArray);

@@ -14,7 +14,6 @@ export default function useReviewCarousel(
   const [slideWidth, setSlideWidth] = useState(0);
   const animationRef = useRef(null);
 
-  // Cleanup animation frame on unmount
   useEffect(
     () => () => {
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
@@ -22,7 +21,6 @@ export default function useReviewCarousel(
     []
   );
 
-  // Measure slide width & handle resizing
   useEffect(() => {
     if (!containerRef.current || length <= 1) return;
 

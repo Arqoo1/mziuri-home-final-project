@@ -20,7 +20,6 @@ export const LoaderProvider = ({ children }) => {
     return data;
   };
 
-  // hook: useFakeLoader (for routes that simulate loading without fetch)
   const useFakeLoader = () => {
     setLoading(true);
 

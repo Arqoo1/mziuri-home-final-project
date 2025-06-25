@@ -1,0 +1,65 @@
+@use '../abstracts/index.scss' as *;
+
+.btn1 {
+  position: relative;
+  overflow: hidden;
+  padding: 13px 40px;
+  background-color: $bg-color-2;
+  color: $white-color;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 0%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: $primary-color;
+    transition: all 0.4s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+
+.btn2 {
+  position: relative;
+  overflow: hidden;
+  padding: 13px 40px;
+  background-color: $primary-color;
+  color: $white-color;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    width: 0%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: black;
+    transition: all 0.4s ease;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+}
+.btn3 {
+  border: 2px solid black;
+  background-color: transparent;
+  padding: 10px 28px;
+}
+.remove-btn {
+  color: rgb(219, 16, 16);
+  border: none;
+  font-size: 23px;
+}

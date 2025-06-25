@@ -9,7 +9,7 @@ function OurHistory() {
       <span>{t('A_little_story')}</span>
       <h2>{t('Our_History')}</h2>
       <p className="history-text">{t('OurHistory1')}</p>
-      <p>{t('OurHistory2')}</p>
+      <p className="history-text">{t('OurHistory2')}</p>
     </section>
   );
 }

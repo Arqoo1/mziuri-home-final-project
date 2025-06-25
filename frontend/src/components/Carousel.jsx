@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import slides from '../data/slidesData.js';
 import { useTranslation } from 'react-i18next';
-
+import Button from './Button';
+import { useNavigate } from 'react-router-dom';
 function Carousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { t, i18n } = useTranslation();
-
+  const navigate = useNavigate();
   const goToSlide = (index) => {
     setCurrentIndex(index);
   };
@@ -17,7 +18,9 @@ function Carousel() {
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   };
-
+  const handleNavigate = () => {
+    navigate('/shop');
+  };
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
@@ -25,7 +28,7 @@ function Carousel() {
 
     return () => clearInterval(interval);
   }, []);
-const currentSlide = slides[currentIndex];
+  const currentSlide = slides[currentIndex];
 
   return (
     <div className="carousel">
@@ -38,8 +41,11 @@ const currentSlide = slides[currentIndex];
           <p className={`sliderText${currentIndex + 1}`}>{t(currentSlide.header)}</p>
           <h2>{t(currentSlide.title)}</h2>
           <p>{t(currentSlide.description)}</p>
-
-          <button className={`sliderBtn${currentIndex + 1}`}>{t('shopNow')}</button>
+          <Button
+            text={t('shopNow')}
+            className={`btn${currentIndex + 1}`}
+            onClick={handleNavigate}
+          />
         </div>
 
         <button

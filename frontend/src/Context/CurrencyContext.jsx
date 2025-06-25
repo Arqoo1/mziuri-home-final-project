@@ -1,9 +1,9 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { fetchRates } from '../api/currencyapi';
 
-const CurrencyContext = createContext(); // <-- this was missing!
+const CurrencyContext = createContext(); 
 
-// currency symbols
+
 const symbols = {
   USD: '$',
   EUR: '€',
@@ -45,7 +45,6 @@ export function CurrencyProvider({ children }) {
   );
 }
 
-// ✅ ADD THIS to fix the error
 export function useCurrency() {
   return useContext(CurrencyContext);
 }

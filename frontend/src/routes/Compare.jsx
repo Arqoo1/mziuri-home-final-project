@@ -5,12 +5,15 @@ import RouteBanner from '../components/RouteBanner';
 import Rating from '../components/Rating';
 import { useAddToCart } from '../hooks/useAddToCart';
 import { useWishlist } from '../hooks/useWishlist';
-
+import { useTranslation } from 'react-i18next';
+import Button from '../components/Button';
 function Compare({ allProducts }) {
+  const { t, i18n } = useTranslation();
   const { compareList, addToCompare, removeFromCompare } = useCompare();
   const [modalOpen, setModalOpen] = useState(false);
   const { addToCart } = useAddToCart();
   const { addToWishlist } = useWishlist();
+  const currentLang = i18n.language;
 
   const emptySlots = 3 - compareList.length;
   const columns = [...compareList, ...Array(emptySlots).fill(null)];
@@ -25,33 +28,30 @@ function Compare({ allProducts }) {
 
   return (
     <>
-      <RouteBanner page="Compare" />
+      <RouteBanner page={t('compare')} />
 
       <table className="compare-table">
         <thead>
           <tr>
-            <th>Attribute</th>
+            <th>{t('attribute')}</th>
             {columns.map((p, i) => (
               <th key={i}>
                 {p ? (
                   p.title?.en || p.title
                 ) : (
-                  <button
-                    className="action-btn"
+                  <Button
+                    className="btn2"
                     onClick={openModal}
-                  >
-                    + Add Product
-                  </button>
+                    text={`+ ${t('add_product')}`}
+                  />
                 )}
               </th>
             ))}
           </tr>
         </thead>
-
         <tbody>
-          {/* Product image + title */}
           <tr>
-            <td>Product</td>
+            <td>{t('product')}</td>
             {columns.map((p, i) => (
               <td key={i}>
                 {p ? (
@@ -63,106 +63,87 @@ function Compare({ allProducts }) {
                     <p>{p.title?.en || p.title}</p>
                   </>
                 ) : (
-                  <p className="placeholder">No product</p>
+                  <p className="placeholder">{t('no_product')}</p>
                 )}
               </td>
             ))}
           </tr>
-
-          {/* Description */}
           <tr>
-            <td>Description</td>
+            <td>{t('description')}</td>
             {columns.map((p, i) => (
               <td key={i}>
-                {p ? p.description?.en || p.description : <p className="placeholder">-</p>}
-              </td>
-            ))}
-          </tr>
-
-          {/* Stock */}
-          <tr>
-            <td>Stock</td>
-            {columns.map((p, i) => (
-              <td key={i}>
-                {p ? (
-                  p.stock === true ? (
-                    'In Stock'
+                <div className="value">
+                  {p ? (
+                    p.description?.[currentLang] || p.description?.en || ''
                   ) : (
-                    'Out of Stock'
-                  )
-                ) : (
-                  <p className="placeholder">-</p>
-                )}
+                    <p className="placeholder">-</p>
+                  )}
+                </div>
               </td>
             ))}
           </tr>
-
-          {/* Price */}
           <tr>
-            <td>Price</td>
+            <td>{t('stock')}</td>
+            {columns.map((p, i) => (
+              <td key={i}>
+                {p ? p.stock ? t('in_stock') : t('out_of_stock') : <p className="placeholder">-</p>}
+              </td>
+            ))}
+          </tr>
+          <tr>
+            <td>{t('price')}</td>
             {columns.map((p, i) => (
               <td key={i}>{p ? `$${p.salePrice || p.price}` : <p className="placeholder">-</p>}</td>
             ))}
           </tr>
-
-          {/* Rating */}
           <tr>
-            <td>Rating</td>
+            <td>{t('rating')}</td>
             {columns.map((p, i) => (
               <td key={i}>{p ? <Rating rating={p.rating} /> : <p className="placeholder">-</p>}</td>
             ))}
           </tr>
-
-          {/* Add to Cart */}
           <tr>
-            <td>Add to Cart</td>
+            <td>{t('add_to_cart')}</td>
             {columns.map((p, i) => (
               <td key={i}>
                 {p ? (
-                  <button
-                    className="add-btn"
+                  <Button
+                    className="btn2"
                     onClick={() => addToCart(p, 1)}
-                  >
-                    Add to Cart
-                  </button>
+                    text={t('add_to_cart')}
+                  />
                 ) : (
                   <p className="placeholder">-</p>
                 )}
               </td>
             ))}
           </tr>
-
-          {/* Add to Wishlist */}
           <tr>
-            <td>Add to Wishlist</td>
+            <td>{t('add_to_wishlist')}</td>
             {columns.map((p, i) => (
               <td key={i}>
                 {p ? (
-                  <button
-                    className="wishlist-btn"
+                  <Button
+                    className="btn3"
                     onClick={() => addToWishlist(p)}
-                  >
-                    Add to Wishlist
-                  </button>
+                    text={t('add_to_wishlist')}
+                  />
                 ) : (
                   <p className="placeholder">-</p>
                 )}
               </td>
             ))}
           </tr>
-
           <tr>
-            <td>Remove</td>
+            <td>{t('remove')}</td>
             {columns.map((p, i) => (
               <td key={i}>
                 {p ? (
-                  <button
+                  <Button
                     className="remove-btn"
                     onClick={() => removeFromCompare(p._id)}
-                    title="Remove from compare"
-                  >
-                    Remove
-                  </button>
+                    text={<i className="fa fa-trash"></i>}
+                  ></Button>
                 ) : (
                   <p className="placeholder">-</p>
                 )}
@@ -171,6 +152,76 @@ function Compare({ allProducts }) {
           </tr>
         </tbody>
       </table>
+
+      <div className="compare-cards">
+        {compareList.map((p, i) => (
+          <div
+            key={i}
+            className="compare-card"
+          >
+            <img
+              src={p.image}
+              alt={p.title?.en || p.title}
+            />
+            <div className="title">{p.title?.en || p.title}</div>
+
+            <div className="card-row">
+              <span>{t('description')}:</span>
+              <div className="value">
+                {p.description?.[currentLang] || p.description?.en || ''}
+              </div>{' '}
+            </div>
+            <div className="card-row">
+              <span>{t('stock')}:</span>
+              <div className="value">{p.stock ? t('in_stock') : t('out_of_stock')}</div>
+            </div>
+            <div className="card-row">
+              <span>{t('price')}:</span>
+              <div className="value">${p.salePrice || p.price}</div>
+            </div>
+            <div className="card-row">
+              <span>{t('rating')}:</span>
+              <div className="value">
+                <Rating rating={p.rating} />
+              </div>
+            </div>
+
+            <div className="actions">
+              <Button
+                className="btn2"
+                onClick={() => addToCart(p, 1)}
+                text={t('add_to_cart')}
+              />
+
+              <Button
+                className="btn3"
+                onClick={() => addToWishlist(p)}
+                text={t('add_to_wishlist')}
+              />
+              <Button
+                className="remove-btn"
+                onClick={() => removeFromCompare(p._id)}
+                text={<i className="fa fa-trash"></i>}
+              ></Button>
+            </div>
+          </div>
+        ))}
+
+        {Array(3 - compareList.length)
+          .fill(null)
+          .map((_, i) => (
+            <div
+              key={`empty-${i}`}
+              className="compare-card empty-card"
+            >
+              <Button
+                className="btn2"
+                onClick={openModal}
+                text={`+ ${t('add_product')}`}
+              />
+            </div>
+          ))}
+      </div>
 
       {modalOpen && (
         <ProductsModal

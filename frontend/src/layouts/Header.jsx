@@ -3,11 +3,13 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/logo.webp';
 import { useTranslation } from 'react-i18next';
 import { useCurrency } from '../Context/CurrencyContext';
+import { useUserData } from '../Context/UserContext';
 
 function Header() {
   const [showSearch, setShowSearch] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); // <-- New state
+  const [menuOpen, setMenuOpen] = useState(false); 
+  const { cart } = useUserData();
 
   const { t, i18n } = useTranslation();
   const { currency, changeCurrency } = useCurrency();
@@ -32,11 +34,12 @@ function Header() {
   return (
     <>
       <header className={`header ${scrolled ? 'scrolled' : ''}`}>
-        <img
-          src={logo}
-          alt="Logo"
-        />
-
+        <Link to="/">
+          <img
+            src={logo}
+            alt="Logo"
+          />
+        </Link>
         <nav>
           <Link to="/">{t('home')}</Link>
           <Link to="/shop">{t('shop')}</Link>
@@ -51,7 +54,14 @@ function Header() {
             className="fa fa-search"
             onClick={() => setShowSearch((prev) => !prev)}
           ></i>
-          <i className="fa fa-shopping-cart"></i>
+          <Link
+            to="/cart"
+            className="cart-icon-link"
+          >
+            <i className="fa fa-shopping-cart">
+              <div className="cart-div">{cart.length}</div>
+            </i>
+          </Link>
           <i
             className="fa fa-bars"
             onClick={() => setMenuOpen((prev) => !prev)}

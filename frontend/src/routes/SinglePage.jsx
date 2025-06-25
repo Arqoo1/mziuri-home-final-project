@@ -9,6 +9,8 @@ import AddConfirmationModal from '../components/AddConfirmationModal';
 import { useAddToCart } from '../hooks/useAddToCart';
 import { useWishlist } from '../hooks/useWishlist';
 import { useCurrency } from '../Context/CurrencyContext';
+import Reviews from '../components/Reviews';
+import Button from '../components/Button';
 
 function SinglePage() {
   const { id: productId } = useParams();
@@ -17,14 +19,13 @@ function SinglePage() {
   const [error, setError] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const { useDataLoader } = useLoader();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { convert, symbol } = useCurrency();
   const { addToCart } = useAddToCart();
   const { addToWishlist } = useWishlist();
 
-  // Modal state
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalAction, setModalAction] = useState(null); // "cart" or "wishlist"
+  const [modalAction, setModalAction] = useState(null);
 
   useEffect(() => {
     const loadProduct = async () => {
@@ -53,7 +54,6 @@ function SinglePage() {
       ? product.description[i18n.language]
       : product.description;
 
-  // Open modal and set which action user wants to confirm
   const handleOpenModal = (actionType) => {
     setModalAction(actionType);
     setModalOpen(true);
@@ -72,10 +72,7 @@ function SinglePage() {
     <main className="single-product-page">
       <RouteBanner page="Single Page" />
       <section className="product-wrapper">
-        <img
-          src={product.image}
-          alt={localizedTitle}
-        />
+        <img src={product.image} alt={localizedTitle} />
         <div className="product-details">
           <h2>{localizedTitle}</h2>
           <p className="product-price">
@@ -99,6 +96,12 @@ function SinglePage() {
           </p>
           <div className="rating">{<Rating rating={product.rating} />}</div>
           <p className="descp">{localizedDescription}</p>
+
+          {/* ✅ Corrected stock check */}
+          <p className={`stock-status ${product.stock ? 'in' : 'out'}`}>
+            {product.stock ? t('inStock') : t('outOfStock')}
+          </p>
+
           <div className="add-to-cart">
             <div className="amount-chooser">
               <input
@@ -108,18 +111,16 @@ function SinglePage() {
                 onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
               />
             </div>
-            <button
+            <Button
               onClick={() => handleOpenModal('cart')}
-              className="add-to-cart-btn"
-            >
-              Add to Cart
-            </button>
-            <button
+              className="btn1"
+              text="Add to Cart"
+            />
+            <Button
               onClick={() => handleOpenModal('wishlist')}
-              className="add-to-wishlist-btn"
-            >
-              Add to Wishlist
-            </button>
+              className="btn2"
+              text="Add to Wishlist"
+            />
           </div>
         </div>
       </section>
@@ -132,6 +133,8 @@ function SinglePage() {
           onConfirm={handleConfirmAdd}
         />
       )}
+
+      <Reviews productId={productId} product={product} />
     </main>
   );
 }

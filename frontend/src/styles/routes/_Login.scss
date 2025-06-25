@@ -3,13 +3,23 @@
 .login-container,
 .register-container {
   padding: 20px;
-  width: 30%;
+  width: 30vw;
   margin: 110px auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
   background-color: $bg-color;
-
+  @media (max-width: 1200px) {
+    margin: 50px auto;
+    width: 50vw;
+  }
+  @media (max-width: 700px) {
+    margin: 50px auto;
+    width: 70vw;
+  }
+  @media (max-width: 480px) {
+    width: 100vw;
+  }
   & > div {
     display: flex;
     flex-direction: column;
@@ -50,24 +60,23 @@
       // gap: 10px;
     }
   }
-}
-
-.checkbox-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-.termsLabel {
-  div {
+  .checkbox-container {
     display: flex;
-    gap: 5px;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .termsLabel {
+    div {
+      display: flex;
+      gap: 5px;
+    }
+  }
+  .forgot-password-link {
+    color: $primary-color;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
   }
 }
-.forgot-password-link{
-  color: $primary-color;
-  text-decoration: none;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: color 0.2s ease-in-out;
 
-}

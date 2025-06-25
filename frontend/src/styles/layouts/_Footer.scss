@@ -7,6 +7,9 @@ footer {
   height: 60vh;
   background-color: #376898;
   flex-wrap: wrap;
+  @media (max-width: 777px) {
+    height: auto;
+  }
   .infoContainer {
     height: 80%;
     width: 100%;
@@ -18,14 +21,22 @@ footer {
     color: $white-color;
     font-size: 17px;
     line-height: 29px;
+
     @media (max-width: 1100px) {
       font-size: 16px;
     }
+
     h2 {
       font-weight: 600;
       color: $white-color;
+
       @media (max-width: 1100px) {
         font-size: 16px;
+      }
+    }
+    .detailsContainer:nth-child(4) {
+      @media (max-width: 950px) {
+        width: 100%;
       }
     }
     .detailsContainer:last-child {
@@ -33,6 +44,7 @@ footer {
         display: none;
       }
     }
+
     .detailsContainer {
       width: 25%;
       display: flex;
@@ -40,43 +52,61 @@ footer {
       align-items: start;
       gap: 30px;
       padding: 0px 10px;
+
       @media (max-width: 1100px) {
         font-size: 14px;
+
         @media (max-width: 950px) {
           width: auto;
         }
       }
+
       @media (max-width: 1100px) {
         font-size: 12px;
       }
+
       .footerList {
         display: flex;
         flex-direction: column;
         gap: 14px;
+
         li {
           list-style: none;
           cursor: pointer;
           transition: all 0.3s ease-in-out;
+
           &:hover {
+            transform: translateX(5px);
+            color: $primary-color;
+          }
+        }
+        a{
+          color: white;
+                    &:hover {
             transform: translateX(5px);
             color: $primary-color;
           }
         }
       }
     }
+
     .logoContainer {
       width: 30%;
+
       @media (max-width: 1100px) {
         font-size: 12px;
       }
+
       .socialLinkContainer {
         display: flex;
         align-items: center;
         gap: 20px;
         width: 100%;
+
         @media (max-width: 1100px) {
           gap: 10px;
         }
+
         i {
           border: 1px solid $white-color;
           border-radius: 100%;
@@ -85,17 +115,51 @@ footer {
           font-size: 13px;
           transition: all 0.3s ease-in-out;
           cursor: pointer;
+
           &:hover {
             background-color: $primary-color;
             border: 1px solid $primary-color;
           }
+
           @media (max-width: 1100px) {
             font-size: 10px;
           }
         }
       }
     }
+
+    @media (max-width: 777px) {
+      flex-wrap: wrap;
+      padding: 20px;
+
+      .logoContainer {
+        width: 100% !important;
+        align-items: center !important;
+        text-align: center;
+
+        .socialLinkContainer {
+          justify-content: center;
+        }
+      }
+
+      .detailsContainer {
+        width: 50%;
+        align-items: center;
+        text-align: center;
+        padding: 20px 0;
+        gap: 20px;
+
+        h2 {
+          font-size: 18px;
+        }
+
+        .footerList {
+          align-items: center;
+        }
+      }
+    }
   }
+
   .copyright {
     width: 100%;
     display: flex;
@@ -104,9 +168,17 @@ footer {
     justify-content: center;
     background-color: black;
     color: $white-color;
+    @media (max-width: 777px) {
+      padding: 20px;
+    }
+    @media (max-width: 490px) {
+      font-size: 10px;
+    }
+
     strong {
       margin-left: 5px;
     }
+
     span {
       color: $primary-color;
       font-weight: 700;

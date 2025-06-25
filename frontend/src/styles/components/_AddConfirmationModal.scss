@@ -7,57 +7,55 @@
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex-layout(row, center, center); // display: flex; justify-content: center; align-items: center;
   z-index: 9999;
-}
 
-.modal-content {
-  display: flex;
-  align-self: center;
-  flex-direction: column;
-  background-color: white;
-  gap: 20px;
-  border-radius: 8px;
-  width: 100%;
+  .modal-content {
+    @include flex-layout(column, flex-start, stretch); // display: flex; flex-direction: column; (align-self and gap remain)
+    align-self: center;
+    background-color: white;
+    gap: 20px;
+    border-radius: 8px;
+    width: 30%;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    .title {
+      font-size: 24px;
+      color: $primary-color;
+      letter-spacing: 1px;
+    }
 
-  .title {
-    font-size: 24px;
-    color: $primary-color;
-    letter-spacing: 1px;
-  }
-  strong {
-    color: black;
-  }
-  & > div {
-    display: flex;
-    justify-content: space-around;
-    button {
-      padding: 0.5rem 1rem;
-      cursor: pointer;
+    strong {
+      color: black;
+    }
 
-      &:first-child {
-        padding: 10px 30px;
-        background: none;
-        border-radius: 4px;
+    > div {
+      @include flex-layout(row, space-around, stretch);
+      
+      button {
+        padding: 0.5rem 1rem;
+        cursor: pointer;
 
-        border: black 1px solid;
-        &:hover {
+        &:first-child {
+          padding: 10px 30px;
+          background: none;
+          border-radius: 4px;
+          border: black 1px solid;
+
+          &:hover {
+            background-color: $primary-color;
+            color: white;
+            border: none;
+          }
+        }
+
+        &:last-child {
           background-color: $primary-color;
           color: white;
-          border:none;
+          border: none;
+          border-radius: 4px;
         }
-      }
-
-      &:last-child {
-        background-color: $primary-color;
-        color: white;
-        border: none;
-        border-radius: 4px;
       }
     }
   }

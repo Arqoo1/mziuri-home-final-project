@@ -1,7 +1,8 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
-const API_URL = `${API_BASE_URL}/api/products`;
+// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000';
+// const API_URL = `${API_BASE_URL}/api/products`;
+const API_URL = 'http://localhost:5000/api/products';
 
 export const fetchProductData = async (sort = '') => {
   try {
@@ -60,4 +61,48 @@ export const removeFromWishlist = async (userId, productId) => {
     userId,
     productId,
   });
+};
+
+
+export const fetchReviews = async (productId) => {
+  try {
+    const res = await axios.get(`${API_URL}/review/${productId}`);
+    return res.data;
+  } catch (error) {
+    console.error("Error fetching reviews:", error);
+    return [];
+  }
+};
+
+export const addReview = async (
+  productId,
+  user,
+  review,
+  rating,
+  userEmail,
+  productName
+) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      console.error("No token found. User may not be authenticated.");
+      return null;
+    }
+
+    const res = await axios.post(
+      'http://localhost:5000/api/products/review',
+      { productId, user, review, rating, userEmail, productName },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    return res.data;
+  } catch (error) {
+    console.error("Error adding review:", error.response?.data || error);
+    return null;
+  }
 };

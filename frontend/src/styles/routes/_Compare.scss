@@ -1,12 +1,11 @@
+/* Compare.module.scss */
 .compare-table {
   width: calc(100% - 80px);
   margin: 50px auto;
   border-collapse: collapse;
   text-align: center;
   table-layout: fixed;
-  ;
 
-  // Let the first column auto-size, rest fixed
   th:first-child,
   td:first-child {
     width: auto;
@@ -14,7 +13,7 @@
 
   th:not(:first-child),
   td:not(:first-child) {
-    width: 30%// fixed width for product columns
+    width: 30%;
   }
 
   th,
@@ -22,13 +21,16 @@
     border: 1px solid #ddd;
     padding: 30px;
     vertical-align: middle;
+
+    @media (max-width: 1300px) {
+      padding: 15px;
+    }
   }
 
   th {
     background-color: #f8f8f8;
     font-weight: 600;
-
-}
+  }
 
   td {
     .add-btn {
@@ -59,94 +61,113 @@
       color: #333;
     }
   }
+
+  @media (max-width: 1100px) {
+    display: none;
+  }
 }
 
-// Modal styles (optional, kept from before)
-.modal-overlay {
-    position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+.compare-cards {
+  display: none;
+  padding: 20px;
 
-  .modal-content {
-      background: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    max-height: 80vh;
-    overflow-y: auto;
-    width: 500px;
-    position: relative;
+  @media (max-width: 1100px) {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+  .compare-card.empty-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 250px;
+    background-color: #f9f9f9;
+    border: 2px dashed #ccc;
 
-    h3 {
-      margin-top: 0;
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: #444;
-    }
-    
-    .close-btn {
-      position: absolute;
-      top: 10px;
-      right: 12px;
-      font-size: 1.5rem;
-      background: none;
+    .action-btn {
+      background-color: #007bff;
+      color: white;
       border: none;
+      padding: 10px 20px;
+      font-size: 1rem;
+      border-radius: 6px;
       cursor: pointer;
-      color: #666;
 
       &:hover {
-        color: #000;
+        background-color: #0056b3;
+      }
+    }
+  }
+  .compare-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    background: white;
+
+    .card-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+
+      span {
+        font-weight: 600;
+        color: #333;
+      }
+
+      .value {
+        font-weight: normal;
+        text-align: right;
       }
     }
 
-    .product-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    img {
+      width: 100px;
+      height: 100px;
+      object-fit: contain;
+      margin-bottom: 10px;
+    }
 
-      li {
-        display: flex;
-        align-items: center;
+    .title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+
+      button {
+        flex: 1;
+        padding: 8px;
+        font-size: 0.9rem;
+        border-radius: 4px;
         cursor: pointer;
-        border-bottom: 1px solid #eee;
-        padding: 10px 0;
+      }
 
-        &:hover {
-          background-color: #f9f9f9;
-        }
-        
-        img {
-          width: 50px;
-          height: 50px;
-          object-fit: contain;
-          margin-right: 10px;
-        }
+      .add-btn {
+        background-color: #28a745;
+        color: white;
+        border: none;
+      }
 
-        &.disabled {
-          pointer-events: none;
-          opacity: 0.5;
-        }
+      .wishlist-btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+      }
+
+      .remove-btn {
+        background-color: #9b1919;
+        color: white;
+        border: none;
       }
     }
   }
 }
-.remove-btn {
-  margin-left: 10px;
-  background-color: #9b1919;
-  color: white;
-  border: none;
-  padding: 4px 8px;
-  border-radius: 4px;
-  cursor: pointer;
-
-  
-  &:hover {
-    background-color: rgb(230, 23, 23);
-  }
+.compare-add{
+  background-color:#007bff;
 }
+
+

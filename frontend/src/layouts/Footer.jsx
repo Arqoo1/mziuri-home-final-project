@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import logo from '../assets/logo-footer.webp';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   const { t } = useTranslation();
@@ -14,9 +15,7 @@ function Footer() {
             alt={t('footer.logoAlt')}
             className="logoFooter"
           />
-          <p>
-            {t('footer.description')}
-          </p>
+          <p>{t('footer.description')}</p>
           <div className="socialLinkContainer">
             <i className="fa-brands fa-facebook-f"></i>
             <i className="fa-brands fa-twitter"></i>
@@ -40,11 +39,18 @@ function Footer() {
         <div className="detailsContainer">
           <h2>{t('footer.quicklink')}</h2>
           <ul className="footerList">
-            <li>{t('footer.about')}</li>
-            <li>{t('footer.blog')}</li>
-            <li>{t('footer.shop')}</li>
-            <li>{t('footer.cart')}</li>
-            <li>{t('footer.contact')}</li>
+            <li>
+              <Link to="/about">{t('footer.about')}</Link>
+            </li>
+            <li>
+              <Link to="/shop">{t('footer.shop')}</Link>
+            </li>
+            <li>
+              <Link to="/cart">{t('footer.cart')}</Link>
+            </li>
+            <li>
+              <Link to="/contact">{t('footer.contact')}</Link>
+            </li>
           </ul>
         </div>
 

@@ -8,6 +8,11 @@
   font-size: 20px;
   flex-direction: column;
   background-color: $bg-color;
+
+  @media (max-width: 800px) {
+    width: calc(100% - 80px);
+  }
+
   button {
     padding: 15px;
     background-color: #000;
@@ -15,6 +20,7 @@
     color: white;
     font-size: 18px;
   }
+
   .summary-row {
     width: 100%;
     height: 100%;
@@ -28,19 +34,27 @@
       font-size: 1.2rem;
     }
   }
+
   .checkout-title {
     padding: 20px;
   }
 }
+
 .coupon-section {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: calc(100% - 80px);
-  margin: 0px auto;
+  margin: 0 auto;
   padding: 20px;
   border: 2px solid rgba(4, 4, 4, 0.075);
   border-top: none;
+
+  @media (max-width: 800px) {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
   & > button {
     padding: 15px;
     background-color: #000;
@@ -48,29 +62,46 @@
     border: none;
   }
 }
+
 .coupon-input-container {
   display: flex;
   align-items: center;
   gap: 10px;
   width: 50%;
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+
   input {
     width: 80%;
     padding: 15px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 16px;
+
+    @media (max-width: 800px) {
+      width: 60%;
+    }
   }
+
   button {
     width: 20%;
     padding: 15px;
     background-color: #000;
     color: white;
     border: none;
+
+    @media (max-width: 800px) {
+      width: 40%;
+    }
   }
 }
-.applied-coupon-msg{
+
+.applied-coupon-msg {
   padding: 20px 40px;
 }
-.wishlist-mode{
+
+.wishlist-mode {
   margin-bottom: 50px;
 }

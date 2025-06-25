@@ -2,17 +2,19 @@
 
 .left-filter {
   margin-bottom: 20px;
-  display: flex;
-  align-items: start;
-  flex-direction: column;
+  @include flex-layout(column, flex-start, stretch);
   width: 25%;
   gap: 30px;
-  padding: 0px 20px;
+  padding: 0 20px;
+
+  @media (max-width: 1170px) {
+    width: 100%;
+  }
 
   .searchTitle {
     font-size: 22px;
     font-weight: 700;
-    padding: 10px 0px;
+    padding: 10px 0;
     width: 100%;
     border-bottom: 3px solid $border-color-3;
   }
@@ -23,66 +25,63 @@
     border: none;
     cursor: pointer;
   }
-}
 
-.filter-section {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  width: 100%;
-  padding: 10px 0px;
-  ul {
-    display: flex;
-    gap: 20px;
+  .filter-section {
+    @include flex-layout(column, flex-start, stretch);
+    gap: 30px;
     width: 100%;
-    flex-wrap: wrap;
-    li {
-      padding: 10px 30px;
-      // background-color: $primary-color;
-      border: 1px solid $border-color-3;
-      border-radius: 20px;
-      color: $black-color;
-      transition: 0.2s ease-in-out;
-      cursor: pointer;
-      &:hover {
-        border: 1px solid $primary-color;
-        color: $primary-color;
+    padding: 10px 0;
 
+    ul {
+      @include flex-layout(row, flex-start, center, wrap);
+      gap: 20px;
+      width: 100%;
+
+      li {
+        padding: 10px 30px;
+        border: 1px solid $border-color-3;
+        border-radius: 20px;
+        color: $black-color;
+        transition: 0.2s ease-in-out;
+        cursor: pointer;
+
+        &:hover {
+          border: 1px solid $primary-color;
+          color: $primary-color;
+        }
       }
     }
   }
-}
 
-.rc-slider-handle {
-  background-color: rgb(255, 255, 255);
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  z-index: 333 !important;
-  border: 2px solid #e72463 !important;
-}
+  .rc-slider-handle {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    z-index: 333 !important;
+    border: 2px solid #e72463 !important;
+  }
 
-.searchInputWrapper {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  position: relative;
-}
+  .searchInputWrapper {
+    @include flex-layout(row, flex-start, center);
+    width: 100%;
+    position: relative;
 
-.searchInput {
-  width: 100%;
-  padding: 10px;
-}
+    .searchInput {
+      width: 100%;
+      padding: 10px;
+    }
 
-.searchButton {
-  position: absolute;
-  padding: 12px;
-  right: 0;
-  background-color: #e8e2f8;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-.priceButton {
-  padding: 6px 20px;
+    .searchButton {
+      position: absolute;
+      padding: 12px;
+      right: 0;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+  }
+
+  .priceButton {
+    padding: 6px 20px;
+  }
 }

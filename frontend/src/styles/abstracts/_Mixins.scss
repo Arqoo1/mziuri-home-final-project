@@ -1,0 +1,95 @@
+@mixin background-center(
+  $size: cover,
+  $repeat: no-repeat,
+  $position: center,
+  $attachment: fixed
+) {
+  background-size: $size;
+  background-repeat: $repeat;
+  background-position: $position;
+  background-attachment: $attachment;
+}
+@mixin flex-layout(
+  $direction: row,
+  $justify: flex-start,
+  $align: stretch,
+  $wrap: nowrap
+) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+  flex-wrap: $wrap;
+}
+
+@mixin hover-scale($scale: 1.05) {
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale($scale);
+  }
+}
+
+@mixin slideInFromRight($duration: 1.5s, $timing: ease-out, $delay: 0s) {
+  animation: slideInFromRight $duration $timing $delay forwards;
+}
+
+@mixin slideInFromLeft($duration: 1.5s, $timing: ease-out, $delay: 0s) {
+  animation: slideInFromLeft $duration $timing $delay forwards;
+}
+
+@mixin slideInFromBottom($duration: 1.5s, $timing: ease-out, $delay: 0s) {
+  animation: slideInFromBottom $duration $timing $delay forwards;
+}
+
+
+@keyframes slideInFromRight {
+  0% {
+    transform: translateX(100%);
+    visibility: visible;
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(-100%);
+    visibility: visible;
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromBottom {
+  0% {
+    transform: translateY(100%);
+    visibility: visible;
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+
+
+
+@mixin carouselAnimation($duration: 0.5s, $timing: ease-out, $delay: 0s) {
+  animation: carouselAnimation $duration $timing $delay forwards;
+}
+
+@keyframes carouselAnimation {
+  0% {
+    transform: translateX(-20px);
+    visibility: visible;
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+
+    transform: translateX(0);
+  }
+}

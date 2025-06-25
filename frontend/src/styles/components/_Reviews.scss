@@ -1,0 +1,111 @@
+@use '../abstracts/index.scss' as *;
+
+.reviews {
+  width: 100%;
+  height: 90vh;
+
+  .reviews-container {
+    width: 80%;
+    margin: 0 auto;
+    height: 100%;
+    @include flex-layout(column, center, center);
+    @media (max-width: 560px) {
+      width: 100%;
+      padding: 10px;
+    }
+    nav {
+      width: 100%;
+      @include flex-layout(row, space-between, center);
+      border-bottom: 2px solid black;
+      margin-bottom: 40px;
+
+      button {
+        width: 33%;
+        height: 100%;
+        padding: 20px 0;
+        background-color: transparent;
+        border: none;
+        color: black;
+        font-size: 23px;
+        cursor: pointer;
+        position: relative;
+        @media (max-width: 560px) {
+          font-size: 18px;
+        }
+        @media (max-width: 385px) {
+          font-size: 16px;
+        }
+        &::before {
+          content: '';
+          position: absolute;
+          bottom: -2px;
+          left: 0;
+          height: 2px;
+          width: 100%;
+          background: black;
+          border-radius: 5px;
+          transform: scaleX(0);
+          transition: all 0.3s ease;
+        }
+
+        &:hover::before {
+          transform: scaleX(1);
+        }
+      }
+    }
+  }
+
+  form {
+    width: 100%;
+    @include flex-layout(column, flex-start, stretch);
+    gap: 10px;
+
+    .inputBox {
+      @include flex-layout(column, center, flex-start);
+
+      .s {
+        width: 20px;
+      }
+    }
+
+    button {
+      padding: 15px;
+      background-color: $primary-color;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  .usersReviewContainer {
+    width: 100%;
+    @include flex-layout(column, flex-start, stretch);
+    gap: 20px;
+strong{
+  color: black;
+  font-size: 20px;
+}
+    .review {
+      width: 100%;
+      padding: 20px;
+      @include flex-layout(row, flex-start, stretch);
+      flex-wrap: wrap;
+      border: 2px solid $primary-color;
+
+      .review-top {
+        @include flex-layout(row, space-between, center);
+        padding-bottom: 10px;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.star-rating {
+  span {
+    color: $primary-color !important;
+  }
+}
+.review-stars {
+  color: $primary-color !important;
+}

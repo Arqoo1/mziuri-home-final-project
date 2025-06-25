@@ -10,7 +10,7 @@ import { validateCoupon } from '../api/couponapi';
 import ProductsModal from '../components/ProductsModal';
 import { useCurrency } from '../Context/CurrencyContext';
 import { useTranslation } from 'react-i18next';
-
+import Button from '../components/Button';
 function Cart() {
   const { cart, setCart, loggedIn } = useUserData();
   const [enrichedCart, setEnrichedCart] = useState([]);
@@ -21,7 +21,6 @@ function Cart() {
   const { convert, symbol } = useCurrency();
   const { t } = useTranslation();
 
-  // Enrich cart with product details
   useEffect(() => {
     const enrichItems = async () => {
       if (!cart || cart.length === 0) {
@@ -46,19 +45,18 @@ function Cart() {
           };
         } catch (err) {
           console.warn('Product not found during enrichment:', item);
-          return null; // Remove if product no longer exists
+          return null; 
         }
       });
 
       const results = await Promise.all(promises);
-      const filtered = results.filter(Boolean); // remove nulls
+      const filtered = results.filter(Boolean); 
       setEnrichedCart(filtered);
     };
 
     enrichItems();
   }, [cart]);
 
-  // Subtotal calculation
   const subtotal = enrichedCart.reduce((acc, item) => {
     const price = Number(item.price);
     const quantity = Number(item.quantity);
@@ -86,7 +84,7 @@ function Cart() {
     try {
       const productToAdd = {
         ...product,
-        productId: product._id, // ✅ Ensures fetchSingleProduct works
+        productId: product._id,
         quantity: 1,
         price: product.salePrice || product.price,
       };
@@ -102,7 +100,6 @@ function Cart() {
     }
   };
 
-  // Apply coupon discount
   useEffect(() => {
     if (!appliedCoupon) {
       setDiscount(0);
@@ -141,7 +138,11 @@ function Cart() {
               }
             }}
           />
-          <button onClick={openModal}>{t('couponSection.updateCart')}</button>
+          <Button
+            onClick={openModal}
+            className="btn1"
+            text={t('couponSection.updateCart')}
+          />{' '}
         </section>
 
         {appliedCoupon && (
@@ -173,12 +174,12 @@ function Cart() {
               {convert(total)}
             </span>
           </div>
-          <button
+          <Button
             onClick={handleProceedToCheckout}
             disabled={enrichedCart.length === 0 || total <= 0}
-          >
-            {t('couponSection.proceedToCheckout')}
-          </button>
+            className="btn1"
+            text={t('couponSection.proceedToCheckout')}
+          />
         </div>
       </section>
 

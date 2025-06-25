@@ -15,7 +15,7 @@ export function useAddToCart() {
         const rawCart = response.data || [];
 
         const enrichedCart = rawCart
-          .filter((item) => item.productId) // Ensure productId exists
+          .filter((item) => item.productId) 
           .map((item) => {
             const idStr = item.productId.toString ? item.productId.toString() : item.productId;
 
@@ -32,7 +32,6 @@ export function useAddToCart() {
 
         setCart(enrichedCart);
       } else {
-        // Guest cart logic unchanged
         const guestCart = JSON.parse(localStorage.getItem('guestCart')) || [];
         const existingIndex = guestCart.findIndex((item) => item._id === productId);
 
