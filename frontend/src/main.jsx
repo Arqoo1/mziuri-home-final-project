@@ -9,7 +9,6 @@ import './i18n/i18n.js';
 import { CompareProvider } from './Context/CompareContext.jsx';
 import { CurrencyProvider } from './Context/CurrencyContext';
 
-
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Router>

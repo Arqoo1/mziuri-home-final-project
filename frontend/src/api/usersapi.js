@@ -70,29 +70,14 @@ export const contact = async (data) => {
 };
 
 // GET TOKEN
-export const getToken = async () => {
+export const getToken = () => {
   const token = localStorage.getItem('token');
-  if (!token) throw new Error('No token found in localStorage');
-
-  try {
-    const response = await API.post('/get-token', null, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      withCredentials: false,
-    });
-    return response.data.token;
-  } catch (error) {
-    const message =
-      error.response?.data?.err || error.response?.data?.message || 'Failed to get token';
-    throw new Error(message);
-  }
+  return token || null;
 };
 
 // GET USER
-export const getUser = async () => {
-  const token = localStorage.getItem('token');
-  if (!token) throw new Error('No token in localStorage');
+export const getUser = async (token) => {
+  if (!token) return null;
 
   try {
     const response = await API.get('/get-user', {

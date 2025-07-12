@@ -50,36 +50,36 @@ function App() {
         if (!token) {
           setLoggedIn(false);
           setUserData(null);
-
-          const guestCart = JSON.parse(localStorage.getItem('guestCart') || '[]');
-          const guestWishlist = JSON.parse(localStorage.getItem('guestWishlist') || '[]');
-          setCart(guestCart);
-          setWishlist(guestWishlist);
+          setCart(JSON.parse(localStorage.getItem('guestCart') || '[]'));
+          setWishlist(JSON.parse(localStorage.getItem('guestWishlist') || '[]'));
           return;
         }
-        const res = await getUser(token);
-        if (res.data) {
-          setUserData(res.data);
-          setCart(res.data.cart || []);
-          setWishlist(res.data.wishlist || []);
-          setLoggedIn(true);
 
+        const res = await getUser(token);
+        if (res) {
+          setUserData(res);
+          setCart(res.cart || []);
+          setWishlist(res.wishlist || []);
+          setLoggedIn(true);
           localStorage.removeItem('guestCart');
           localStorage.removeItem('guestWishlist');
         } else {
-          setUserData(null);
+          // Token might be invalid or user not found
           setLoggedIn(false);
+          setUserData(null);
         }
       } catch (error) {
-        console.error(error);
+        console.error('Failed to fetch user:', error.message); // Only logs real issues
         setUserData(null);
         setLoggedIn(false);
         setCart(JSON.parse(localStorage.getItem('guestCart') || '[]'));
         setWishlist(JSON.parse(localStorage.getItem('guestWishlist') || '[]'));
       }
     };
+
     getUserInfo();
   }, [navigate, setLoggedIn, setCart, setWishlist, setUserData]);
+
   useEffect(() => {
     if (!loggedIn) {
       localStorage.setItem('guestCart', JSON.stringify(cart));

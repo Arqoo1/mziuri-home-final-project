@@ -14,7 +14,9 @@ export function useWishlist() {
       if (loggedIn && userData?._id) {
         const newWishlist = [...wishlist];
 
-        const exists = newWishlist.some(item => item.productId === productId || item._id === productId);
+        const exists = newWishlist.some(
+          (item) => item.productId === productId || item._id === productId
+        );
         if (!exists) {
           newWishlist.push({ _id: productId, productId, quantity: 1 });
           await apiUpdateUserWishlist(newWishlist);
@@ -25,7 +27,7 @@ export function useWishlist() {
         }
       } else {
         const guestWishlist = JSON.parse(localStorage.getItem('guestWishlist')) || [];
-        const exists = guestWishlist.some(item => item._id === productId);
+        const exists = guestWishlist.some((item) => item._id === productId);
         if (!exists) {
           guestWishlist.push({
             _id: productId,

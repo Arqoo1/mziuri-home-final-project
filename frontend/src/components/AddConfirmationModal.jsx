@@ -1,11 +1,6 @@
 import React from 'react';
 
-function AddConfirmationModal({
-  productTitle,
-  action, 
-  onClose,
-  onConfirm,
-}) {
+function AddConfirmationModal({ productTitle, action, onClose, onConfirm }) {
   const capitalizedAction = action === 'cart' ? 'Cart' : 'Wishlist';
 
   return (

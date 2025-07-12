@@ -16,9 +16,9 @@ export async function fetchRates() {
 export async function convertCurrency(amount, targetCurrency) {
   try {
     const response = await axios.get(`${API_BASE_URL}/convert`, {
-      params: { amount, targetCurrency }
+      params: { amount, targetCurrency },
     });
-    return response.data.convertedAmount; 
+    return response.data.convertedAmount;
   } catch (error) {
     console.error('Currency conversion failed:', error);
     throw error;

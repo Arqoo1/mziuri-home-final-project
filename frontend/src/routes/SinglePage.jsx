@@ -72,7 +72,10 @@ function SinglePage() {
     <main className="single-product-page">
       <RouteBanner page="Single Page" />
       <section className="product-wrapper">
-        <img src={product.image} alt={localizedTitle} />
+        <img
+          src={product.image}
+          alt={localizedTitle}
+        />
         <div className="product-details">
           <h2>{localizedTitle}</h2>
           <p className="product-price">
@@ -134,7 +137,10 @@ function SinglePage() {
         />
       )}
 
-      <Reviews productId={productId} product={product} />
+      <Reviews
+        productId={productId}
+        product={product}
+      />
     </main>
   );
 }

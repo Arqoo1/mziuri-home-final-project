@@ -23,10 +23,19 @@ function ProductsModal({ excludedProducts = [], onAdd, onClose }) {
     excludedProducts.some((item) => item._id === product._id || item.productId === product._id);
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+    <div
+      className="modal-overlay"
+      onClick={onClose}
+    >
+      <div
+        className="modal-content"
+        onClick={(e) => e.stopPropagation()}
+      >
         <h3>Select a product to add</h3>
-        <button className="close-btn" onClick={onClose}>
+        <button
+          className="close-btn"
+          onClick={onClose}
+        >
           &times;
         </button>
 
@@ -52,7 +61,10 @@ function ProductsModal({ excludedProducts = [], onAdd, onClose }) {
                   if (!disabled) onAdd(p);
                 }}
               >
-                <img src={p.image} alt={p.title?.en || p.title} />
+                <img
+                  src={p.image}
+                  alt={p.title?.en || p.title}
+                />
                 <span>{p.title?.en || p.title}</span>
                 {disabled && <span className="tag">Already Added</span>}
               </li>

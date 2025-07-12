@@ -11,7 +11,7 @@ function Product({ product, className = '' }) {
   const stars = Rating(rating);
   const { addToCompare } = useCompare();
   const { i18n } = useTranslation();
-const { convert, symbol } = useCurrency();
+  const { convert, symbol } = useCurrency();
 
   const handleClick = () => {
     navigate(`/shop/${_id}`);

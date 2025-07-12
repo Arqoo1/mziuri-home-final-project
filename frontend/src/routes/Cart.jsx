@@ -45,12 +45,12 @@ function Cart() {
           };
         } catch (err) {
           console.warn('Product not found during enrichment:', item);
-          return null; 
+          return null;
         }
       });
 
       const results = await Promise.all(promises);
-      const filtered = results.filter(Boolean); 
+      const filtered = results.filter(Boolean);
       setEnrichedCart(filtered);
     };
 

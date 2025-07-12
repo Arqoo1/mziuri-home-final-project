@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 
 /**
- * @param {number} durationMs 
+ * @param {number} durationMs
  * @returns {{ days: number, hours: number, minutes: number, seconds: number }}
  */
 export default function useCountdown(durationMs) {

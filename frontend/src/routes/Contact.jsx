@@ -75,11 +75,7 @@ function Contact() {
       <section className="contact-form">
         <div className="form-container">
           <h2>{t('getInTouch')}</h2>
-          {submitSuccess && (
-            <div className="success-message">
-              {t('successMessage')}
-            </div>
-          )}
+          {submitSuccess && <div className="success-message">{t('successMessage')}</div>}
           <form
             className="contactform"
             onSubmit={handleSubmit}

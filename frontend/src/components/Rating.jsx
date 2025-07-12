@@ -7,13 +7,12 @@ function Rating({ rating }) {
   const roundedRating = Math.round(rating * 2) / 2;
 
   const starStyle = {
-    color: '#e72463', 
+    color: '#e72463',
     marginRight: '3px',
-
   };
 
   const emptyStarStyle = {
-    color: 'transparent', 
+    color: 'transparent',
 
     WebkitTextStroke: '1px #e72463',
     marginRight: '3px',

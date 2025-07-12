@@ -32,7 +32,11 @@ const ImageCarousel = () => {
       onTouchEnd={() => setTimeout(() => setHoveredIndex(null), 500)}
       key={index}
     >
-      <img src={src} alt={`Slide ${index}`} draggable="false" />
+      <img
+        src={src}
+        alt={`Slide ${index}`}
+        draggable="false"
+      />
     </div>
   );
 

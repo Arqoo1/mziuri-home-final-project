@@ -1,8 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { fetchRates } from '../api/currencyapi';
 
-const CurrencyContext = createContext(); 
-
+const CurrencyContext = createContext();
 
 const symbols = {
   USD: '$',

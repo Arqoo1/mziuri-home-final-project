@@ -15,7 +15,7 @@ export function useAddToCart() {
         const rawCart = response.data || [];
 
         const enrichedCart = rawCart
-          .filter((item) => item.productId) 
+          .filter((item) => item.productId)
           .map((item) => {
             const idStr = item.productId.toString ? item.productId.toString() : item.productId;
 

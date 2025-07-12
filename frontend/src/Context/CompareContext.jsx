@@ -7,8 +7,8 @@ export const CompareProvider = ({ children }) => {
 
   const addToCompare = (product) => {
     setCompareList((prev) => {
-      if (prev.some((p) => p._id === product._id)) return prev; 
-      if (prev.length >= 3) return prev; 
+      if (prev.some((p) => p._id === product._id)) return prev;
+      if (prev.length >= 3) return prev;
       return [...prev, product];
     });
   };

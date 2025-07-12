@@ -62,7 +62,7 @@ function DealOfDay() {
         breakpoints={{
           0: { slidesPerView: 1 },
           600: { slidesPerView: 2 },
-          900: { slidesPerView: 3 }, 
+          900: { slidesPerView: 3 },
         }}
       />
     </section>

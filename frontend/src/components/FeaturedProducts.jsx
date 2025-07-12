@@ -20,7 +20,6 @@ function FeaturedProducts() {
       const filtered = products.filter((p) =>
         p.tags?.some((tag) => tag.en.toLowerCase() === 'featured')
       );
-      console.log('Filtered featured products:', filtered);
       const half = Math.ceil(filtered.length / 2);
       setTopRowProducts(filtered.slice(0, half));
       setBottomRowProducts(filtered.slice(half));

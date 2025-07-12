@@ -23,7 +23,7 @@ function Checkout() {
         <section className="checkout">
           <form className="checkout-form">
             <InputGroup
-              label={t('country') + ' *'}
+              label={`${t('country')} *`}
               name="country"
             >
               <select
@@ -73,7 +73,7 @@ function Checkout() {
             </div>
 
             <InputGroup
-              label={t('address') + ' *'}
+              label={`${t('address')} *`}
               name="address"
             >
               <input
@@ -85,7 +85,7 @@ function Checkout() {
             </InputGroup>
 
             <InputGroup
-              label={t('townCity') + ' *'}
+              label={`${t('townCity')} *`}
               name="city"
             >
               <input
@@ -98,7 +98,7 @@ function Checkout() {
 
             <div className="half-inputs">
               <InputGroup
-                label={t('stateCountry') + ' *'}
+                label={`${t('stateCountry')} *`}
                 name="state"
               >
                 <input
@@ -109,7 +109,7 @@ function Checkout() {
                 />
               </InputGroup>
               <InputGroup
-                label={t('postcodeZip') + ' *'}
+                label={`${t('postcodeZip')} *`}
                 name="postcode"
               >
                 <input
@@ -123,7 +123,7 @@ function Checkout() {
 
             <div className="half-inputs">
               <InputGroup
-                label={t('emailAddress') + ' *'}
+                label={`${t('emailAddress')} *`}
                 name="email"
               >
                 <input
@@ -134,7 +134,7 @@ function Checkout() {
                 />
               </InputGroup>
               <InputGroup
-                label={t('phone') + ' *'}
+                label={`${t('phone')} *`}
                 name="phone"
               >
                 <input

@@ -77,7 +77,7 @@ function ProductList() {
   );
 
   useEffect(() => {
-    setCurrentPage(1); 
+    setCurrentPage(1);
   }, [priceRange, selectedTags, selectedCategory, sort]);
 
   return (

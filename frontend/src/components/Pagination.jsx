@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 
 function Pagination({ currentPage, totalPages, onPageChange }) {
   const pages = [...Array(totalPages).keys()].map((n) => n + 1);

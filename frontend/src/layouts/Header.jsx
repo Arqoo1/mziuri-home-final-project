@@ -8,7 +8,7 @@ import { useUserData } from '../Context/UserContext';
 function Header() {
   const [showSearch, setShowSearch] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false); 
+  const [menuOpen, setMenuOpen] = useState(false);
   const { cart } = useUserData();
 
   const { t, i18n } = useTranslation();
